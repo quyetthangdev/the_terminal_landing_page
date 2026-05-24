@@ -5,7 +5,7 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation'
 function GlassMenuCard({ item, index }: { item: (typeof menuItems)[number]; index: number }) {
   return (
     <div
-      className="group bg-white/[0.05] backdrop-blur-sm border border-white/10 rounded-sm overflow-hidden hover:bg-white/[0.08] hover:border-gold/30 transition-all duration-300 opacity-0 animate-fade-in-up"
+      className="group bg-white/70 backdrop-blur-md border border-gold/15 rounded-sm overflow-hidden hover:border-gold/40 hover:shadow-md transition-all duration-300 opacity-0 animate-fade-in-up"
       style={{ animationDelay: `${index * 80}ms`, animationFillMode: 'forwards' }}
     >
       <div className="aspect-[4/3] overflow-hidden relative">
@@ -18,8 +18,8 @@ function GlassMenuCard({ item, index }: { item: (typeof menuItems)[number]; inde
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
       </div>
       <div className="p-4">
-        <h3 className="font-display font-bold text-white text-base mb-1">{item.name}</h3>
-        <p className="text-white/40 text-xs leading-relaxed mb-3">{item.description}</p>
+        <h3 className="font-display font-bold text-brand-dark text-base mb-1">{item.name}</h3>
+        <p className="text-gray-500 text-xs leading-relaxed mb-3">{item.description}</p>
         <p className="text-gold font-semibold text-sm">{item.price}</p>
       </div>
     </div>
@@ -35,13 +35,13 @@ export default function GlassMenuSection() {
     <section
       id="glass-menu"
       ref={ref as React.RefObject<HTMLElement>}
-      className={`py-28 bg-[#0d0d0d] transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+      className={`py-28 bg-warm-white transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
     >
       <div className="max-w-6xl mx-auto px-6">
         {/* Heading */}
         <div className="text-center mb-14">
-          <p className="text-gold/60 text-[10px] tracking-[0.5em] mb-3">ĐẶC SẢN</p>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-white tracking-wide mb-6">THỰC ĐƠN</h2>
+          <p className="text-gold text-[10px] tracking-[0.5em] mb-3">ĐẶC SẢN</p>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-brand-dark tracking-wide mb-6">THỰC ĐƠN</h2>
           <div className="w-12 h-px bg-gold/40 mx-auto" />
         </div>
 
@@ -54,7 +54,7 @@ export default function GlassMenuSection() {
               className={`px-5 py-2 text-[10px] tracking-[0.25em] rounded-full border transition-all duration-200 ${
                 active === cat.id
                   ? 'bg-gold/20 border-gold/50 text-gold backdrop-blur-sm'
-                  : 'bg-white/[0.05] border-white/15 text-white/40 hover:text-white/70 hover:border-white/30'
+                  : 'bg-white/60 border-gold/15 text-brand-dark/40 hover:text-brand-dark/70 hover:border-gold/30'
               }`}
             >
               {cat.label.toUpperCase()}

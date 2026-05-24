@@ -23,25 +23,25 @@ export default function GlassGallerySection() {
     <section
       id="glass-gallery"
       ref={ref as React.RefObject<HTMLElement>}
-      className={`py-28 bg-[#080808] overflow-hidden transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+      className={`py-28 bg-pearl overflow-hidden transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
     >
       {/* Heading */}
       <div className="max-w-6xl mx-auto px-6 mb-12 flex items-end justify-between">
         <div>
-          <p className="text-gold/60 text-[10px] tracking-[0.5em] mb-3">TRẢI NGHIỆM</p>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-white tracking-wide">KHÔNG GIAN</h2>
+          <p className="text-gold text-[10px] tracking-[0.5em] mb-3">TRẢI NGHIỆM</p>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-brand-dark tracking-wide">KHÔNG GIAN</h2>
         </div>
         {/* Nav arrows */}
         <div className="flex gap-2">
           <button
             onClick={() => scroll('left')}
-            className="w-10 h-10 rounded-full bg-white/[0.08] backdrop-blur-sm border border-white/15 flex items-center justify-center text-white/60 hover:bg-white/15 hover:text-white transition-all"
+            className="w-10 h-10 rounded-full bg-white/70 backdrop-blur-md border border-gold/20 flex items-center justify-center text-brand-dark/60 hover:bg-white/90 hover:text-brand-dark transition-all"
           >
             <ChevronLeft size={18} />
           </button>
           <button
             onClick={() => scroll('right')}
-            className="w-10 h-10 rounded-full bg-white/[0.08] backdrop-blur-sm border border-white/15 flex items-center justify-center text-white/60 hover:bg-white/15 hover:text-white transition-all"
+            className="w-10 h-10 rounded-full bg-white/70 backdrop-blur-md border border-gold/20 flex items-center justify-center text-brand-dark/60 hover:bg-white/90 hover:text-brand-dark transition-all"
           >
             <ChevronRight size={18} />
           </button>

@@ -8,7 +8,7 @@ function scrollTo(id: string) {
 
 export default function GlassHeroSection() {
   return (
-    <section id="glass-hero" className="relative h-screen overflow-hidden bg-[#0a0a0a]">
+    <section id="glass-hero" className="relative h-screen overflow-hidden bg-brand-darker">
       {/* Three.js train as background */}
       <div className="absolute inset-0">
         <Suspense fallback={null}>
@@ -45,9 +45,9 @@ export default function GlassHeroSection() {
             { label: 'Món ăn', value: '50+' },
             { label: 'Không gian', value: '1 Tầng' },
           ].map((stat) => (
-            <div key={stat.label} className="bg-white/[0.08] backdrop-blur-lg border border-white/15 rounded-sm p-4">
-              <p className="font-display text-2xl font-bold text-white">{stat.value}</p>
-              <p className="text-white/40 text-[10px] tracking-[0.2em] mt-1">{stat.label.toUpperCase()}</p>
+            <div key={stat.label} className="bg-warm-white/80 backdrop-blur-lg border border-gold/20 rounded-sm p-4">
+              <p className="font-display text-2xl font-bold text-brand-dark">{stat.value}</p>
+              <p className="text-brand-dark/50 text-[10px] tracking-[0.2em] mt-1">{stat.label.toUpperCase()}</p>
             </div>
           ))}
         </div>

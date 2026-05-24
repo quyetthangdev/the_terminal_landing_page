@@ -14,28 +14,28 @@ export default function GlassLocationSection() {
     <section
       id="glass-location"
       ref={ref as React.RefObject<HTMLElement>}
-      className={`py-28 bg-[#0d0d0d] transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+      className={`py-28 bg-warm-white transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
     >
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-14">
-          <p className="text-gold/60 text-[10px] tracking-[0.5em] mb-3">TÌM CHÚNG TÔI</p>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-white tracking-wide">VỊ TRÍ</h2>
+          <p className="text-gold text-[10px] tracking-[0.5em] mb-3">TÌM CHÚNG TÔI</p>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-brand-dark tracking-wide">VỊ TRÍ</h2>
           <div className="w-12 h-px bg-gold/40 mx-auto mt-4" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {info.map(({ icon: Icon, label, value }) => (
-            <div key={label} className="bg-white/[0.05] backdrop-blur-sm border border-white/10 rounded-sm p-6 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-200">
-              <Icon size={18} className="text-gold/70 mb-4" />
-              <p className="text-white/30 text-[10px] tracking-[0.3em] mb-2">{label.toUpperCase()}</p>
-              <p className="text-white/70 text-sm leading-relaxed whitespace-pre-line">{value}</p>
+            <div key={label} className="bg-white/70 backdrop-blur-md border border-gold/15 rounded-sm p-6 hover:border-gold/30 transition-all duration-200">
+              <Icon size={18} className="text-gold mb-4" />
+              <p className="text-brand-dark/30 text-[10px] tracking-[0.3em] mb-2">{label.toUpperCase()}</p>
+              <p className="text-brand-dark/70 text-sm leading-relaxed whitespace-pre-line">{value}</p>
             </div>
           ))}
         </div>
 
         {/* Map placeholder */}
-        <div className="mt-6 h-48 bg-white/[0.03] border border-white/[0.08] rounded-sm flex items-center justify-center">
-          <p className="text-white/20 text-xs tracking-widest">BẢN ĐỒ</p>
+        <div className="mt-6 h-48 bg-white/50 border border-gold/10 rounded-sm flex items-center justify-center">
+          <p className="text-brand-dark/20 text-xs tracking-widest">BẢN ĐỒ</p>
         </div>
       </div>
     </section>

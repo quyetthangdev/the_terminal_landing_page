@@ -11,7 +11,7 @@ import PageSwitcher from '@/components/PageSwitcher'
 
 export default function GlassPage() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#0a0a0a]">
+    <div className="min-h-screen overflow-x-hidden bg-warm-white">
       <GlassNavbar />
       <main>
         <GlassHeroSection />

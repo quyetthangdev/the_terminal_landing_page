@@ -27,11 +27,11 @@ export default function GlassNavbar() {
     <header className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 w-[calc(100%-3rem)] max-w-4xl`}>
       <nav className={`flex items-center justify-between px-6 py-3 rounded-full border transition-all duration-500 ${
         scrolled
-          ? 'bg-black/40 backdrop-blur-xl border-white/20 shadow-lg shadow-black/20'
-          : 'bg-white/[0.08] backdrop-blur-md border-white/[0.12]'
+          ? 'bg-warm-white/80 backdrop-blur-xl border-gold/20 shadow-lg shadow-gold/5'
+          : 'bg-white/[0.12] backdrop-blur-md border-gold/15'
       }`}>
         {/* Logo */}
-        <a href="#" className="font-display font-bold text-white text-sm tracking-[0.2em]">
+        <a href="#" className="font-display font-bold text-brand-dark text-sm tracking-[0.2em]">
           THE TERMINAL
         </a>
 
@@ -41,7 +41,7 @@ export default function GlassNavbar() {
             <button
               key={link.label}
               onClick={() => scrollTo(link.href)}
-              className="text-white/60 hover:text-white text-xs tracking-[0.2em] transition-colors duration-200"
+              className="text-brand-dark/60 hover:text-brand-dark text-xs tracking-[0.2em] transition-colors duration-200"
             >
               {link.label.toUpperCase()}
             </button>
@@ -51,7 +51,7 @@ export default function GlassNavbar() {
         {/* CTA */}
         <button
           onClick={() => scrollTo('#glass-reservation')}
-          className="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/25 text-white text-xs tracking-[0.15em] transition-all duration-200 backdrop-blur-sm"
+          className="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/90 hover:bg-gold border border-gold text-brand-dark text-xs tracking-[0.15em] transition-all duration-200 backdrop-blur-sm"
         >
           ĐẶT BÀN
         </button>
@@ -59,18 +59,18 @@ export default function GlassNavbar() {
         {/* Mobile menu */}
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
-            <button className="md:hidden text-white/70 hover:text-white">
+            <button className="md:hidden text-brand-dark/70 hover:text-brand-dark">
               <Menu size={20} />
             </button>
           </SheetTrigger>
-          <SheetContent side="right" className="bg-black/80 backdrop-blur-2xl border-white/10 text-white w-72">
+          <SheetContent side="right" className="bg-warm-white/95 backdrop-blur-2xl border-gold/10 text-brand-dark w-72">
             <SheetTitle className="sr-only">Điều hướng</SheetTitle>
             <div className="flex flex-col gap-6 mt-12 px-2">
               {navLinks.map((link) => (
                 <button
                   key={link.label}
                   onClick={() => { scrollTo(link.href); setOpen(false) }}
-                  className="text-white/70 hover:text-white text-sm tracking-[0.25em] text-left transition-colors"
+                  className="text-brand-dark/70 hover:text-brand-dark text-sm tracking-[0.25em] text-left transition-colors"
                 >
                   {link.label.toUpperCase()}
                 </button>

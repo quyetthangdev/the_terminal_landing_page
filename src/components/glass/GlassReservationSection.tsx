@@ -23,55 +23,55 @@ export default function GlassReservationSection() {
     <section
       id="glass-reservation"
       ref={ref as React.RefObject<HTMLElement>}
-      className={`py-28 bg-[#0a0a0a] transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+      className={`py-28 bg-surface transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
     >
       <div className="max-w-2xl mx-auto px-6">
         <div className="text-center mb-12">
-          <p className="text-gold/60 text-[10px] tracking-[0.5em] mb-3">LIÊN HỆ</p>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-white tracking-wide mb-4">ĐẶT BÀN</h2>
+          <p className="text-gold text-[10px] tracking-[0.5em] mb-3">LIÊN HỆ</p>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-brand-dark tracking-wide mb-4">ĐẶT BÀN</h2>
           <div className="w-12 h-px bg-gold/40 mx-auto" />
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white/[0.05] backdrop-blur-sm border border-white/10 rounded-sm p-8 space-y-5">
+        <form onSubmit={handleSubmit} className="bg-white/70 backdrop-blur-md border border-gold/15 rounded-sm p-8 space-y-5">
           {[
             { name: 'name', label: 'Họ và Tên', type: 'text', placeholder: 'Nguyễn Văn A' },
             { name: 'phone', label: 'Số Điện Thoại', type: 'tel', placeholder: '0901 234 567' },
             { name: 'date', label: 'Ngày & Giờ', type: 'datetime-local', placeholder: '' },
           ].map((field) => (
             <div key={field.name}>
-              <label className="block text-white/40 text-[10px] tracking-[0.3em] mb-2">{field.label.toUpperCase()}</label>
+              <label className="block text-brand-dark/40 text-[10px] tracking-[0.3em] mb-2">{field.label.toUpperCase()}</label>
               <input
                 name={field.name}
                 type={field.type}
                 value={form[field.name as keyof typeof form]}
                 onChange={handleChange}
                 placeholder={field.placeholder}
-                className="w-full bg-white/[0.05] border border-white/10 text-white text-sm px-4 py-3 rounded-sm placeholder-white/20 focus:outline-none focus:border-gold/50 focus:bg-white/[0.08] transition-all"
+                className="w-full bg-white/60 border border-gold/10 text-brand-dark text-sm px-4 py-3 rounded-sm placeholder-gray-300 focus:outline-none focus:border-gold/50 transition-all"
               />
             </div>
           ))}
 
           <div>
-            <label className="block text-white/40 text-[10px] tracking-[0.3em] mb-2">SỐ KHÁCH</label>
+            <label className="block text-brand-dark/40 text-[10px] tracking-[0.3em] mb-2">SỐ KHÁCH</label>
             <select
               name="guests"
               value={form.guests}
               onChange={handleChange}
-              className="w-full bg-white/[0.05] border border-white/10 text-white text-sm px-4 py-3 rounded-sm focus:outline-none focus:border-gold/50 transition-all appearance-none"
+              className="w-full bg-white/60 border border-gold/10 text-brand-dark text-sm px-4 py-3 rounded-sm focus:outline-none focus:border-gold/50 transition-all appearance-none"
             >
-              {['1','2','3','4','5','6+'].map((n) => <option key={n} value={n} className="bg-brand-darker">{n} khách</option>)}
+              {['1','2','3','4','5','6+'].map((n) => <option key={n} value={n} className="bg-surface">{n} khách</option>)}
             </select>
           </div>
 
           <div>
-            <label className="block text-white/40 text-[10px] tracking-[0.3em] mb-2">GHI CHÚ</label>
+            <label className="block text-brand-dark/40 text-[10px] tracking-[0.3em] mb-2">GHI CHÚ</label>
             <textarea
               name="note"
               value={form.note}
               onChange={handleChange}
               rows={3}
               placeholder="Yêu cầu đặc biệt..."
-              className="w-full bg-white/[0.05] border border-white/10 text-white text-sm px-4 py-3 rounded-sm placeholder-white/20 focus:outline-none focus:border-gold/50 transition-all resize-none"
+              className="w-full bg-white/60 border border-gold/10 text-brand-dark text-sm px-4 py-3 rounded-sm placeholder-gray-300 focus:outline-none focus:border-gold/50 transition-all resize-none"
             />
           </div>
 

@@ -38,7 +38,7 @@ export default function GallerySection() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 auto-rows-[200px]">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 auto-rows-[160px] md:auto-rows-[200px]">
           {images.map((img, i) => (
             <div
               key={img.id}

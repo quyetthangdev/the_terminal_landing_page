@@ -38,23 +38,32 @@ export default function GallerySection() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 auto-rows-[160px] md:auto-rows-[200px]">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
           {images.map((img, i) => (
-            <div
+            <button
               key={img.id}
               onClick={() => openAt(i)}
-              className={`group cursor-pointer overflow-hidden rounded-sm ${i === 0 ? 'row-span-2' : ''}`}
+              className={`group cursor-pointer overflow-hidden rounded-sm relative focus:outline-none focus-visible:ring-2 focus-visible:ring-gold ${
+                i === 0 ? 'col-span-2 md:col-span-2 row-span-2 aspect-[4/3] md:aspect-auto md:h-[420px]' :
+                i < 3 ? 'aspect-square' :
+                'aspect-[4/3]'
+              }`}
+              aria-label={`Xem ảnh: ${img.alt}`}
             >
-              <div className="relative w-full h-full">
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gold/0 group-hover:bg-gold/15 transition-colors duration-300" />
+              <img
+                src={img.src}
+                alt={img.alt}
+                loading="lazy"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              {/* Gold overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {/* Caption */}
+              <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                <p className="text-white/90 text-xs tracking-widest font-light">{img.alt.toUpperCase()}</p>
+                <div className="w-6 h-px bg-gold mt-1" />
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>

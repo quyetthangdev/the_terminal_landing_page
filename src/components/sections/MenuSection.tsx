@@ -3,9 +3,12 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { menuItems, categories, type CategoryId } from '@/data/menu'
 import { useScrollAnimation } from '@/hooks/useScrollAnimation'
 
-function MenuCard({ item }: { item: (typeof menuItems)[number] }) {
+function MenuCard({ item, index }: { item: (typeof menuItems)[number]; index: number }) {
   return (
-    <div className="group bg-white border border-gray-100 rounded-sm overflow-hidden hover:border-gold hover:shadow-md transition-all duration-300">
+    <div
+      className="group bg-white border border-gray-100 rounded-sm overflow-hidden hover:border-gold hover:shadow-md transition-all duration-300 opacity-0 animate-fade-in-up"
+      style={{ animationDelay: `${index * 80}ms`, animationFillMode: 'forwards' }}
+    >
       <div className="aspect-[4/3] overflow-hidden">
         <img
           src={item.image}
@@ -62,8 +65,8 @@ export default function MenuSection() {
           {categories.map((cat) => (
             <TabsContent key={cat.id} value={cat.id}>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filtered.map((item) => (
-                  <MenuCard key={item.id} item={item} />
+                {filtered.map((item, index) => (
+                  <MenuCard key={`${active}-${item.id}`} item={item} index={index} />
                 ))}
               </div>
             </TabsContent>

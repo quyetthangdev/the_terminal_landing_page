@@ -1,27 +1,14 @@
-import Navbar from '@/components/layout/Navbar'
-import Footer from '@/components/layout/Footer'
-import HeroSection from '@/components/sections/HeroSection'
-import AboutSection from '@/components/sections/AboutSection'
-import MenuSection from '@/components/sections/MenuSection'
-import ReservationSection from '@/components/sections/ReservationSection'
-import GallerySection from '@/components/sections/GallerySection'
-import LocationSection from '@/components/sections/LocationSection'
-import { Toaster } from '@/components/ui/sonner'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import MuseumPage from '@/pages/MuseumPage'
+import GlassPage from '@/pages/GlassPage'
 
 export default function App() {
   return (
-    <div className="min-h-screen overflow-x-hidden">
-      <Navbar />
-      <main>
-        <HeroSection />
-        <AboutSection />
-        <MenuSection />
-        <ReservationSection />
-        <GallerySection />
-        <LocationSection />
-      </main>
-      <Footer />
-      <Toaster />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MuseumPage />} />
+        <Route path="/glass" element={<GlassPage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }

@@ -17,7 +17,7 @@ export default function GlassHeroSection() {
       <div className="relative flex-1 overflow-hidden">
         {/* Background photo — exterior panoramic */}
         <img
-          src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=1920&auto=format&fit=crop&q=80"
+          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&auto=format&fit=crop&q=80"
           alt="The Terminal exterior"
           className="absolute inset-0 w-full h-full object-cover"
         />

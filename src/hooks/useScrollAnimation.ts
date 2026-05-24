@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 
 export function useScrollAnimation(threshold = 0.15) {
   const [isVisible, setIsVisible] = useState(false)
+  const elementRef = useRef<HTMLElement>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
-  const refRef = useRef<HTMLElement>(null)
   const observedRef = useRef(false)
 
   useEffect(() => {
@@ -12,23 +12,22 @@ export function useScrollAnimation(threshold = 0.15) {
       { threshold },
     )
     observerRef.current = observer
-
     return () => observer.disconnect()
   }, [threshold])
 
-  // Create a proxy ref that observes when accessed
-  const ref = new Proxy(refRef, {
-    set(target, prop, value) {
-      Reflect.set(target, prop, value)
+  const stableProxyRef = useRef<typeof elementRef>(null!)
+  if (!stableProxyRef.current) {
+    stableProxyRef.current = new Proxy(elementRef, {
+      set(target, prop, value) {
+        Reflect.set(target, prop, value)
+        if (prop === 'current' && value && observerRef.current && !observedRef.current) {
+          observerRef.current.observe(value)
+          observedRef.current = true
+        }
+        return true
+      },
+    })
+  }
 
-      if (prop === 'current' && value && observerRef.current && !observedRef.current) {
-        observerRef.current.observe(value)
-        observedRef.current = true
-      }
-
-      return true
-    },
-  }) as typeof refRef
-
-  return { ref, isVisible }
+  return { ref: stableProxyRef.current, isVisible }
 }

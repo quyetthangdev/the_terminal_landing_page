@@ -39,7 +39,6 @@ describe('useScrollAnimation', () => {
     const { result } = renderHook(() => useScrollAnimation())
     const div = document.createElement('div')
     act(() => {
-      // @ts-expect-error - assigning to read-only ref for test
       result.current.ref.current = div
     })
     expect(observe).toHaveBeenCalledWith(div)

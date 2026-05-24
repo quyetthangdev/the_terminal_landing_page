@@ -1,4 +1,4 @@
-import { Facebook, Instagram } from 'lucide-react'
+import { Share2, Camera } from 'lucide-react'
 
 const navLinks = [
   { label: 'Giới thiệu', id: 'about' },
@@ -54,14 +54,14 @@ export default function Footer() {
               className="w-9 h-9 rounded-full border border-gold/30 flex items-center justify-center text-gold hover:bg-gold/10 transition-colors"
               aria-label="Facebook"
             >
-              <Facebook size={15} />
+              <Share2 size={15} />
             </a>
             <a
               href="#"
               className="w-9 h-9 rounded-full border border-gold/30 flex items-center justify-center text-gold hover:bg-gold/10 transition-colors"
               aria-label="Instagram"
             >
-              <Instagram size={15} />
+              <Camera size={15} />
             </a>
             <a
               href="#"

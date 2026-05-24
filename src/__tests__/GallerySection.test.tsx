@@ -9,7 +9,7 @@ beforeEach(() => {
     this.disconnect = vi.fn()
     this.unobserve = vi.fn()
   })
-  global.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver
+  window.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver
 })
 
 describe('GallerySection', () => {

@@ -3,23 +3,50 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
 function Smoke() {
+  const COUNT = 9
   const meshRefs = useRef<(THREE.Mesh | null)[]>([])
   const data = useRef(
-    Array.from({ length: 5 }, (_, i) => ({
-      y: i * 0.45,
-      speed: 0.55 + Math.random() * 0.3,
+    Array.from({ length: COUNT }, (_, i) => ({
+      y: (i / COUNT) * 3.0,
+      x: 0,
+      z: 0,
+      speed: 0.35 + Math.random() * 0.35,
+      xDrift: (Math.random() - 0.5) * 0.5,
+      zDrift: (Math.random() - 0.5) * 0.25,
+      turbX: Math.random() * Math.PI * 2,
+      turbZ: Math.random() * Math.PI * 2,
+      size: 0.25 + Math.random() * 0.15,
     })),
   )
 
   useFrame((_, delta) => {
     data.current.forEach((p, i) => {
       p.y += delta * p.speed
-      if (p.y > 2.2) p.y = 0
+      p.turbX += delta * 1.2
+      p.turbZ += delta * 0.9
+      p.x = p.xDrift * p.y * 0.4 + Math.sin(p.turbX) * 0.1
+      p.z = p.zDrift * p.y * 0.3 + Math.cos(p.turbZ) * 0.07
+
+      if (p.y > 3.2) {
+        p.y = 0
+        p.x = 0
+        p.z = 0
+        p.speed = 0.35 + Math.random() * 0.35
+        p.xDrift = (Math.random() - 0.5) * 0.5
+        p.zDrift = (Math.random() - 0.5) * 0.25
+        p.turbX = Math.random() * Math.PI * 2
+        p.turbZ = Math.random() * Math.PI * 2
+      }
+
       const mesh = meshRefs.current[i]
       if (!mesh) return
-      mesh.position.y = p.y
-      mesh.scale.setScalar(0.12 + p.y * 0.22)
-      ;(mesh.material as THREE.MeshBasicMaterial).opacity = Math.max(0, 0.5 - p.y * 0.26)
+      mesh.position.set(p.x, p.y, p.z)
+      const lifecycle = p.y / 3.2
+      const scale = lifecycle < 0.45
+        ? p.size + lifecycle * 1.1
+        : (p.size + 0.45 * 1.1) * (1 - (lifecycle - 0.45) * 0.6)
+      mesh.scale.setScalar(Math.max(0.05, scale))
+      ;(mesh.material as THREE.MeshBasicMaterial).opacity = Math.max(0, 0.55 * (1 - lifecycle * 1.1))
     })
   })
 
@@ -27,8 +54,8 @@ function Smoke() {
     <group position={[1.4, 1.6, 0]}>
       {data.current.map((_, i) => (
         <mesh key={i} ref={(el) => { meshRefs.current[i] = el }}>
-          <sphereGeometry args={[0.3, 6, 6]} />
-          <meshBasicMaterial color="#c0c0c0" transparent depthWrite={false} />
+          <sphereGeometry args={[0.38, 8, 8]} />
+          <meshBasicMaterial color="#cccccc" transparent depthWrite={false} />
         </mesh>
       ))}
     </group>
@@ -45,7 +72,7 @@ function Train() {
     trainRef.current.position.x -= delta * SPEED
     if (trainRef.current.position.x < -15) trainRef.current.position.x = 15
     if (wheelGroupRef.current) {
-      wheelGroupRef.current.children.forEach((w) => { w.rotation.z -= delta * SPEED * 2.2 })
+      wheelGroupRef.current.children.forEach((w) => { w.rotation.y -= delta * SPEED * 2.2 })
     }
   })
 

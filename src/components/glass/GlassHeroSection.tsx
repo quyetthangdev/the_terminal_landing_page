@@ -15,10 +15,10 @@ export default function GlassHeroSection() {
 
       {/* ── TOP ZONE: photo + title ── */}
       <div className="relative flex-1 overflow-hidden">
-        {/* Background photo */}
+        {/* Background photo — exterior panoramic */}
         <img
-          src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&auto=format&fit=crop&q=80"
-          alt="The Terminal interior"
+          src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=1920&auto=format&fit=crop&q=80"
+          alt="The Terminal exterior"
           className="absolute inset-0 w-full h-full object-cover"
         />
         {/* Dark overlay */}
@@ -29,11 +29,13 @@ export default function GlassHeroSection() {
         {/* Oversized title — left-anchored, bleeds off right */}
         <div className="absolute left-0 right-0 overflow-hidden" style={{ top: '50%', transform: 'translateY(-60%)' }}>
           <h1
-            className="font-display font-black text-white whitespace-nowrap pl-6 md:pl-12 lg:pl-20 leading-none"
+            className="font-sans font-black text-white whitespace-nowrap pl-6 md:pl-12 lg:pl-20 leading-none"
             style={{
               fontSize: 'clamp(5.5rem, 17vw, 14rem)',
-              letterSpacing: '-0.02em',
-              textShadow: '0 4px 40px rgba(0,0,0,0.4)',
+              letterSpacing: '-0.03em',
+              mixBlendMode: 'overlay',
+              animation: 'blendFadeIn 2.2s ease-out both',
+              animationDelay: '0.3s',
             }}
           >
             THE TERMINAL
@@ -51,7 +53,7 @@ export default function GlassHeroSection() {
       </div>
 
       {/* ── BOTTOM ZONE: thumbnail + stats ── */}
-      <div className="bg-surface/95 backdrop-blur-sm border-t border-gold/20 flex" style={{ height: '38%', minHeight: '180px', maxHeight: '260px' }}>
+      <div className="bg-surface/95 backdrop-blur-sm border-t border-gold/20 flex" style={{ height: '30%', minHeight: '160px', maxHeight: '220px' }}>
 
         {/* Left: thumbnail image + arrows */}
         <div className="relative w-44 md:w-52 shrink-0 overflow-hidden border-r border-gold/15">

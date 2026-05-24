@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
+import OrnamentalDivider from '@/components/ui/OrnamentalDivider'
 
 const links = [
   { label: 'GIỚI THIỆU', id: 'about' },
@@ -85,15 +86,16 @@ export default function Navbar() {
                   key={l.id}
                   href={`#${l.id}`}
                   onClick={(e) => { e.preventDefault(); scrollTo(l.id); setOpen(false) }}
-                  className="text-sm tracking-widest text-white/70 hover:text-gold transition-colors text-left"
+                  className="text-xs tracking-[0.3em] uppercase text-white/70 hover:text-gold transition-colors text-left"
                 >
                   {l.label}
                 </a>
               ))}
+              <OrnamentalDivider />
               <a
                 href="#reservation"
                 onClick={(e) => { e.preventDefault(); scrollTo('reservation'); setOpen(false) }}
-                className="text-sm tracking-widest text-white/70 hover:text-gold transition-colors text-left"
+                className="text-xs tracking-[0.3em] uppercase text-white/70 hover:text-gold transition-colors text-left"
               >
                 ĐẶT BÀN
               </a>

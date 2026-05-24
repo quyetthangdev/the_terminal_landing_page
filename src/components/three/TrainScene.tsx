@@ -2,6 +2,8 @@ import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
+const WHEEL_ROLL_AXIS = new THREE.Vector3(0, 0, 1)
+
 function Smoke() {
   const COUNT = 9
   const meshRefs = useRef<(THREE.Mesh | null)[]>([])
@@ -62,6 +64,60 @@ function Smoke() {
   )
 }
 
+function SteamTrail() {
+  const COUNT = 12
+  const meshRefs = useRef<(THREE.Mesh | null)[]>([])
+  const data = useRef(
+    Array.from({ length: COUNT }, (_, i) => ({
+      // Distributed along train body
+      startX: -1.5 + (i / COUNT) * 3.5,
+      x: -1.5 + (i / COUNT) * 3.5,
+      y: -0.8 + Math.random() * 0.3,
+      z: (Math.random() - 0.5) * 1.2,
+      age: Math.random(),
+      lifetime: 0.8 + Math.random() * 0.6,
+      speed: 0.25 + Math.random() * 0.2,
+      driftX: (Math.random() - 0.5) * 0.15,
+      driftZ: (Math.random() - 0.5) * 0.1,
+    })),
+  )
+
+  useFrame((_, delta) => {
+    data.current.forEach((p, i) => {
+      p.age += delta * p.speed
+      if (p.age >= p.lifetime) {
+        p.age = 0
+        p.x = p.startX
+        p.y = -0.8 + Math.random() * 0.3
+        p.z = (Math.random() - 0.5) * 1.2
+        p.driftX = (Math.random() - 0.5) * 0.15
+        p.driftZ = (Math.random() - 0.5) * 0.1
+      }
+      const t = p.age / p.lifetime
+      p.x += p.driftX * delta
+      p.y += delta * 0.12
+      p.z += p.driftZ * delta
+
+      const mesh = meshRefs.current[i]
+      if (!mesh) return
+      mesh.position.set(p.x, p.y, p.z)
+      mesh.scale.setScalar(0.06 + t * 0.18)
+      ;(mesh.material as THREE.MeshBasicMaterial).opacity = Math.max(0, 0.18 * (1 - t * 1.2))
+    })
+  })
+
+  return (
+    <group>
+      {data.current.map((_, i) => (
+        <mesh key={i} ref={(el) => { meshRefs.current[i] = el }}>
+          <sphereGeometry args={[0.4, 6, 6]} />
+          <meshBasicMaterial color="#e0e0e0" transparent depthWrite={false} />
+        </mesh>
+      ))}
+    </group>
+  )
+}
+
 function Train() {
   const trainRef = useRef<THREE.Group>(null)
   const wheelGroupRef = useRef<THREE.Group>(null)
@@ -72,7 +128,9 @@ function Train() {
     trainRef.current.position.x -= delta * SPEED
     if (trainRef.current.position.x < -15) trainRef.current.position.x = 15
     if (wheelGroupRef.current) {
-      wheelGroupRef.current.children.forEach((w) => { w.rotation.y -= delta * SPEED * 2.2 })
+      wheelGroupRef.current.children.forEach((w) => {
+        w.rotateOnWorldAxis(WHEEL_ROLL_AXIS, -delta * SPEED * 2.2)
+      })
     }
   })
 
@@ -139,6 +197,7 @@ function Train() {
       </group>
       {/* Smoke (child of train, moves with it) */}
       <Smoke />
+      <SteamTrail />
     </group>
   )
 }

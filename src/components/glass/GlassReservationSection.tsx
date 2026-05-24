@@ -29,49 +29,49 @@ export default function GlassReservationSection() {
         <div className="text-center mb-12">
           <p className="text-gold text-[10px] tracking-[0.5em] mb-3">LIÊN HỆ</p>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-brand-dark tracking-wide mb-4">ĐẶT BÀN</h2>
-          <div className="w-12 h-px bg-gold/40 mx-auto" />
+          <div className="w-12 h-px bg-gold/60 mx-auto" />
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white/70 backdrop-blur-md border border-gold/15 rounded-sm p-8 space-y-5">
+        <form onSubmit={handleSubmit} className="bg-white/85 backdrop-blur-md border border-gold/15 shadow-md shadow-gold/[0.05] rounded-sm p-8 space-y-5">
           {[
             { name: 'name', label: 'Họ và Tên', type: 'text', placeholder: 'Nguyễn Văn A' },
             { name: 'phone', label: 'Số Điện Thoại', type: 'tel', placeholder: '0901 234 567' },
             { name: 'date', label: 'Ngày & Giờ', type: 'datetime-local', placeholder: '' },
           ].map((field) => (
             <div key={field.name}>
-              <label className="block text-brand-dark/40 text-[10px] tracking-[0.3em] mb-2">{field.label.toUpperCase()}</label>
+              <label className="block text-brand-dark/50 text-[10px] tracking-[0.3em] mb-2">{field.label.toUpperCase()}</label>
               <input
                 name={field.name}
                 type={field.type}
                 value={form[field.name as keyof typeof form]}
                 onChange={handleChange}
                 placeholder={field.placeholder}
-                className="w-full bg-white/60 border border-gold/10 text-brand-dark text-sm px-4 py-3 rounded-sm placeholder-gray-300 focus:outline-none focus:border-gold/50 transition-all"
+                className="w-full bg-white/80 border border-gold/20 text-brand-dark text-sm px-4 py-3 rounded-sm placeholder:text-brand-dark/25 focus:outline-none focus:border-gold/50 transition-all"
               />
             </div>
           ))}
 
           <div>
-            <label className="block text-brand-dark/40 text-[10px] tracking-[0.3em] mb-2">SỐ KHÁCH</label>
+            <label className="block text-brand-dark/50 text-[10px] tracking-[0.3em] mb-2">SỐ KHÁCH</label>
             <select
               name="guests"
               value={form.guests}
               onChange={handleChange}
-              className="w-full bg-white/60 border border-gold/10 text-brand-dark text-sm px-4 py-3 rounded-sm focus:outline-none focus:border-gold/50 transition-all appearance-none"
+              className="w-full bg-white/80 border border-gold/20 text-brand-dark text-sm px-4 py-3 rounded-sm focus:outline-none focus:border-gold/50 transition-all appearance-none"
             >
               {['1','2','3','4','5','6+'].map((n) => <option key={n} value={n} className="bg-surface">{n} khách</option>)}
             </select>
           </div>
 
           <div>
-            <label className="block text-brand-dark/40 text-[10px] tracking-[0.3em] mb-2">GHI CHÚ</label>
+            <label className="block text-brand-dark/50 text-[10px] tracking-[0.3em] mb-2">GHI CHÚ</label>
             <textarea
               name="note"
               value={form.note}
               onChange={handleChange}
               rows={3}
               placeholder="Yêu cầu đặc biệt..."
-              className="w-full bg-white/60 border border-gold/10 text-brand-dark text-sm px-4 py-3 rounded-sm placeholder-gray-300 focus:outline-none focus:border-gold/50 transition-all resize-none"
+              className="w-full bg-white/80 border border-gold/20 text-brand-dark text-sm px-4 py-3 rounded-sm placeholder:text-brand-dark/25 focus:outline-none focus:border-gold/50 transition-all resize-none"
             />
           </div>
 

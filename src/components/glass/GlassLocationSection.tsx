@@ -25,17 +25,17 @@ export default function GlassLocationSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {info.map(({ icon: Icon, label, value }) => (
-            <div key={label} className="bg-white/70 backdrop-blur-md border border-gold/15 rounded-sm p-6 hover:border-gold/30 transition-all duration-200">
+            <div key={label} className="bg-white/85 backdrop-blur-md border border-gold/15 rounded-sm p-6 hover:border-gold/30 transition-all duration-200">
               <Icon size={18} className="text-gold mb-4" />
-              <p className="text-brand-dark/30 text-[10px] tracking-[0.3em] mb-2">{label.toUpperCase()}</p>
-              <p className="text-brand-dark/70 text-sm leading-relaxed whitespace-pre-line">{value}</p>
+              <p className="text-brand-dark/50 text-[10px] tracking-[0.3em] mb-2">{label.toUpperCase()}</p>
+              <p className="text-brand-dark/75 text-sm leading-relaxed whitespace-pre-line">{value}</p>
             </div>
           ))}
         </div>
 
         {/* Map placeholder */}
-        <div className="mt-6 h-48 bg-white/50 border border-gold/10 rounded-sm flex items-center justify-center">
-          <p className="text-brand-dark/20 text-xs tracking-widest">BẢN ĐỒ</p>
+        <div className="mt-6 h-48 bg-white/70 border border-gold/10 rounded-sm flex items-center justify-center">
+          <p className="text-brand-dark/35 text-xs tracking-widest">BẢN ĐỒ</p>
         </div>
       </div>
     </section>

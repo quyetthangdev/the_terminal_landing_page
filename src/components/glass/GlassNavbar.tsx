@@ -27,8 +27,8 @@ export default function GlassNavbar() {
     <header className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 w-[calc(100%-3rem)] max-w-4xl`}>
       <nav className={`flex items-center justify-between px-6 py-3 rounded-full border transition-all duration-500 ${
         scrolled
-          ? 'bg-warm-white/80 backdrop-blur-xl border-gold/20 shadow-lg shadow-gold/5'
-          : 'bg-white/[0.12] backdrop-blur-md border-gold/15'
+          ? 'bg-warm-white/92 backdrop-blur-xl border-gold/20 shadow-md shadow-gold/[0.06]'
+          : 'bg-white/50 backdrop-blur-md border-gold/15'
       }`}>
         {/* Logo */}
         <a href="#" className="font-display font-bold text-brand-dark text-sm tracking-[0.2em]">
@@ -41,7 +41,7 @@ export default function GlassNavbar() {
             <button
               key={link.label}
               onClick={() => scrollTo(link.href)}
-              className="text-brand-dark/60 hover:text-brand-dark text-xs tracking-[0.2em] transition-colors duration-200"
+              className="text-brand-dark/70 hover:text-brand-dark text-xs tracking-[0.2em] transition-colors duration-200"
             >
               {link.label.toUpperCase()}
             </button>

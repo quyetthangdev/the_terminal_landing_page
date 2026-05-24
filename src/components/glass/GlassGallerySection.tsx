@@ -35,13 +35,13 @@ export default function GlassGallerySection() {
         <div className="flex gap-2">
           <button
             onClick={() => scroll('left')}
-            className="w-10 h-10 rounded-full bg-white/70 backdrop-blur-md border border-gold/20 flex items-center justify-center text-brand-dark/60 hover:bg-white/90 hover:text-brand-dark transition-all"
+            className="w-10 h-10 rounded-full bg-white/85 backdrop-blur-md border border-gold/20 flex items-center justify-center text-brand-dark/70 hover:bg-white/90 hover:text-brand-dark transition-all"
           >
             <ChevronLeft size={18} />
           </button>
           <button
             onClick={() => scroll('right')}
-            className="w-10 h-10 rounded-full bg-white/70 backdrop-blur-md border border-gold/20 flex items-center justify-center text-brand-dark/60 hover:bg-white/90 hover:text-brand-dark transition-all"
+            className="w-10 h-10 rounded-full bg-white/85 backdrop-blur-md border border-gold/20 flex items-center justify-center text-brand-dark/70 hover:bg-white/90 hover:text-brand-dark transition-all"
           >
             <ChevronRight size={18} />
           </button>

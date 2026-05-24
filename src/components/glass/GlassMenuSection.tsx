@@ -5,7 +5,7 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation'
 function GlassMenuCard({ item, index }: { item: (typeof menuItems)[number]; index: number }) {
   return (
     <div
-      className="group bg-white/70 backdrop-blur-md border border-gold/15 rounded-sm overflow-hidden hover:border-gold/40 hover:shadow-md transition-all duration-300 opacity-0 animate-fade-in-up"
+      className="group bg-white/85 backdrop-blur-md border border-gold/20 rounded-sm overflow-hidden hover:border-gold/40 hover:shadow-md transition-all duration-300 opacity-0 animate-fade-in-up"
       style={{ animationDelay: `${index * 80}ms`, animationFillMode: 'forwards' }}
     >
       <div className="aspect-[4/3] overflow-hidden relative">
@@ -19,7 +19,7 @@ function GlassMenuCard({ item, index }: { item: (typeof menuItems)[number]; inde
       </div>
       <div className="p-4">
         <h3 className="font-display font-bold text-brand-dark text-base mb-1">{item.name}</h3>
-        <p className="text-gray-500 text-xs leading-relaxed mb-3">{item.description}</p>
+        <p className="text-gray-600 text-xs leading-relaxed mb-3">{item.description}</p>
         <p className="text-gold font-semibold text-sm">{item.price}</p>
       </div>
     </div>
@@ -42,7 +42,7 @@ export default function GlassMenuSection() {
         <div className="text-center mb-14">
           <p className="text-gold text-[10px] tracking-[0.5em] mb-3">ĐẶC SẢN</p>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-brand-dark tracking-wide mb-6">THỰC ĐƠN</h2>
-          <div className="w-12 h-px bg-gold/40 mx-auto" />
+          <div className="w-12 h-px bg-gold/60 mx-auto" />
         </div>
 
         {/* Category pills */}
@@ -54,7 +54,7 @@ export default function GlassMenuSection() {
               className={`px-5 py-2 text-[10px] tracking-[0.25em] rounded-full border transition-all duration-200 ${
                 active === cat.id
                   ? 'bg-gold/20 border-gold/50 text-gold backdrop-blur-sm'
-                  : 'bg-white/60 border-gold/15 text-brand-dark/40 hover:text-brand-dark/70 hover:border-gold/30'
+                  : 'bg-white/60 border-gold/15 text-brand-dark/60 hover:text-brand-dark/70 hover:border-gold/30'
               }`}
             >
               {cat.label.toUpperCase()}

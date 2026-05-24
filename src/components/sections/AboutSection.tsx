@@ -1,8 +1,8 @@
 import { useScrollAnimation } from '@/hooks/useScrollAnimation'
 
 const stats = [
-  { value: 'Est. 2024', label: 'Thành lập' },
-  { value: '3 Tầng', label: 'Không gian' },
+  { value: 'Est. 2026', label: 'Thành lập' },
+  { value: '1 Tầng', label: 'Không gian' },
   { value: '120+', label: 'Chỗ ngồi' },
   { value: '50+', label: 'Món ăn' },
 ]
@@ -39,7 +39,7 @@ export default function AboutSection() {
               Điểm dừng chân<br />giữa lòng thành phố
             </h2>
             <p className="text-gray-600 leading-relaxed mb-4">
-              Lấy cảm hứng từ những chuyến tàu hơi nước vàng son của thế kỷ XIX, The Terminal ra đời năm 2024 với sứ mệnh trở thành điểm hẹn văn hóa — nơi cà phê rang mộc Việt gặp gỡ ẩm thực châu Âu tinh tế trong một không gian industrial đặc trưng.
+              Lấy cảm hứng từ những chuyến tàu hơi nước vàng son của thế kỷ XIX, The Terminal ra đời năm 2026 với sứ mệnh trở thành điểm hẹn văn hóa — nơi cà phê rang mộc Việt gặp gỡ ẩm thực châu Âu tinh tế trong một không gian industrial đặc trưng.
             </p>
             <p className="text-gray-600 leading-relaxed mb-10">
               Mỗi góc quán là một câu chuyện: những bánh răng cưa sắt rỉ, đèn Edison ấm áp, gỗ cũ và đồng đập nổi — tất cả cộng hưởng để tạo nên một hành trình ẩm thực khó quên.

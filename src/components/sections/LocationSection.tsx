@@ -13,7 +13,7 @@ export default function LocationSection() {
     <section
       id="location"
       ref={ref as React.RefObject<HTMLElement>}
-      className={`py-24 bg-surface transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+      className={`py-24 bg-pearl transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
     >
       <div className="max-w-6xl mx-auto px-6">
         {/* Heading */}
@@ -50,8 +50,8 @@ export default function LocationSection() {
                     <MapPin size={14} className="text-gold" />
                   </div>
                   <div>
-                    <p className="text-brand-dark font-medium">123 Đường ABC, Phường XYZ</p>
-                    <p className="text-gray-500 text-sm">Quận 1, TP. Hồ Chí Minh</p>
+                    <p className="text-brand-dark font-medium">Số 3 Nguyễn Công Trứ</p>
+                    <p className="text-gray-500 text-sm">Thủ Đức, TP. Hồ Chí Minh</p>
                   </div>
                 </div>
 

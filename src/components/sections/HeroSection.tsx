@@ -32,7 +32,7 @@ export default function HeroSection() {
         <div className="w-[72px] h-[72px] rounded-full border border-gold/50 flex items-center justify-center mb-8">
           <div className="w-14 h-14 rounded-full border border-gold/20 flex items-center justify-center">
             <span className="text-gold text-[10px] tracking-[0.15em] leading-snug text-center font-semibold">
-              EST<br />2024
+              EST<br />2026
             </span>
           </div>
         </div>

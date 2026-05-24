@@ -78,7 +78,7 @@ export default function Footer() {
 
       <div className="border-t border-gold/10 py-4 text-center">
         <p className="text-white/25 text-xs tracking-widest">
-          © 2024 THE TERMINAL. ALL RIGHTS RESERVED.
+          © 2026 THE TERMINAL. ALL RIGHTS RESERVED.
         </p>
       </div>
     </footer>

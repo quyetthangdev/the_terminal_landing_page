@@ -11,11 +11,13 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
-  			gold: '#CFA93F',
-  			'gold-dark': '#7B3F00',
+  			gold: '#C9A84C',
+  			'gold-dark': '#8B6914',
   			'brand-dark': '#1a1a1a',
   			'brand-darker': '#0d0d0d',
-  			surface: '#fdfaf5',
+  			surface: '#faf7ef',
+  			pearl: '#f0ebe0',
+  			'warm-white': '#fefcf8',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

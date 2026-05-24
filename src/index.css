@@ -82,8 +82,6 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-background text-foreground;
-    font-family: Inter, system-ui, sans-serif;
-    -webkit-font-smoothing: antialiased;
+    @apply bg-background text-foreground font-sans antialiased;
   }
 }

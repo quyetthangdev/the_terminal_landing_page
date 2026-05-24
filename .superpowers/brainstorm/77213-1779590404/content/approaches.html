@@ -1,0 +1,44 @@
+<h2>3 Hướng tiếp cận kiến trúc</h2>
+<p class="subtitle">Chọn cách tổ chức project phù hợp nhất</p>
+
+<div class="options">
+
+  <div class="option" data-choice="vite-spa" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Vite + React SPA — Khuyến nghị ✓</h3>
+      <p>Single page app thuần, dùng Vite để build nhanh. React Router cho scroll-to-section navigation. Three.js chạy trong Canvas riêng biệt ở hero. Tailwind + ShadcnUI cho toàn bộ UI. Deploy lên Vercel/Netlify bằng 1 lệnh.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Ưu điểm</h4><ul><li>Setup đơn giản, nhanh</li><li>Three.js tích hợp dễ</li><li>Build size nhỏ</li><li>Deploy dễ dàng</li></ul></div>
+        <div class="cons"><h4>Nhược điểm</h4><ul><li>Không có SSR (SEO hơi kém)</li><li>First load chậm hơn Next.js một chút</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="nextjs" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Next.js App Router</h3>
+      <p>Framework full-featured với SSR/SSG. SEO tốt hơn cho landing page nhà hàng. Three.js load với dynamic import (tránh SSR issue). Có thể thêm API routes cho form sau này.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Ưu điểm</h4><ul><li>SEO tốt (SSR/SSG)</li><li>Có thể thêm backend sau</li><li>Image optimization tích hợp</li></ul></div>
+        <div class="cons"><h4>Nhược điểm</h4><ul><li>Setup phức tạp hơn</li><li>Three.js cần dynamic import riêng</li><li>Overkill cho landing page tĩnh</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="vite-multipage" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Vite + React Multi-page</h3>
+      <p>Mỗi section (Menu, Reservation) là một route riêng. Cho phép lazy-load Three.js chỉ khi cần. Code splitting tự nhiên.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Ưu điểm</h4><ul><li>Code splitting tự nhiên</li><li>Mỗi page load nhanh hơn</li></ul></div>
+        <div class="cons"><h4>Nhược điểm</h4><ul><li>Landing page bị chia nhỏ, mất trải nghiệm scroll liền mạch</li><li>Phức tạp hơn SPA không cần thiết</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:24px; font-style:italic;">Click chọn hoặc nhắn trong terminal</p>

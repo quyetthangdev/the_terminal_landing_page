@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Terminal — Landing Page Design</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Georgia', serif; background: #f8f6f1; color: #1a1a1a; }
+
+  .page-title {
+    text-align: center;
+    padding: 32px 24px 16px;
+    background: #1a1a1a;
+    color: #CFA93F;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+  .page-subtitle {
+    text-align: center;
+    padding: 8px 24px 24px;
+    background: #1a1a1a;
+    color: #666;
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+
+  .sections-wrapper {
+    display: flex;
+    gap: 0;
+    padding: 32px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .section-card {
+    border: 1px solid #e0d9cc;
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+    flex: 1;
+    min-width: 300px;
+  }
+
+  .section-label {
+    background: #1a1a1a;
+    color: #CFA93F;
+    font-size: 10px;
+    letter-spacing: 3px;
+    padding: 6px 12px;
+    text-transform: uppercase;
+  }
+
+  /* ---- HERO MOCKUP ---- */
+  .hero {
+    background: #0d0d0d;
+    height: 240px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .hero-canvas {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 80%, rgba(207,169,63,0.08) 0%, transparent 60%);
+  }
+  /* train silhouette */
+  .train {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 50px;
+  }
+  .train-body { width: 140px; height: 35px; background: #2a2a2a; border-radius: 4px 12px 0 0; position: absolute; bottom: 12px; left: 20px; border: 1px solid #CFA93F; }
+  .train-chimney { width: 16px; height: 22px; background: #2a2a2a; position: absolute; bottom: 47px; left: 30px; border: 1px solid #CFA93F; border-radius: 3px 3px 0 0; }
+  .train-wheel { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #CFA93F; position: absolute; bottom: 0; }
+  .wheel-1 { left: 28px; }
+  .wheel-2 { left: 60px; }
+  .wheel-3 { left: 92px; }
+  .wheel-4 { left: 128px; }
+  /* smoke */
+  .smoke { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.06); }
+  .s1 { width: 20px; height: 20px; bottom: 70px; left: 35px; }
+  .s2 { width: 28px; height: 28px; bottom: 85px; left: 30px; background: rgba(255,255,255,0.04); }
+  .s3 { width: 36px; height: 36px; bottom: 105px; left: 24px; background: rgba(255,255,255,0.03); }
+  /* particles */
+  .particle { position: absolute; border-radius: 50%; background: #CFA93F; }
+  .p1 { width:2px; height:2px; top:18%; left:12%; opacity:.5; }
+  .p2 { width:3px; height:3px; top:30%; left:72%; opacity:.7; }
+  .p3 { width:2px; height:2px; top:55%; left:88%; opacity:.4; }
+  .p4 { width:2px; height:2px; top:72%; left:20%; opacity:.6; }
+  .p5 { width:3px; height:3px; top:15%; left:55%; opacity:.5; }
+  .p6 { width:2px; height:2px; top:40%; left:40%; opacity:.3; }
+  /* track */
+  .track { position: absolute; bottom: 12px; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(207,169,63,0.3), rgba(207,169,63,0.5), rgba(207,169,63,0.3), transparent); }
+  .hero-text { z-index: 1; text-align: center; position: relative; margin-bottom: 70px; }
+  .hero-badge { width: 56px; height: 56px; border-radius: 50%; border: 2px solid #CFA93F; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; background: rgba(207,169,63,0.1); }
+  .hero-badge-inner { font-size: 8px; color: #CFA93F; letter-spacing: 1px; text-align: center; }
+  .hero-title { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 6px; text-shadow: 0 0 30px rgba(207,169,63,0.3); }
+  .hero-sub { font-size: 9px; color: #CFA93F; letter-spacing: 4px; margin-top: 4px; }
+  .hero-cta { margin-top: 10px; display: flex; gap: 8px; justify-content: center; }
+  .btn-gold { background: #CFA93F; color: #1a1a1a; font-size: 8px; padding: 6px 14px; border-radius: 2px; letter-spacing: 2px; font-weight: 700; }
+  .btn-outline { border: 1px solid rgba(207,169,63,0.5); color: #CFA93F; font-size: 8px; padding: 6px 14px; border-radius: 2px; letter-spacing: 2px; }
+  .hero-nav { position: absolute; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid rgba(207,169,63,0.15); }
+  .nav-logo { font-size: 10px; color: #CFA93F; letter-spacing: 3px; font-weight: 700; }
+  .nav-links { display: flex; gap: 12px; }
+  .nav-link { font-size: 8px; color: #888; letter-spacing: 2px; }
+
+  /* ---- ABOUT MOCKUP ---- */
+  .about { background: #fff; padding: 20px; min-height: 140px; }
+  .about-inner { display: flex; gap: 16px; align-items: center; }
+  .about-img { width: 80px; height: 80px; background: linear-gradient(135deg, #7B3F00, #CFA93F); border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .about-img span { font-size: 9px; color: rgba(255,255,255,0.7); letter-spacing: 1px; }
+  .about-text h4 { font-size: 11px; letter-spacing: 3px; color: #CFA93F; text-transform: uppercase; margin-bottom: 6px; }
+  .about-text p { font-size: 9px; color: #666; line-height: 1.7; }
+  .about-divider { width: 40px; height: 1px; background: linear-gradient(90deg, #CFA93F, transparent); margin: 8px 0; }
+
+  /* ---- MENU MOCKUP ---- */
+  .menu { background: #fdfaf5; padding: 20px; }
+  .menu-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+  .tab { font-size: 8px; letter-spacing: 2px; padding: 4px 10px; border-radius: 2px; }
+  .tab-active { background: #CFA93F; color: #1a1a1a; font-weight: 700; }
+  .tab-inactive { border: 1px solid #ddd; color: #999; }
+  .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .menu-item { background: white; border: 1px solid #eee; border-radius: 4px; padding: 10px; display: flex; gap: 8px; align-items: center; }
+  .menu-img { width: 36px; height: 36px; border-radius: 3px; background: linear-gradient(135deg, #e8dcc8, #d4c4a0); flex-shrink: 0; }
+  .menu-info { flex: 1; }
+  .menu-name { font-size: 9px; font-weight: 700; color: #1a1a1a; letter-spacing: 0.5px; }
+  .menu-desc { font-size: 8px; color: #999; margin-top: 2px; line-height: 1.4; }
+  .menu-price { font-size: 10px; color: #CFA93F; font-weight: 700; margin-top: 4px; }
+
+  /* ---- RESERVATION MOCKUP ---- */
+  .reservation { background: #1a1a1a; padding: 20px; }
+  .res-title { font-size: 11px; letter-spacing: 3px; color: #CFA93F; text-align: center; margin-bottom: 4px; text-transform: uppercase; }
+  .res-sub { font-size: 8px; color: #666; text-align: center; margin-bottom: 14px; letter-spacing: 1px; }
+  .res-form { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .res-input { background: #262626; border: 1px solid #333; border-radius: 2px; padding: 8px 10px; font-size: 8px; color: #999; letter-spacing: 1px; }
+  .res-input-full { grid-column: 1 / -1; }
+  .res-btn { grid-column: 1 / -1; background: #CFA93F; color: #1a1a1a; font-size: 9px; padding: 10px; border-radius: 2px; letter-spacing: 3px; font-weight: 700; text-align: center; margin-top: 4px; }
+
+  /* ---- GALLERY MOCKUP ---- */
+  .gallery { background: #fff; padding: 16px; }
+  .gallery-title { font-size: 10px; letter-spacing: 3px; color: #1a1a1a; text-align: center; margin-bottom: 12px; text-transform: uppercase; }
+  .gallery-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 60px 60px; gap: 4px; }
+  .g-item { border-radius: 3px; background: linear-gradient(135deg, #c8b89a, #a89070); }
+  .g-item:first-child { grid-row: 1 / 3; }
+  .g-2 { background: linear-gradient(135deg, #8a7060, #6a5040); }
+  .g-3 { background: linear-gradient(135deg, #b09878, #907858); }
+  .g-4 { background: linear-gradient(135deg, #d0c0a0, #b0a080); }
+  .g-5 { background: linear-gradient(135deg, #786050, #584030); }
+
+  /* ---- LOCATION MOCKUP ---- */
+  .location { background: #f5f2ec; padding: 20px; }
+  .location-inner { display: flex; gap: 16px; }
+  .map-placeholder { flex: 1; background: linear-gradient(135deg, #ddd6c8, #ccc4b0); border-radius: 4px; min-height: 100px; display: flex; align-items: center; justify-content: center; }
+  .map-placeholder span { font-size: 9px; color: #888; letter-spacing: 2px; }
+  .location-info { flex: 1; }
+  .location-info h4 { font-size: 10px; letter-spacing: 2px; color: #CFA93F; margin-bottom: 8px; text-transform: uppercase; }
+  .info-row { display: flex; gap: 6px; margin-bottom: 6px; align-items: flex-start; }
+  .info-icon { width: 14px; height: 14px; border-radius: 50%; background: rgba(207,169,63,0.2); flex-shrink: 0; margin-top: 1px; }
+  .info-text { font-size: 8px; color: #666; line-height: 1.5; }
+
+  /* ---- FOOTER MOCKUP ---- */
+  .footer-mock { background: #0d0d0d; padding: 16px; display: flex; align-items: center; justify-content: space-between; }
+  .footer-logo { font-size: 10px; color: #CFA93F; letter-spacing: 3px; font-weight: 700; }
+  .footer-social { display: flex; gap: 8px; }
+  .social-dot { width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(207,169,63,0.3); display: flex; align-items: center; justify-content: center; }
+  .social-dot span { font-size: 8px; color: #CFA93F; }
+  .footer-copy { font-size: 7px; color: #444; letter-spacing: 1px; }
+
+  .full-width { min-width: 100% !important; }
+  .annotation {
+    font-size: 10px; color: #888; font-style: italic;
+    padding: 6px 12px 10px;
+    background: white;
+    border-top: 1px dashed #e0d9cc;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-title">THE TERMINAL — LANDING PAGE WIREFRAME</div>
+<div class="page-subtitle">Vite + React SPA · TailwindCSS · ShadcnUI · Three.js · Tông Trắng & Vàng Kim</div>
+
+<div class="sections-wrapper">
+
+  <!-- HERO -->
+  <div class="section-card full-width">
+    <div class="section-label">01 — HERO (Three.js Canvas)</div>
+    <div class="hero">
+      <div class="hero-canvas"></div>
+      <div class="particle p1"></div><div class="particle p2"></div>
+      <div class="particle p3"></div><div class="particle p4"></div>
+      <div class="particle p5"></div><div class="particle p6"></div>
+      <div class="hero-nav">
+        <div class="nav-logo">THE TERMINAL</div>
+        <div class="nav-links">
+          <span class="nav-link">MENU</span>
+          <span class="nav-link">ĐẶT BÀN</span>
+          <span class="nav-link">LIÊN HỆ</span>
+          <span class="nav-link" style="color:#CFA93F;">☰</span>
+        </div>
+      </div>
+      <div class="hero-text">
+        <div class="hero-badge"><div class="hero-badge-inner">EST<br>2024</div></div>
+        <div class="hero-title">THE TERMINAL</div>
+        <div class="hero-sub">CAFE & EUROPEAN KITCHEN</div>
+        <div class="hero-cta">
+          <div class="btn-gold">XEM MENU</div>
+          <div class="btn-outline">ĐẶT BÀN</div>
+        </div>
+      </div>
+      <div class="train">
+        <div class="smoke s1"></div><div class="smoke s2"></div><div class="smoke s3"></div>
+        <div class="train-chimney"></div>
+        <div class="train-body"></div>
+        <div class="train-wheel wheel-1"></div>
+        <div class="train-wheel wheel-2"></div>
+        <div class="train-wheel wheel-3"></div>
+        <div class="train-wheel wheel-4"></div>
+      </div>
+      <div class="track"></div>
+    </div>
+    <div class="annotation">Three.js: Tàu hơi nước 3D chạy qua từ phải sang trái, khói bay lên, đường ray ánh vàng. Particles vàng nhẹ trôi trong nền. Navbar sticky transparent → solid khi scroll.</div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="section-card">
+    <div class="section-label">02 — GIỚI THIỆU</div>
+    <div class="about">
+      <div class="about-inner">
+        <div class="about-img"><span>ẢNH<br>QUÁN</span></div>
+        <div class="about-text">
+          <h4>Câu chuyện của chúng tôi</h4>
+          <div class="about-divider"></div>
+          <p>Được lấy cảm hứng từ những chuyến tàu hơi nước vàng son, The Terminal là điểm dừng chân lý tưởng giữa lòng thành phố — nơi cà phê rang mộc gặp gỡ ẩm thực Âu tinh tế.</p>
+        </div>
+      </div>
+    </div>
+    <div class="annotation">Nền trắng. Animation: text fade-in khi scroll vào view.</div>
+  </div>
+
+  <!-- MENU -->
+  <div class="section-card">
+    <div class="section-label">03 — MENU</div>
+    <div class="menu">
+      <div class="menu-tabs">
+        <div class="tab tab-active">THỨC UỐNG</div>
+        <div class="tab tab-inactive">ĂN SÁNG</div>
+        <div class="tab tab-inactive">MÓN CHÍNH</div>
+        <div class="tab tab-inactive">TRÁNG MIỆNG</div>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-item">
+          <div class="menu-img"></div>
+          <div class="menu-info">
+            <div class="menu-name">Terminal Espresso</div>
+            <div class="menu-desc">Espresso đặc biệt, crema vàng kim</div>
+            <div class="menu-price">45.000đ</div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-img"></div>
+          <div class="menu-info">
+            <div class="menu-name">Signature Latte</div>
+            <div class="menu-desc">Sữa tươi, vanilla, caramel nhẹ</div>
+            <div class="menu-price">65.000đ</div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-img"></div>
+          <div class="menu-info">
+            <div class="menu-name">Cold Brew Tonic</div>
+            <div class="menu-desc">Cold brew ngâm 24h, tonic nước hoa</div>
+            <div class="menu-price">70.000đ</div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-img"></div>
+          <div class="menu-info">
+            <div class="menu-name">Matcha Zen</div>
+            <div class="menu-desc">Matcha Nhật, sữa oat, foam latte</div>
+            <div class="menu-price">75.000đ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="annotation">Tab filter theo danh mục. Ảnh món từ Unsplash. Card hover có border vàng.</div>
+  </div>
+
+  <!-- RESERVATION -->
+  <div class="section-card full-width">
+    <div class="section-label">04 — ĐẶT BÀN</div>
+    <div class="reservation">
+      <div class="res-title">Đặt bàn trước</div>
+      <div class="res-sub">Chúng tôi sẽ xác nhận trong vòng 30 phút</div>
+      <div class="res-form">
+        <div class="res-input">Họ & tên</div>
+        <div class="res-input">Số điện thoại</div>
+        <div class="res-input">Ngày</div>
+        <div class="res-input">Giờ</div>
+        <div class="res-input">Số người</div>
+        <div class="res-input">Dịp đặc biệt (tùy chọn)</div>
+        <div class="res-input res-input-full">Ghi chú thêm (yêu cầu chỗ ngồi, dị ứng...)</div>
+        <div class="res-btn">GỬI YÊU CẦU ĐẶT BÀN</div>
+      </div>
+    </div>
+    <div class="annotation">Nền tối tương phản với các section trắng. Form placeholder — submit chưa kết nối. Input focus highlight vàng kim.</div>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="section-card">
+    <div class="section-label">05 — GALLERY</div>
+    <div class="gallery">
+      <div class="gallery-title">Không gian</div>
+      <div class="gallery-grid">
+        <div class="g-item"></div>
+        <div class="g-item g-2"></div>
+        <div class="g-item g-3"></div>
+        <div class="g-item g-4"></div>
+        <div class="g-item g-5"></div>
+      </div>
+    </div>
+    <div class="annotation">Ảnh từ Unsplash (cafe, industrial interior, coffee). Hover zoom nhẹ. Click mở lightbox fullscreen.</div>
+  </div>
+
+  <!-- LOCATION -->
+  <div class="section-card">
+    <div class="section-label">06 — ĐỊA CHỈ & GIỜ MỞ CỬA</div>
+    <div class="location">
+      <div class="location-inner">
+        <div class="map-placeholder"><span>GOOGLE MAP</span></div>
+        <div class="location-info">
+          <h4>Tìm chúng tôi</h4>
+          <div class="info-row">
+            <div class="info-icon"></div>
+            <div class="info-text">123 Đường ABC, Quận 1, TP.HCM</div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon"></div>
+            <div class="info-text">T2–T6: 7:00 – 22:00<br>T7–CN: 7:00 – 23:00</div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon"></div>
+            <div class="info-text">0900 123 456</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="annotation">Google Maps embed iframe. Icons từ lucide-react.</div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="section-card full-width">
+    <div class="section-label">07 — FOOTER</div>
+    <div class="footer-mock">
+      <div class="footer-logo">THE TERMINAL</div>
+      <div class="footer-social">
+        <div class="social-dot"><span>f</span></div>
+        <div class="social-dot"><span>ig</span></div>
+        <div class="social-dot"><span>tt</span></div>
+      </div>
+      <div class="footer-copy">© 2024 The Terminal. All rights reserved.</div>
+    </div>
+    <div class="annotation">Nền đen. Logo vàng. Social links: Facebook, Instagram, TikTok.</div>
+  </div>
+
+</div>
+
+</body>
+</html>

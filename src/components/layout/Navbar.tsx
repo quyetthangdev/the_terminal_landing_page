@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 
 const links = [
@@ -78,6 +78,7 @@ export default function Navbar() {
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="bg-brand-darker border-gold/20 w-64">
+            <SheetTitle className="sr-only">Điều hướng</SheetTitle>
             <div className="flex flex-col gap-6 mt-12">
               {navLinks.map((l) => (
                 <a

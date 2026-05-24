@@ -24,12 +24,12 @@ export default function GlassNavbar() {
   }, [])
 
   return (
-    <header className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 w-[calc(100%-3rem)] max-w-4xl`}>
-      <nav className={`flex items-center justify-between px-6 py-3 rounded-full border transition-all duration-500 ${
-        scrolled
-          ? 'bg-warm-white/92 backdrop-blur-xl border-gold/20 shadow-md shadow-gold/[0.06]'
-          : 'bg-white/50 backdrop-blur-md border-gold/15'
-      }`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${
+      scrolled
+        ? 'bg-warm-white/90 backdrop-blur-xl border-gold/20 shadow-sm shadow-gold/[0.05]'
+        : 'bg-white/30 backdrop-blur-md border-white/10'
+    }`}>
+      <nav className="flex items-center justify-between px-6 md:px-10 py-4 max-w-7xl mx-auto">
         {/* Logo */}
         <a href="#" className="font-display font-bold text-brand-dark text-sm tracking-[0.2em]">
           THE TERMINAL
@@ -51,7 +51,7 @@ export default function GlassNavbar() {
         {/* CTA */}
         <button
           onClick={() => scrollTo('#glass-reservation')}
-          className="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/90 hover:bg-gold border border-gold text-brand-dark text-xs tracking-[0.15em] transition-all duration-200 backdrop-blur-sm"
+          className="hidden md:flex items-center gap-2 px-5 py-2 bg-gold/90 hover:bg-gold border border-gold text-brand-dark text-xs tracking-[0.15em] transition-all duration-200"
         >
           ĐẶT BÀN
         </button>
@@ -80,5 +80,6 @@ export default function GlassNavbar() {
         </Sheet>
       </nav>
     </header>
+
   )
 }

@@ -12,6 +12,11 @@ export function useScrollAnimation(threshold = 0.15) {
       { threshold },
     )
     observerRef.current = observer
+    // Element may have been assigned before this effect ran (production build timing)
+    if (elementRef.current && !observedRef.current) {
+      observer.observe(elementRef.current)
+      observedRef.current = true
+    }
     return () => observer.disconnect()
   }, [threshold])
 

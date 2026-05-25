@@ -27,11 +27,11 @@ export default function GlassNavbar() {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${
       scrolled
         ? 'bg-warm-white/90 backdrop-blur-xl border-gold/20 shadow-sm shadow-gold/[0.05]'
-        : 'bg-white/30 backdrop-blur-md border-white/10'
+        : 'bg-white/[0.06] backdrop-blur-md border-white/[0.08]'
     }`}>
       <nav className="flex items-center justify-between px-6 md:px-10 py-4 max-w-7xl mx-auto">
         {/* Logo */}
-        <a href="#" className="font-display font-bold text-brand-dark text-sm tracking-[0.2em]">
+        <a href="#" className={`font-display font-bold text-sm tracking-[0.2em] transition-colors duration-500 ${scrolled ? 'text-brand-dark' : 'text-white'}`}>
           THE TERMINAL
         </a>
 
@@ -41,7 +41,7 @@ export default function GlassNavbar() {
             <button
               key={link.label}
               onClick={() => scrollTo(link.href)}
-              className="text-brand-dark/70 hover:text-brand-dark text-xs tracking-[0.2em] transition-colors duration-200"
+              className={`text-xs tracking-[0.2em] transition-colors duration-500 ${scrolled ? 'text-brand-dark/70 hover:text-brand-dark' : 'text-white/70 hover:text-white'}`}
             >
               {link.label.toUpperCase()}
             </button>
@@ -59,7 +59,7 @@ export default function GlassNavbar() {
         {/* Mobile menu */}
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
-            <button className="md:hidden text-brand-dark/70 hover:text-brand-dark">
+            <button className={`md:hidden transition-colors duration-500 ${scrolled ? 'text-brand-dark/70 hover:text-brand-dark' : 'text-white/70 hover:text-white'}`}>
               <Menu size={20} />
             </button>
           </SheetTrigger>

@@ -1,9 +1,5 @@
 import type { Table } from '@/data/tables'
-import type { TableSession, OrderItem } from '@/hooks/useTableSessions'
-
-function totalFrom(items: OrderItem[]) {
-  return items.reduce((s, i) => s + i.priceNum * i.quantity, 0)
-}
+import type { TableSession } from '@/hooks/useTableSessions'
 
 function formatVnd(n: number) {
   return n.toLocaleString('vi-VN') + 'đ'
@@ -49,8 +45,20 @@ interface Props {
 export default function TableCard({ table, session, onClick }: Props) {
   const status = session?.status ?? 'empty'
   const cfg = statusConfig[status]
-  const total = session ? totalFrom(session.items) : 0
-  const itemCount = session ? session.items.length : 0
+
+  const submittedTotal = session
+    ? session.submittedOrders.reduce((s, o) => s + o.items.reduce((ss, i) => ss + i.priceNum * i.quantity, 0), 0)
+    : 0
+  const pendingTotal = session
+    ? session.pendingItems.reduce((s, i) => s + i.priceNum * i.quantity, 0)
+    : 0
+  const total = submittedTotal + pendingTotal
+
+  const submittedCount = session
+    ? session.submittedOrders.reduce((s, o) => s + o.items.reduce((ss, i) => ss + i.quantity, 0), 0)
+    : 0
+  const pendingCount = session ? session.pendingItems.reduce((s, i) => s + i.quantity, 0) : 0
+  const itemCount = submittedCount + pendingCount
 
   return (
     <button

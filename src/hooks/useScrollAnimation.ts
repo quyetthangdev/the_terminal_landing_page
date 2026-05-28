@@ -26,7 +26,6 @@ export function useScrollAnimation(threshold = 0.15) {
       elementRef.current = el
       if (el && observerRef.current) observerRef.current.observe(el)
     },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [])
 
   return { ref, isVisible }

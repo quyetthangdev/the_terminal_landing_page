@@ -27,7 +27,7 @@ function GlassMenuCard({ item, index }: { item: (typeof menuItems)[number]; inde
 }
 
 export default function GlassMenuSection() {
-  const [active, setActive] = useState<CategoryId>('drinks')
+  const [active, setActive] = useState<CategoryId>('appetizers')
   const { ref, isVisible } = useScrollAnimation()
   const filtered = menuItems.filter((item) => item.category === active)
 

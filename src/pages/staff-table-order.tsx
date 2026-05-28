@@ -7,7 +7,7 @@ import OrderSummary from '@/components/staff/order-summary'
 export default function StaffTableOrderPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { sessions, addItem, updateItem, removeItem, requestPayment } = useTableSessions()
+  const { sessions, addItem, updateItem, removeItem, submitOrder, requestPayment } = useTableSessions()
 
   const table = tables.find(t => t.id === id)
   const session = id ? sessions[id] : undefined
@@ -59,14 +59,16 @@ export default function StaffTableOrderPage() {
       <div className="flex-1 grid grid-cols-[1fr_340px] overflow-hidden">
         <div className="border-r border-[#2a2a2a] overflow-hidden">
           <MenuPanel
-            items={session.items}
+            pendingItems={session.pendingItems}
             onAdd={item => id && addItem(id, item)}
           />
         </div>
         <OrderSummary
-          items={session.items}
+          pendingItems={session.pendingItems}
+          submittedOrders={session.submittedOrders}
           onUpdateItem={(menuItemId, patch) => id && updateItem(id, menuItemId, patch)}
           onRemoveItem={menuItemId => id && removeItem(id, menuItemId)}
+          onSubmitOrder={() => id && submitOrder(id)}
           onPay={handlePay}
         />
       </div>

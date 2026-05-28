@@ -13,33 +13,33 @@ beforeEach(() => {
 })
 
 describe('MenuSection', () => {
-  it('shows THỨC UỐNG items by default', () => {
+  it('shows Khai Vị items by default', () => {
     render(<MenuSection />)
-    expect(screen.getByText('Terminal Espresso')).toBeInTheDocument()
-    expect(screen.getByText('Signature Latte')).toBeInTheDocument()
+    expect(screen.getByText('Foie Gras Terrine')).toBeInTheDocument()
+    expect(screen.getByText('Burrata & Tomato')).toBeInTheDocument()
   })
 
-  it('shows ĂN SÁNG items when breakfast button clicked', async () => {
+  it('shows Ăn Sáng items when breakfast button clicked', async () => {
     render(<MenuSection />)
-    await userEvent.click(screen.getByRole('button', { name: 'ĂN SÁNG' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Ăn Sáng' }))
     expect(await screen.findByText('Eggs Benedict')).toBeInTheDocument()
-    expect(screen.queryByText('Terminal Espresso')).not.toBeInTheDocument()
+    expect(screen.queryByText('Foie Gras Terrine')).not.toBeInTheDocument()
   })
 
-  it('shows MÓN CHÍNH items when mains button clicked', async () => {
+  it('shows Pasta items when pasta button clicked', async () => {
     render(<MenuSection />)
-    await userEvent.click(screen.getByRole('button', { name: 'MÓN CHÍNH' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Pasta' }))
     expect(await screen.findByText('Pasta Carbonara')).toBeInTheDocument()
   })
 
-  it('shows TRÁNG MIỆNG items when desserts button clicked', async () => {
+  it('shows Tráng Miệng items when desserts button clicked', async () => {
     render(<MenuSection />)
-    await userEvent.click(screen.getByRole('button', { name: 'TRÁNG MIỆNG' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Tráng Miệng' }))
     expect(await screen.findByText('Crème Brûlée')).toBeInTheDocument()
   })
 
   it('displays price for each item', () => {
     render(<MenuSection />)
-    expect(screen.getByText('45.000đ')).toBeInTheDocument()
+    expect(screen.getByText('245.000đ')).toBeInTheDocument()
   })
 })

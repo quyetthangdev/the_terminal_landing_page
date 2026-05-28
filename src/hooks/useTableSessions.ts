@@ -9,10 +9,17 @@ export interface OrderItem {
   note: string
 }
 
+export interface SubmittedOrder {
+  id: string
+  items: OrderItem[]
+  submittedAt: string
+}
+
 export interface TableSession {
   tableId: string
   status: 'empty' | 'serving' | 'waiting_payment' | 'done'
-  items: OrderItem[]
+  pendingItems: OrderItem[]
+  submittedOrders: SubmittedOrder[]
   openedAt: string
 }
 
@@ -49,7 +56,7 @@ export function useTableSessions() {
     (tableId: string) => {
       update(prev => ({
         ...prev,
-        [tableId]: { tableId, status: 'serving', items: [], openedAt: new Date().toISOString() },
+        [tableId]: { tableId, status: 'serving', pendingItems: [], submittedOrders: [], openedAt: new Date().toISOString() },
       }))
     },
     [update],
@@ -60,12 +67,12 @@ export function useTableSessions() {
       update(prev => {
         const session = prev[tableId]
         if (!session) return prev
-        const idx = session.items.findIndex(i => i.menuItemId === item.menuItemId)
-        const items =
+        const idx = session.pendingItems.findIndex(i => i.menuItemId === item.menuItemId)
+        const pendingItems =
           idx >= 0
-            ? session.items.map((i, n) => (n === idx ? { ...i, quantity: i.quantity + 1 } : i))
-            : [...session.items, { ...item, quantity: 1, note: '' }]
-        return { ...prev, [tableId]: { ...session, items } }
+            ? session.pendingItems.map((i, n) => (n === idx ? { ...i, quantity: i.quantity + 1 } : i))
+            : [...session.pendingItems, { ...item, quantity: 1, note: '' }]
+        return { ...prev, [tableId]: { ...session, pendingItems } }
       })
     },
     [update],
@@ -76,8 +83,8 @@ export function useTableSessions() {
       update(prev => {
         const session = prev[tableId]
         if (!session) return prev
-        const items = session.items.map(i => (i.menuItemId === menuItemId ? { ...i, ...patch } : i))
-        return { ...prev, [tableId]: { ...session, items } }
+        const pendingItems = session.pendingItems.map(i => (i.menuItemId === menuItemId ? { ...i, ...patch } : i))
+        return { ...prev, [tableId]: { ...session, pendingItems } }
       })
     },
     [update],
@@ -88,7 +95,30 @@ export function useTableSessions() {
       update(prev => {
         const session = prev[tableId]
         if (!session) return prev
-        return { ...prev, [tableId]: { ...session, items: session.items.filter(i => i.menuItemId !== menuItemId) } }
+        return { ...prev, [tableId]: { ...session, pendingItems: session.pendingItems.filter(i => i.menuItemId !== menuItemId) } }
+      })
+    },
+    [update],
+  )
+
+  const submitOrder = useCallback(
+    (tableId: string) => {
+      update(prev => {
+        const session = prev[tableId]
+        if (!session || session.pendingItems.length === 0) return prev
+        const order: SubmittedOrder = {
+          id: `order-${Date.now()}`,
+          items: session.pendingItems,
+          submittedAt: new Date().toISOString(),
+        }
+        return {
+          ...prev,
+          [tableId]: {
+            ...session,
+            pendingItems: [],
+            submittedOrders: [...session.submittedOrders, order],
+          },
+        }
       })
     },
     [update],
@@ -116,5 +146,5 @@ export function useTableSessions() {
     [update],
   )
 
-  return { sessions, openSession, addItem, updateItem, removeItem, requestPayment, closeSession }
+  return { sessions, openSession, addItem, updateItem, removeItem, submitOrder, requestPayment, closeSession }
 }

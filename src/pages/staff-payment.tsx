@@ -2,10 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useTableSessions } from '@/hooks/useTableSessions'
 import { tables } from '@/data/tables'
 import PaymentPanel from '@/components/staff/payment-panel'
-
-function formatVnd(n: number) {
-  return n.toLocaleString('vi-VN') + 'đ'
-}
+import { formatVnd } from '@/lib/format'
 
 export default function StaffPaymentPage() {
   const { id } = useParams<{ id: string }>()
@@ -26,7 +23,10 @@ export default function StaffPaymentPage() {
     )
   }
 
-  const total = session.items.reduce((s, i) => s + i.priceNum * i.quantity, 0)
+  const total = session.submittedOrders.reduce(
+    (s, o) => s + o.items.reduce((ss, i) => ss + i.priceNum * i.quantity, 0),
+    0,
+  )
 
   function handleConfirm() {
     if (!id) return
@@ -52,20 +52,29 @@ export default function StaffPaymentPage() {
 
       {/* Split layout */}
       <div className="grid grid-cols-2 min-h-[calc(100vh-53px)]">
-        {/* Left: bill summary */}
+        {/* Left: bill summary grouped by order */}
         <div className="border-r border-[#2a2a2a] p-6">
           <p className="text-[10px] tracking-[0.2em] text-[#555] uppercase mb-4">Tổng kết đơn hàng</p>
-          <div className="space-y-1 mb-6">
-            {session.items.map(item => (
-              <div key={item.menuItemId} className="flex justify-between items-baseline gap-3 py-2 border-b border-[#1e1e1e]">
-                <div>
-                  <p className="text-[12px] text-[#b0a898]">{item.name}</p>
-                  {item.note && <p className="text-[10px] text-[#C9A84C55] italic mt-0.5">{item.note}</p>}
+          <div className="space-y-4 mb-6">
+            {session.submittedOrders.map((order, idx) => (
+              <div key={order.id}>
+                <p className="text-[9px] tracking-[0.15em] text-[#444] uppercase mb-1.5">
+                  Đơn {idx + 1} · {new Date(order.submittedAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
+                </p>
+                <div className="space-y-1">
+                  {order.items.map(item => (
+                    <div key={item.menuItemId} className="flex justify-between items-baseline gap-3 py-1.5 border-b border-[#1a1a1a]">
+                      <div>
+                        <p className="text-[12px] text-[#b0a898]">{item.name}</p>
+                        {item.note && <p className="text-[10px] text-[#C9A84C55] italic mt-0.5">{item.note}</p>}
+                      </div>
+                      <span className="text-[11px] text-[#555]">×{item.quantity}</span>
+                      <span className="text-[12px] text-[#888] min-w-[80px] text-right">
+                        {formatVnd(item.priceNum * item.quantity)}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-                <span className="text-[11px] text-[#555]">×{item.quantity}</span>
-                <span className="text-[12px] text-[#888] min-w-[80px] text-right">
-                  {formatVnd(item.priceNum * item.quantity)}
-                </span>
               </div>
             ))}
           </div>

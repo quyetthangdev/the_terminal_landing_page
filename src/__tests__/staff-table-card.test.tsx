@@ -21,18 +21,45 @@ describe('TableCard', () => {
 
   it('shows "Đang phục vụ" for serving session', () => {
     const session: TableSession = {
-      tableId: '01', status: 'serving', items: [
+      tableId: '01',
+      status: 'serving',
+      pendingItems: [
         { menuItemId: 'd1', name: 'Espresso', priceNum: 45000, price: '45.000đ', quantity: 2, note: '' }
-      ], openedAt: '',
+      ],
+      submittedOrders: [],
+      openedAt: '',
     }
     render(<TableCard table={table} session={session} onClick={vi.fn()} />)
     expect(screen.getByText('Đang phục vụ')).toBeInTheDocument()
-    expect(screen.getByText('1 món · 90.000đ')).toBeInTheDocument()
+    expect(screen.getByText('2 món · 90.000đ')).toBeInTheDocument()
+  })
+
+  it('sums submitted and pending across all orders', () => {
+    const session: TableSession = {
+      tableId: '01',
+      status: 'serving',
+      pendingItems: [
+        { menuItemId: 'd1', name: 'Espresso', priceNum: 45000, price: '45.000đ', quantity: 1, note: '' }
+      ],
+      submittedOrders: [
+        {
+          id: 'order-1',
+          submittedAt: new Date().toISOString(),
+          items: [
+            { menuItemId: 'm1', name: 'Pasta', priceNum: 145000, price: '145.000đ', quantity: 2, note: '' }
+          ],
+        }
+      ],
+      openedAt: '',
+    }
+    render(<TableCard table={table} session={session} onClick={vi.fn()} />)
+    // 1 pending (qty 1) + 2 submitted (qty 2) = 3 món; 45000 + 290000 = 335000
+    expect(screen.getByText('3 món · 335.000đ')).toBeInTheDocument()
   })
 
   it('shows "Chờ thanh toán" for waiting_payment session', () => {
     const session: TableSession = {
-      tableId: '01', status: 'waiting_payment', items: [], openedAt: '',
+      tableId: '01', status: 'waiting_payment', pendingItems: [], submittedOrders: [], openedAt: '',
     }
     render(<TableCard table={table} session={session} onClick={vi.fn()} />)
     expect(screen.getByText('Chờ thanh toán')).toBeInTheDocument()

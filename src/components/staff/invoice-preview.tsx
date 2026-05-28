@@ -1,17 +1,18 @@
-import type { InvoiceData } from '@/types/invoice'
+import type { InvoiceData, InvoiceRequest } from '@/types/invoice'
 import { formatVnd } from '@/lib/format'
 
-const PAYMENT_LABEL = { cash: 'Tiền mặt', transfer: 'Chuyển khoản ngân hàng' }
+const PAYMENT_LABEL = {
+  cash: 'Tiền mặt',
+  transfer: 'Chuyển khoản ngân hàng',
+} satisfies Record<InvoiceRequest['paymentMethod'], string>
 
 interface Props {
   invoice: InvoiceData
 }
 
 export default function InvoicePreview({ invoice }: Props) {
-  const date = new Date(invoice.issuedAt)
-  const dd = String(date.getDate()).padStart(2, '0')
-  const mm = String(date.getMonth() + 1).padStart(2, '0')
-  const yyyy = date.getFullYear()
+  const [yyyy, rawMm, dd] = invoice.issuedAt.slice(0, 10).split('-')
+  const mm = rawMm
 
   return (
     <div className="bg-white text-black font-sans text-sm leading-relaxed max-w-[794px] mx-auto p-10 print:p-8 print:shadow-none shadow-lg">
@@ -60,8 +61,8 @@ export default function InvoicePreview({ invoice }: Props) {
           </tr>
         </thead>
         <tbody>
-          {invoice.items.map(item => (
-            <tr key={item.no}>
+          {invoice.items.map((item, idx) => (
+            <tr key={idx}>
               <td className="border border-black px-2 py-1.5 text-center">{item.no}</td>
               <td className="border border-black px-2 py-1.5">{item.name}</td>
               <td className="border border-black px-2 py-1.5 text-center">{item.unit}</td>
@@ -81,7 +82,7 @@ export default function InvoicePreview({ invoice }: Props) {
             <span className="font-semibold">{formatVnd(invoice.subtotal)}</span>
           </div>
           <div className="flex justify-between">
-            <span>Thuế suất GTGT: {invoice.vatRate * 100}%</span>
+            <span>Thuế suất GTGT: {Math.round(invoice.vatRate * 100)}%</span>
             <span className="font-semibold">{formatVnd(invoice.vatAmount)}</span>
           </div>
           <div className="flex justify-between border-t border-black pt-1 font-bold text-[13px]">

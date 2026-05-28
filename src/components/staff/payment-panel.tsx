@@ -91,7 +91,7 @@ export default function PaymentPanel({ total, onConfirm }: Props) {
       {tab === 'transfer' && (
         <div className="bg-[#181818] border border-[#2a2a2a] rounded p-4 space-y-4">
           {/* QR — square container, image fills it */}
-          <div className="w-full aspect-square bg-white rounded overflow-hidden">
+          <div className="mx-auto w-48 aspect-square bg-white rounded overflow-hidden">
             <svg width="100%" height="100%" viewBox="0 0 80 80" fill="#0d0d0d" preserveAspectRatio="xMidYMid meet">
               <rect x="5" y="5" width="30" height="30" rx="2" fill="none" stroke="#0d0d0d" strokeWidth="4"/>
               <rect x="13" y="13" width="14" height="14" rx="1"/>

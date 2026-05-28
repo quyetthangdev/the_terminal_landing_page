@@ -4,6 +4,7 @@ import GlassPage from '@/pages/GlassPage'
 import StaffFloorPlanPage from '@/pages/staff-floor-plan'
 import StaffTableOrderPage from '@/pages/staff-table-order'
 import StaffPaymentPage from '@/pages/staff-payment'
+import StaffInvoicePage from '@/pages/staff-invoice'
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/staff" element={<StaffFloorPlanPage />} />
         <Route path="/staff/table/:id" element={<StaffTableOrderPage />} />
         <Route path="/staff/table/:id/payment" element={<StaffPaymentPage />} />
+        <Route path="/staff/table/:id/invoice" element={<StaffInvoicePage />} />
       </Routes>
     </BrowserRouter>
   )

@@ -1,13 +1,17 @@
+import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTableSessions } from '@/hooks/useTableSessions'
 import { tables } from '@/data/tables'
 import PaymentPanel from '@/components/staff/payment-panel'
+import InvoiceForm from '@/components/staff/invoice-form'
 import { formatVnd } from '@/lib/format'
+import type { InvoiceRequest } from '@/types/invoice'
 
 export default function StaffPaymentPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { sessions, closeSession } = useTableSessions()
+  const { sessions, closeSession, setInvoiceRequest } = useTableSessions()
+  const [showInvoiceForm, setShowInvoiceForm] = useState(false)
 
   const table = tables.find(t => t.id === id)
   const session = id ? sessions[id] : undefined
@@ -34,8 +38,21 @@ export default function StaffPaymentPage() {
     navigate('/staff')
   }
 
+  function handleInvoiceSubmit(request: InvoiceRequest) {
+    if (!id) return
+    setInvoiceRequest(id, request)
+    navigate(`/staff/table/${id}/invoice`)
+  }
+
   return (
     <div className="min-h-screen bg-brand-darker text-[#f5f0e8]">
+      {showInvoiceForm && (
+        <InvoiceForm
+          onSubmit={handleInvoiceSubmit}
+          onCancel={() => setShowInvoiceForm(false)}
+        />
+      )}
+
       {/* Topbar */}
       <div className="flex items-center gap-2 sm:gap-3 bg-[#1a1a1a] border-b border-[#2a2a2a] px-3 sm:px-5 py-2.5">
         <button
@@ -89,6 +106,17 @@ export default function StaffPaymentPage() {
         <div className="p-4 sm:p-6">
           <p className="text-[10px] tracking-[0.2em] text-[#555] uppercase mb-4">Phương thức thanh toán</p>
           <PaymentPanel total={total} onConfirm={handleConfirm} />
+
+          <div className="mt-6 pt-4 border-t border-[#2a2a2a]">
+            <p className="text-[10px] tracking-[0.2em] text-[#555] uppercase mb-3">Hoá đơn đỏ</p>
+            <button
+              onClick={() => setShowInvoiceForm(true)}
+              className="w-full border border-[#C9A84C44] text-gold text-[11px] tracking-[0.2em] py-2.5 rounded hover:bg-[#1e1a0e] transition-colors"
+            >
+              XUẤT HOÁ ĐƠN GTGT →
+            </button>
+            <p className="text-[9px] text-[#444] mt-2 text-center">Dành cho khách hàng doanh nghiệp</p>
+          </div>
         </div>
       </div>
     </div>

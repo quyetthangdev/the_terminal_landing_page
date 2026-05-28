@@ -1,6 +1,7 @@
 import { renderHook, act } from '@testing-library/react'
 import { describe, it, expect, beforeEach } from 'vitest'
 import { useTableSessions } from '@/hooks/useTableSessions'
+import type { InvoiceRequest } from '@/types/invoice'
 
 beforeEach(() => localStorage.clear())
 
@@ -105,5 +106,19 @@ describe('useTableSessions', () => {
     }))
     const { result } = renderHook(() => useTableSessions())
     expect(result.current.sessions['03'].status).toBe('serving')
+  })
+
+  it('setInvoiceRequest stores buyer info on the session', () => {
+    const { result } = renderHook(() => useTableSessions())
+    act(() => result.current.openSession('01'))
+    const invoiceData: InvoiceRequest = {
+      buyerName: 'Công ty ABC',
+      buyerTaxCode: '0987654321',
+      buyerAddress: '456 Nguyễn Huệ',
+      buyerEmail: 'abc@abc.com',
+      paymentMethod: 'cash',
+    }
+    act(() => result.current.setInvoiceRequest('01', invoiceData))
+    expect(result.current.sessions['01'].invoiceRequest?.buyerName).toBe('Công ty ABC')
   })
 })

@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import type { InvoiceRequest } from '@/types/invoice'
 
 export interface OrderItem {
   menuItemId: string
@@ -21,6 +22,7 @@ export interface TableSession {
   pendingItems: OrderItem[]
   submittedOrders: SubmittedOrder[]
   openedAt: string
+  invoiceRequest?: InvoiceRequest
 }
 
 const STORAGE_KEY = 'terminal_staff_sessions'
@@ -146,5 +148,16 @@ export function useTableSessions() {
     [update],
   )
 
-  return { sessions, openSession, addItem, updateItem, removeItem, submitOrder, requestPayment, closeSession }
+  const setInvoiceRequest = useCallback(
+    (tableId: string, request: InvoiceRequest) => {
+      update(prev => {
+        const session = prev[tableId]
+        if (!session) return prev
+        return { ...prev, [tableId]: { ...session, invoiceRequest: request } }
+      })
+    },
+    [update],
+  )
+
+  return { sessions, openSession, addItem, updateItem, removeItem, submitOrder, requestPayment, closeSession, setInvoiceRequest }
 }

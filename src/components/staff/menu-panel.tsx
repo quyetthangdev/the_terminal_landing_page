@@ -45,33 +45,36 @@ export default function MenuPanel({ pendingItems, onAdd }: Props) {
           return (
             <div
               key={item.id}
-              className="relative bg-[#1c1c1c] border border-[#2a2a2a] rounded overflow-hidden hover:border-[#C9A84C55] hover:bg-[#1e1a0e] transition-colors"
+              className="relative bg-[#1c1c1c] border border-[#2a2a2a] rounded p-2.5 hover:border-[#C9A84C55] hover:bg-[#1e1a0e] transition-colors"
             >
               {qty > 0 && (
                 <span className="absolute top-1.5 right-1.5 z-10 w-5 h-5 rounded-full bg-gold text-brand-dark text-[10px] font-bold flex items-center justify-center">
                   {qty}
                 </span>
               )}
-              {/* Item image */}
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-full h-20 object-cover"
-                loading="lazy"
-              />
-              <div className="p-2.5">
-                <p className="text-[11px] font-semibold text-[#e8e0d0] mb-0.5 leading-snug pr-4">{item.name}</p>
-                <p className="text-[9px] text-[#555] leading-relaxed mb-2 line-clamp-2">{item.description}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] text-gold font-semibold">{item.price}</span>
-                  <button
-                    aria-label={`Thêm ${item.name}`}
-                    onClick={() => onAdd({ menuItemId: item.id, name: item.name, priceNum: parsePrice(item.price), price: item.price })}
-                    className="w-[20px] h-[20px] rounded bg-gold text-brand-dark text-sm font-bold flex items-center justify-center"
-                  >
-                    +
-                  </button>
+              {/* Top row: image + name/description */}
+              <div className="flex gap-2 mb-2">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-14 h-14 object-cover rounded flex-shrink-0"
+                  loading="lazy"
+                />
+                <div className="flex-1 min-w-0">
+                  <p className="text-[11px] font-semibold text-[#e8e0d0] leading-snug mb-0.5 pr-4">{item.name}</p>
+                  <p className="text-[9px] text-[#555] leading-relaxed line-clamp-3">{item.description}</p>
                 </div>
+              </div>
+              {/* Bottom row: price + add button */}
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] text-gold font-semibold">{item.price}</span>
+                <button
+                  aria-label={`Thêm ${item.name}`}
+                  onClick={() => onAdd({ menuItemId: item.id, name: item.name, priceNum: parsePrice(item.price), price: item.price })}
+                  className="w-[20px] h-[20px] rounded bg-gold text-brand-dark text-sm font-bold flex items-center justify-center"
+                >
+                  +
+                </button>
               </div>
             </div>
           )

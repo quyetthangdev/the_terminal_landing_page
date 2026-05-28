@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import MuseumPage from '@/pages/MuseumPage'
 import GlassPage from '@/pages/GlassPage'
 import StaffFloorPlanPage from '@/pages/staff-floor-plan'
@@ -9,7 +9,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MuseumPage />} />
+        <Route path="/" element={<Navigate to="/staff" replace />} />
+        <Route path="/museum" element={<MuseumPage />} />
         <Route path="/glass" element={<GlassPage />} />
         <Route path="/staff" element={<StaffFloorPlanPage />} />
         <Route path="/staff/table/:id" element={<StaffTableOrderPage />} />

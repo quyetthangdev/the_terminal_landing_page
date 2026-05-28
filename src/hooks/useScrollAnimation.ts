@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 export function useScrollAnimation(threshold = 0.15) {
   const [isVisible, setIsVisible] = useState(false)
-  const elementRef = useRef<HTMLElement>(null)
+  const elementRef = useRef<HTMLElement | null>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
-  const observedRef = useRef(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -12,27 +11,23 @@ export function useScrollAnimation(threshold = 0.15) {
       { threshold },
     )
     observerRef.current = observer
-    // Element may have been assigned before this effect ran (production build timing)
-    if (elementRef.current && !observedRef.current) {
-      observer.observe(elementRef.current)
-      observedRef.current = true
+    if (elementRef.current) observer.observe(elementRef.current)
+    return () => {
+      observer.disconnect()
+      observerRef.current = null
     }
-    return () => observer.disconnect()
   }, [threshold])
 
-  const stableProxyRef = useRef<typeof elementRef>(null!)
-  if (!stableProxyRef.current) {
-    stableProxyRef.current = new Proxy(elementRef, {
-      set(target, prop, value) {
-        Reflect.set(target, prop, value)
-        if (prop === 'current' && value && observerRef.current && !observedRef.current) {
-          observerRef.current.observe(value)
-          observedRef.current = true
-        }
-        return true
-      },
-    })
-  }
+  // Setter-based ref so attaching the element after the effect runs still
+  // triggers observe() — handles production build timing without Proxy.
+  const ref = useMemo(() => ({
+    get current(): HTMLElement | null { return elementRef.current },
+    set current(el: HTMLElement | null) {
+      elementRef.current = el
+      if (el && observerRef.current) observerRef.current.observe(el)
+    },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), [])
 
-  return { ref: stableProxyRef.current, isVisible }
+  return { ref, isVisible }
 }

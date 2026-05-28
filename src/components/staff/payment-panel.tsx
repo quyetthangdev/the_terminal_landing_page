@@ -90,27 +90,34 @@ export default function PaymentPanel({ total, onConfirm }: Props) {
 
       {tab === 'transfer' && (
         <div className="bg-[#181818] border border-[#2a2a2a] rounded p-4 space-y-4">
-          <div className="flex gap-4 items-start">
-            {/* QR placeholder */}
-            <div className="w-24 h-24 bg-white rounded flex items-center justify-center flex-shrink-0">
-              <svg width="80" height="80" viewBox="0 0 80 80" fill="#0d0d0d">
-                <rect x="5" y="5" width="30" height="30" rx="2" fill="none" stroke="#0d0d0d" strokeWidth="4"/>
-                <rect x="13" y="13" width="14" height="14" rx="1"/>
-                <rect x="45" y="5" width="30" height="30" rx="2" fill="none" stroke="#0d0d0d" strokeWidth="4"/>
-                <rect x="53" y="13" width="14" height="14" rx="1"/>
-                <rect x="5" y="45" width="30" height="30" rx="2" fill="none" stroke="#0d0d0d" strokeWidth="4"/>
-                <rect x="13" y="53" width="14" height="14" rx="1"/>
-                <rect x="45" y="45" width="8" height="8"/><rect x="57" y="45" width="8" height="8"/>
-                <rect x="45" y="57" width="8" height="8"/><rect x="57" y="57" width="8" height="8"/>
-                <rect x="68" y="45" width="8" height="8"/><rect x="68" y="57" width="8" height="8"/>
-              </svg>
-            </div>
-            <div className="flex-1 space-y-1">
-              <p className="text-[10px] text-[#555] tracking-[0.1em]">ACB · The Terminal</p>
-              <p className="text-sm font-semibold text-[#e8e0d0]">1234 5678 90</p>
-              <p className="text-[12px] text-gold">{formatVnd(total)}</p>
-            </div>
+          {/* QR — full width */}
+          <div className="bg-white rounded-lg p-4 flex items-center justify-center">
+            <svg width="200" height="200" viewBox="0 0 80 80" fill="#0d0d0d">
+              <rect x="5" y="5" width="30" height="30" rx="2" fill="none" stroke="#0d0d0d" strokeWidth="4"/>
+              <rect x="13" y="13" width="14" height="14" rx="1"/>
+              <rect x="45" y="5" width="30" height="30" rx="2" fill="none" stroke="#0d0d0d" strokeWidth="4"/>
+              <rect x="53" y="13" width="14" height="14" rx="1"/>
+              <rect x="5" y="45" width="30" height="30" rx="2" fill="none" stroke="#0d0d0d" strokeWidth="4"/>
+              <rect x="13" y="53" width="14" height="14" rx="1"/>
+              <rect x="45" y="45" width="8" height="8"/><rect x="57" y="45" width="8" height="8"/>
+              <rect x="45" y="57" width="8" height="8"/><rect x="57" y="57" width="8" height="8"/>
+              <rect x="68" y="45" width="8" height="8"/><rect x="68" y="57" width="8" height="8"/>
+            </svg>
           </div>
+
+          {/* Thông tin tài khoản */}
+          <div className="bg-[#111] border border-[#2a2a2a] rounded px-4 py-3 space-y-1">
+            <p className="text-[10px] text-[#555] tracking-[0.15em] uppercase">Tài khoản nhận</p>
+            <p className="text-base font-semibold text-[#e8e0d0] tracking-widest">1234 5678 90</p>
+            <p className="text-[11px] text-[#666]">ACB · The Terminal</p>
+          </div>
+
+          {/* Số tiền */}
+          <div className="bg-[#111] border border-[#C9A84C22] rounded px-4 py-3 flex justify-between items-baseline">
+            <p className="text-[10px] text-[#555] tracking-[0.15em] uppercase">Số tiền</p>
+            <p className="font-display text-2xl text-gold font-bold">{formatVnd(total)}</p>
+          </div>
+
           <button
             onClick={onConfirm}
             className="w-full bg-[#2a2a2a] border border-[#C9A84C44] text-gold text-[11px] font-semibold tracking-[0.2em] py-3 rounded"

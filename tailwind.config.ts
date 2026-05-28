@@ -68,7 +68,7 @@ export default {
   		},
   		fontFamily: {
   			display: ['"Playfair Display"', 'Georgia', 'serif'],
-  			sans: ['Inter', 'system-ui', 'sans-serif'],
+  			sans: ['"Be Vietnam Pro"', 'system-ui', 'sans-serif'],
   		},
   		keyframes: {
   			fadeInUp: {

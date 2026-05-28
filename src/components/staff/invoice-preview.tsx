@@ -11,8 +11,7 @@ interface Props {
 }
 
 export default function InvoicePreview({ invoice }: Props) {
-  const [yyyy, rawMm, dd] = invoice.issuedAt.slice(0, 10).split('-')
-  const mm = rawMm
+  const [yyyy, mm, dd] = invoice.issuedAt.slice(0, 10).split('-')
 
   return (
     <div className="bg-white text-black font-sans text-sm leading-relaxed max-w-[794px] mx-auto p-10 print:p-8 print:shadow-none shadow-lg">

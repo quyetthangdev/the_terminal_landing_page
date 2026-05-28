@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTableSessions } from '@/hooks/useTableSessions'
 import { tables } from '@/data/tables'
@@ -12,7 +13,16 @@ export default function StaffInvoicePage() {
   const table = tables.find(t => t.id === id)
   const session = id ? sessions[id] : undefined
 
-  if (!table || !session || !session.invoiceRequest) {
+  // Call hook unconditionally before any early return
+  const invoice = useMemo(() => {
+    // Guard inside the callback to ensure we have valid data
+    if (!session || !session.invoiceRequest) {
+      return null
+    }
+    return buildInvoice(session, session.invoiceRequest)
+  }, [session])
+
+  if (!table || !session || !session.invoiceRequest || !invoice) {
     return (
       <div className="min-h-screen bg-brand-darker flex items-center justify-center text-[#555]">
         Không tìm thấy dữ liệu hoá đơn.{' '}
@@ -22,8 +32,6 @@ export default function StaffInvoicePage() {
       </div>
     )
   }
-
-  const invoice = buildInvoice(session, session.invoiceRequest)
 
   function handleDone() {
     if (!id) return

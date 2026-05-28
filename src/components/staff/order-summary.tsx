@@ -31,33 +31,37 @@ export default function OrderSummary({ pendingItems, submittedOrders, onUpdateIt
     <div className="flex flex-col h-full bg-[#111] relative">
       {/* Confirm dialog overlay */}
       {showConfirm && (
-        <div className="absolute inset-0 z-20 bg-black/70 flex items-center justify-center p-4">
-          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg w-full max-w-xs p-5 space-y-4">
-            <p className="text-[11px] tracking-[0.2em] text-[#888] uppercase">Xác nhận đặt món</p>
-            <div className="space-y-1 max-h-40 overflow-y-auto">
+        <div className="fixed inset-0 z-50 bg-black/75 flex items-center justify-center p-6">
+          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg w-full max-w-sm p-6 space-y-4">
+            <div>
+              <p className="text-base font-semibold text-[#e8e0d0] mb-0.5">Xác nhận đặt món</p>
+              <p className="text-[11px] text-[#555]">Đợt {submittedOrders.length + 1} · {pendingItems.reduce((s, i) => s + i.quantity, 0)} món</p>
+            </div>
+            <div className="space-y-2 max-h-52 overflow-y-auto -mx-1 px-1">
               {pendingItems.map(item => (
-                <div key={item.menuItemId} className="flex justify-between items-baseline gap-2 text-[11px]">
-                  <span className="text-[#c8bfaf]">{item.name} ×{item.quantity}</span>
-                  <span className="text-gold">{formatVnd(item.priceNum * item.quantity)}</span>
+                <div key={item.menuItemId} className="flex justify-between items-baseline gap-3 py-1.5 border-b border-[#222]">
+                  <span className="text-[13px] text-[#c8bfaf]">{item.name}</span>
+                  <span className="text-[12px] text-[#666] flex-shrink-0">×{item.quantity}</span>
+                  <span className="text-[13px] text-gold font-semibold flex-shrink-0">{formatVnd(item.priceNum * item.quantity)}</span>
                 </div>
               ))}
             </div>
-            <div className="flex justify-between items-baseline pt-2 border-t border-[#2a2a2a]">
-              <span className="text-[10px] text-[#888]">Tổng đợt này</span>
-              <span className="text-gold font-bold">{formatVnd(pendingTotal)}</span>
+            <div className="flex justify-between items-baseline pt-1 border-t border-[#2a2a2a]">
+              <span className="text-[12px] text-[#888]">Tổng đợt này</span>
+              <span className="text-lg text-gold font-bold">{formatVnd(pendingTotal)}</span>
             </div>
-            <div className="flex gap-2 pt-1">
+            <div className="flex gap-3 pt-1">
               <button
                 onClick={() => setShowConfirm(false)}
-                className="flex-1 py-2 text-[10px] tracking-[0.15em] border border-[#333] text-[#666] rounded"
+                className="flex-1 py-2.5 text-[11px] tracking-[0.15em] border border-[#333] text-[#666] rounded"
               >
                 HỦY
               </button>
               <button
                 onClick={handleConfirmSubmit}
-                className="flex-1 py-2 text-[10px] tracking-[0.15em] bg-gold text-brand-dark font-bold rounded"
+                className="flex-1 py-2.5 text-[11px] tracking-[0.15em] bg-gold text-brand-dark font-bold rounded"
               >
-                XÁC NHẬN
+                XÁC NHẬN ĐẶT MÓN
               </button>
             </div>
           </div>

@@ -2,6 +2,7 @@ import type { InvoiceData, InvoiceLineItem, InvoiceRequest } from '@/types/invoi
 import type { TableSession } from '@/hooks/useTableSessions'
 import { seller } from '@/data/seller'
 
+const VAT_INCLUSIVE = 1.1
 const ONES = ['', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín']
 const ONES_AFTER_TEN = ['', 'mốt', 'hai', 'ba', 'bốn', 'lăm', 'sáu', 'bảy', 'tám', 'chín']
 
@@ -68,7 +69,7 @@ export function buildInvoice(session: TableSession, request: InvoiceRequest): In
     if (merged[item.menuItemId]) {
       merged[item.menuItemId].quantity += item.quantity
       merged[item.menuItemId].amount = Math.round(
-        (merged[item.menuItemId].quantity * item.priceNum) / 1.1,
+        (merged[item.menuItemId].quantity * item.priceNum) / VAT_INCLUSIVE,
       )
     } else {
       merged[item.menuItemId] = {
@@ -76,14 +77,14 @@ export function buildInvoice(session: TableSession, request: InvoiceRequest): In
         name: item.name,
         unit: 'phần',
         quantity: item.quantity,
-        unitPrice: Math.round(item.priceNum / 1.1),
-        amount: Math.round((item.priceNum * item.quantity) / 1.1),
+        unitPrice: Math.round(item.priceNum / VAT_INCLUSIVE),
+        amount: Math.round((item.priceNum * item.quantity) / VAT_INCLUSIVE),
       }
     }
   }
 
   const total = allItems.reduce((s, i) => s + i.priceNum * i.quantity, 0)
-  const subtotal = Math.round(total / 1.1)
+  const subtotal = Math.round(total / VAT_INCLUSIVE)
   const vatAmount = total - subtotal
 
   return {

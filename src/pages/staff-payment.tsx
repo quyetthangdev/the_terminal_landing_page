@@ -37,23 +37,24 @@ export default function StaffPaymentPage() {
   return (
     <div className="min-h-screen bg-brand-darker text-[#f5f0e8]">
       {/* Topbar */}
-      <div className="flex items-center gap-3 bg-[#1a1a1a] border-b border-[#2a2a2a] px-5 py-3">
+      <div className="flex items-center gap-2 sm:gap-3 bg-[#1a1a1a] border-b border-[#2a2a2a] px-3 sm:px-5 py-2.5">
         <button
           onClick={() => navigate(`/staff/table/${id}`)}
-          className="text-[12px] text-gold border border-[#C9A84C44] px-3 py-1 rounded tracking-[0.1em]"
+          className="text-[11px] sm:text-[12px] text-gold border border-[#C9A84C44] px-2 sm:px-3 py-1 rounded tracking-[0.1em] flex-shrink-0"
         >
-          ← {table.label}
+          ←
+          <span className="hidden sm:inline"> {table.label}</span>
         </button>
-        <span className="font-display text-[#f5f0e8] text-base">Thanh toán</span>
-        <span className="text-[9px] tracking-[0.2em] text-[#e07b39] bg-[#e07b3915] border border-[#e07b3933] px-2.5 py-1 rounded">
+        <span className="font-display text-[#f5f0e8] text-sm sm:text-base">Thanh toán</span>
+        <span className="text-[9px] tracking-[0.15em] text-[#e07b39] bg-[#e07b3915] border border-[#e07b3933] px-2 py-0.5 rounded flex-shrink-0">
           CHỜ THANH TOÁN
         </span>
       </div>
 
-      {/* Split layout */}
-      <div className="grid grid-cols-2 min-h-[calc(100vh-53px)]">
-        {/* Left: bill summary grouped by order */}
-        <div className="border-r border-[#2a2a2a] p-6">
+      {/* Split layout — stacked on mobile, side-by-side on md+ */}
+      <div className="grid grid-cols-1 md:grid-cols-2 min-h-[calc(100vh-49px)]">
+        {/* Bill summary */}
+        <div className="border-b md:border-b-0 md:border-r border-[#2a2a2a] p-4 sm:p-6">
           <p className="text-[10px] tracking-[0.2em] text-[#555] uppercase mb-4">Tổng kết đơn hàng</p>
           <div className="space-y-4 mb-6">
             {session.submittedOrders.map((order, idx) => (
@@ -64,12 +65,12 @@ export default function StaffPaymentPage() {
                 <div className="space-y-1">
                   {order.items.map(item => (
                     <div key={item.menuItemId} className="flex justify-between items-baseline gap-3 py-1.5 border-b border-[#1a1a1a]">
-                      <div>
-                        <p className="text-[12px] text-[#b0a898]">{item.name}</p>
-                        {item.note && <p className="text-[10px] text-[#C9A84C55] italic mt-0.5">{item.note}</p>}
+                      <div className="min-w-0">
+                        <p className="text-[12px] text-[#b0a898] truncate">{item.name}</p>
+                        {item.note && <p className="text-[10px] text-[#C9A84C55] italic mt-0.5 truncate">{item.note}</p>}
                       </div>
-                      <span className="text-[11px] text-[#555]">×{item.quantity}</span>
-                      <span className="text-[12px] text-[#888] min-w-[80px] text-right">
+                      <span className="text-[11px] text-[#555] flex-shrink-0">×{item.quantity}</span>
+                      <span className="text-[12px] text-[#888] flex-shrink-0 min-w-[80px] text-right">
                         {formatVnd(item.priceNum * item.quantity)}
                       </span>
                     </div>
@@ -80,12 +81,12 @@ export default function StaffPaymentPage() {
           </div>
           <div className="flex justify-between items-baseline pt-4 border-t border-[#C9A84C33]">
             <span className="text-[11px] tracking-[0.2em] text-[#888] uppercase">Tổng thanh toán</span>
-            <span className="font-display text-3xl text-gold font-bold">{formatVnd(total)}</span>
+            <span className="font-display text-2xl sm:text-3xl text-gold font-bold">{formatVnd(total)}</span>
           </div>
         </div>
 
-        {/* Right: payment panel */}
-        <div className="p-6">
+        {/* Payment panel */}
+        <div className="p-4 sm:p-6">
           <p className="text-[10px] tracking-[0.2em] text-[#555] uppercase mb-4">Phương thức thanh toán</p>
           <PaymentPanel total={total} onConfirm={handleConfirm} />
         </div>

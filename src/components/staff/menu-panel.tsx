@@ -22,7 +22,7 @@ export default function MenuPanel({ pendingItems, onAdd }: Props) {
   return (
     <div className="flex h-full">
       {/* Left: vertical category sidebar */}
-      <div className="w-28 flex-shrink-0 flex flex-col border-r border-[#2a2a2a] bg-[#111] overflow-y-auto">
+      <div className="w-20 sm:w-28 flex-shrink-0 flex flex-col border-r border-[#2a2a2a] bg-[#111] overflow-y-auto">
         {categories.map(cat => (
           <button
             key={cat.id}
@@ -39,7 +39,7 @@ export default function MenuPanel({ pendingItems, onAdd }: Props) {
       </div>
 
       {/* Right: item grid */}
-      <div className="flex-1 overflow-y-auto p-3 grid grid-cols-2 gap-2.5 content-start">
+      <div className="flex-1 overflow-y-auto p-2 sm:p-3 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5 content-start">
         {filtered.map(item => {
           const qty = qtyOf(item.id)
           return (

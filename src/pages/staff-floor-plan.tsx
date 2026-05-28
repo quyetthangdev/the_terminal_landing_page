@@ -22,7 +22,7 @@ export default function StaffFloorPlanPage() {
   return (
     <div className="min-h-screen bg-brand-darker text-[#f5f0e8]">
       {/* Topbar */}
-      <div className="flex items-center justify-between bg-[#1a1a1a] border-b border-[#2a2a2a] px-5 py-3">
+      <div className="flex items-center justify-between bg-[#1a1a1a] border-b border-[#2a2a2a] px-3 sm:px-5 py-2.5 sm:py-3">
         <span className="font-display text-gold tracking-[0.15em] text-base">THE TERMINAL</span>
         <div className="flex items-center gap-3">
           <Clock />

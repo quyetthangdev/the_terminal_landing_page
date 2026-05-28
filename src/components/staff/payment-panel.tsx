@@ -1,9 +1,6 @@
 import { useState } from 'react'
 import { generatePresets } from '@/data/tables'
-
-function formatVnd(n: number) {
-  return n.toLocaleString('vi-VN') + 'đ'
-}
+import { formatAmount, formatVnd } from '@/lib/format'
 
 interface Props {
   total: number
@@ -65,9 +62,9 @@ export default function PaymentPanel({ total, onConfirm }: Props) {
               <input
                 className="flex-1 bg-[#111] border border-[#2a2a2a] rounded text-[14px] font-semibold text-[#e8e0d0] px-3 py-2 outline-none focus:border-[#C9A84C55]"
                 placeholder="Nhập số tiền khác…"
-                value={received}
+                value={received === '' ? '' : formatAmount(received)}
                 onChange={e => {
-                  const v = parseInt(e.target.value.replace(/\D/g, ''), 10)
+                  const v = parseInt(e.target.value.replace(/\./g, '').replace(/\D/g, ''), 10)
                   setReceived(isNaN(v) ? '' : v)
                 }}
               />

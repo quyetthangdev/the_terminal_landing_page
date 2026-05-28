@@ -18,7 +18,7 @@ describe('PaymentPanel', () => {
   it('clicking preset fills input and shows change', async () => {
     render(<PaymentPanel total={345000} onConfirm={vi.fn()} />)
     await userEvent.click(screen.getByRole('button', { name: '400k' }))
-    expect(screen.getByDisplayValue('400000')).toBeInTheDocument()
+    expect(screen.getByDisplayValue('400.000')).toBeInTheDocument()
     expect(screen.getByText('55.000đ')).toBeInTheDocument()
   })
 

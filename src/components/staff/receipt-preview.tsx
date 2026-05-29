@@ -1,7 +1,7 @@
 import type { SubmittedOrder } from '@/types/session'
 import { mergeOrderItems } from '@/lib/orders'
 import { formatVnd } from '@/lib/format'
-import { seller } from '@/data/seller'
+import { useSettings } from '@/hooks/useSettings'
 
 interface Props {
   tableLabel: string
@@ -11,6 +11,7 @@ interface Props {
 }
 
 export default function ReceiptPreview({ tableLabel, issuedAt, orders, isDraft }: Props) {
+  const { settings } = useSettings()
   const d = new Date(issuedAt)
   const dd = String(d.getDate()).padStart(2, '0')
   const mm = String(d.getMonth() + 1).padStart(2, '0')
@@ -24,9 +25,9 @@ export default function ReceiptPreview({ tableLabel, issuedAt, orders, isDraft }
     <div className="bg-white text-black font-sans text-sm leading-relaxed max-w-sm mx-auto p-6 print:p-4 print:shadow-none shadow-lg">
       {/* Restaurant header */}
       <div className="text-center mb-4">
-        <p className="text-[16px] font-bold tracking-widest">{seller.name}</p>
-        <p className="text-[10px] text-gray-500 mt-0.5">{seller.address}</p>
-        <p className="text-[10px] text-gray-500">{seller.phone}</p>
+        <p className="text-[16px] font-bold tracking-widest">{settings.restaurantName}</p>
+        <p className="text-[10px] text-gray-500 mt-0.5">{settings.address}</p>
+        <p className="text-[10px] text-gray-500">{settings.phone}</p>
       </div>
 
       {/* Title */}

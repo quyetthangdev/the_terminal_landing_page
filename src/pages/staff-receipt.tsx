@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTableSessions } from '@/hooks/useTableSessions'
-import { tables } from '@/data/tables'
+import { useTableData } from '@/hooks/useTableData'
 import ReceiptPreview from '@/components/staff/receipt-preview'
 
 export default function StaffReceiptPage() {
@@ -10,6 +10,7 @@ export default function StaffReceiptPage() {
   const [searchParams] = useSearchParams()
   const isDraft = searchParams.get('draft') === 'true'
   const { sessions, closeSession } = useTableSessions()
+  const { tables } = useTableData()
   // Capture issuedAt once on mount so it doesn't change on re-renders
   const [issuedAt] = useState(() => new Date().toISOString())
 

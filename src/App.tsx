@@ -8,6 +8,11 @@ import StaffTableOrderPage from '@/pages/staff-table-order'
 import StaffPaymentPage from '@/pages/staff-payment'
 import StaffInvoicePage from '@/pages/staff-invoice'
 import StaffReceiptPage from '@/pages/staff-receipt'
+import AdminLayout from '@/pages/admin/admin-layout'
+import AdminDashboard from '@/pages/admin/admin-dashboard'
+import AdminMenuPage from '@/pages/admin/admin-menu'
+import AdminTablesPage from '@/pages/admin/admin-tables'
+import AdminSettingsPage from '@/pages/admin/admin-settings'
 
 export default function App() {
   return (
@@ -43,6 +48,12 @@ export default function App() {
         <Route path="/staff/table/:id/payment" element={<StaffPaymentPage />} />
         <Route path="/staff/table/:id/invoice" element={<StaffInvoicePage />} />
         <Route path="/staff/table/:id/receipt" element={<StaffReceiptPage />} />
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="menu" element={<AdminMenuPage />} />
+          <Route path="tables" element={<AdminTablesPage />} />
+          <Route path="settings" element={<AdminSettingsPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )

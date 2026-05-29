@@ -4,6 +4,7 @@ import { useTableSessions } from '@/hooks/useTableSessions'
 import { tables } from '@/data/tables'
 import PaymentPanel from '@/components/staff/payment-panel'
 import InvoiceForm from '@/components/staff/invoice-form'
+import ReceiptDialog from '@/components/staff/receipt-dialog'
 import { formatVnd } from '@/lib/format'
 import type { InvoiceRequest } from '@/types/invoice'
 
@@ -12,6 +13,7 @@ export default function StaffPaymentPage() {
   const navigate = useNavigate()
   const { sessions, closeSession, setInvoiceRequest } = useTableSessions()
   const [showInvoiceForm, setShowInvoiceForm] = useState(false)
+  const [receiptType, setReceiptType] = useState<'draft' | 'final' | null>(null)
 
   const table = tables.find(t => t.id === id)
   const session = id ? sessions[id] : undefined
@@ -44,12 +46,28 @@ export default function StaffPaymentPage() {
     navigate(`/staff/table/${id}/invoice`)
   }
 
+  function handleReceiptDone() {
+    if (!id) return
+    closeSession(id)
+    navigate('/staff')
+  }
+
   return (
     <div className="min-h-screen bg-brand-darker text-[#f5f0e8]">
       {showInvoiceForm && (
         <InvoiceForm
           onSubmit={handleInvoiceSubmit}
           onCancel={() => setShowInvoiceForm(false)}
+        />
+      )}
+      {receiptType !== null && id && (
+        <ReceiptDialog
+          tableId={id}
+          tableLabel={table.label}
+          orders={session.submittedOrders}
+          isDraft={receiptType === 'draft'}
+          onClose={() => setReceiptType(null)}
+          onDone={receiptType === 'final' ? handleReceiptDone : undefined}
         />
       )}
 
@@ -111,13 +129,13 @@ export default function StaffPaymentPage() {
             <p className="text-[10px] tracking-[0.2em] text-[#555] uppercase mb-3">Hoá đơn</p>
             <div className="space-y-2">
               <button
-                onClick={() => navigate(`/staff/table/${id}/receipt?draft=true`)}
+                onClick={() => setReceiptType('draft')}
                 className="w-full border border-[#333] text-[#888] text-[11px] tracking-[0.2em] py-2.5 rounded hover:bg-[#181818] transition-colors"
               >
                 XUẤT HOÁ ĐƠN TẠM
               </button>
               <button
-                onClick={() => navigate(`/staff/table/${id}/receipt`)}
+                onClick={() => setReceiptType('final')}
                 className="w-full border border-[#C9A84C44] text-gold text-[11px] tracking-[0.2em] py-2.5 rounded hover:bg-[#1e1a0e] transition-colors"
               >
                 XUẤT HOÁ ĐƠN THƯỜNG

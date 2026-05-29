@@ -4,12 +4,14 @@ import { useTableSessions } from '@/hooks/useTableSessions'
 import { tables } from '@/data/tables'
 import MenuPanel from '@/components/staff/menu-panel'
 import OrderSummary from '@/components/staff/order-summary'
+import ReceiptDialog from '@/components/staff/receipt-dialog'
 
 export default function StaffTableOrderPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { sessions, addItem, updateItem, removeItem, submitOrder, requestPayment } = useTableSessions()
   const [mobilePane, setMobilePane] = useState<'menu' | 'order'>('menu')
+  const [showDraftReceipt, setShowDraftReceipt] = useState(false)
 
   const table = tables.find(t => t.id === id)
   const session = id ? sessions[id] : undefined
@@ -40,6 +42,15 @@ export default function StaffTableOrderPage() {
 
   return (
     <div className="h-screen flex flex-col bg-brand-darker text-[#f5f0e8] overflow-hidden">
+      {showDraftReceipt && id && (
+        <ReceiptDialog
+          tableId={id}
+          tableLabel={table.label}
+          orders={session.submittedOrders}
+          isDraft={true}
+          onClose={() => setShowDraftReceipt(false)}
+        />
+      )}
       {/* Topbar */}
       <div className="flex items-center justify-between bg-[#1a1a1a] border-b border-[#2a2a2a] px-3 sm:px-5 py-2.5 flex-shrink-0 gap-2">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
@@ -103,7 +114,7 @@ export default function StaffTableOrderPage() {
             onRemoveItem={menuItemId => id && removeItem(id, menuItemId)}
             onSubmitOrder={() => id && submitOrder(id)}
             onPay={handlePay}
-            onDraftReceipt={() => id && navigate(`/staff/table/${id}/receipt?draft=true`)}
+            onDraftReceipt={() => setShowDraftReceipt(true)}
           />
         </div>
       </div>

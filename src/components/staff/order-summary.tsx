@@ -9,9 +9,10 @@ interface Props {
   onRemoveItem: (menuItemId: string) => void
   onSubmitOrder: () => void
   onPay: () => void
+  onDraftReceipt: () => void
 }
 
-export default function OrderSummary({ pendingItems, submittedOrders, onUpdateItem, onRemoveItem, onSubmitOrder, onPay }: Props) {
+export default function OrderSummary({ pendingItems, submittedOrders, onUpdateItem, onRemoveItem, onSubmitOrder, onPay, onDraftReceipt }: Props) {
   const [showConfirm, setShowConfirm] = useState(false)
 
   const pendingTotal = pendingItems.reduce((s, i) => s + i.priceNum * i.quantity, 0)
@@ -176,13 +177,22 @@ export default function OrderSummary({ pendingItems, submittedOrders, onUpdateIt
         >
           ĐẶT MÓN →
         </button>
-        <button
-          disabled={submittedOrders.length === 0}
-          onClick={onPay}
-          className="w-full bg-gold text-brand-dark text-[11px] font-bold tracking-[0.25em] py-2.5 rounded disabled:opacity-30"
-        >
-          THANH TOÁN →
-        </button>
+        <div className="flex gap-2">
+          <button
+            disabled={submittedOrders.length === 0}
+            onClick={onDraftReceipt}
+            className="px-3 py-2.5 border border-[#333] text-[#888] text-[11px] tracking-[0.1em] rounded disabled:opacity-30"
+          >
+            HĐ tạm
+          </button>
+          <button
+            disabled={submittedOrders.length === 0}
+            onClick={onPay}
+            className="flex-1 bg-gold text-brand-dark text-[11px] font-bold tracking-[0.25em] py-2.5 rounded disabled:opacity-30"
+          >
+            THANH TOÁN →
+          </button>
+        </div>
       </div>
     </div>
   )

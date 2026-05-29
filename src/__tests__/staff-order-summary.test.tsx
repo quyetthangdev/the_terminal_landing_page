@@ -18,6 +18,7 @@ const defaultProps = {
   onRemoveItem: vi.fn(),
   onSubmitOrder: vi.fn(),
   onPay: vi.fn(),
+  onDraftReceipt: vi.fn(),
 }
 
 describe('OrderSummary', () => {

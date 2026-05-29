@@ -10,8 +10,11 @@ interface Props {
 }
 
 export default function ReceiptPreview({ tableLabel, issuedAt, orders, isDraft }: Props) {
-  const [yyyy, mm, dd] = issuedAt.slice(0, 10).split('-')
-  const time = new Date(issuedAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
+  const d = new Date(issuedAt)
+  const dd = String(d.getDate()).padStart(2, '0')
+  const mm = String(d.getMonth() + 1).padStart(2, '0')
+  const yyyy = d.getFullYear()
+  const time = d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
 
   // Merge same menuItemId across all orders
   const merged: Record<string, { name: string; quantity: number; priceNum: number }> = {}
@@ -24,7 +27,7 @@ export default function ReceiptPreview({ tableLabel, issuedAt, orders, isDraft }
       }
     }
   }
-  const lines = Object.values(merged)
+  const lines = Object.entries(merged).map(([menuItemId, v]) => ({ menuItemId, ...v }))
   const total = lines.reduce((s, l) => s + l.priceNum * l.quantity, 0)
 
   return (
@@ -59,8 +62,8 @@ export default function ReceiptPreview({ tableLabel, issuedAt, orders, isDraft }
           </tr>
         </thead>
         <tbody>
-          {lines.map((line, idx) => (
-            <tr key={idx} className="border-b border-gray-100">
+          {lines.map(line => (
+            <tr key={line.menuItemId} className="border-b border-gray-100">
               <td className="py-1">{line.name}</td>
               <td className="text-center py-1">{line.quantity}</td>
               <td className="text-right py-1">{formatVnd(line.priceNum * line.quantity)}</td>

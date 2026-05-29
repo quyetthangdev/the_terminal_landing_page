@@ -1,4 +1,5 @@
-import type { SubmittedOrder } from '@/hooks/useTableSessions'
+import type { SubmittedOrder } from '@/types/session'
+import { mergeOrderItems } from '@/lib/orders'
 import { formatVnd } from '@/lib/format'
 import { seller } from '@/data/seller'
 
@@ -16,18 +17,7 @@ export default function ReceiptPreview({ tableLabel, issuedAt, orders, isDraft }
   const yyyy = d.getFullYear()
   const time = d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
 
-  // Merge same menuItemId across all orders
-  const merged: Record<string, { name: string; quantity: number; priceNum: number }> = {}
-  for (const order of orders) {
-    for (const item of order.items) {
-      if (merged[item.menuItemId]) {
-        merged[item.menuItemId].quantity += item.quantity
-      } else {
-        merged[item.menuItemId] = { name: item.name, quantity: item.quantity, priceNum: item.priceNum }
-      }
-    }
-  }
-  const lines = Object.entries(merged).map(([menuItemId, v]) => ({ menuItemId, ...v }))
+  const lines = mergeOrderItems(orders)
   const total = lines.reduce((s, l) => s + l.priceNum * l.quantity, 0)
 
   return (

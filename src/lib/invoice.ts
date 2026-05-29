@@ -1,5 +1,6 @@
 import type { InvoiceData, InvoiceLineItem, InvoiceRequest } from '@/types/invoice'
-import type { TableSession } from '@/hooks/useTableSessions'
+import type { TableSession } from '@/types/session'
+import { mergeOrderItems } from '@/lib/orders'
 import { seller } from '@/data/seller'
 
 const VAT_INCLUSIVE = 1.1
@@ -61,29 +62,18 @@ export function generateInvoiceNumber(): string {
 }
 
 export function buildInvoice(session: TableSession, request: InvoiceRequest): InvoiceData {
-  const allItems = session.submittedOrders.flatMap(o => o.items)
+  const merged = mergeOrderItems(session.submittedOrders)
 
-  const merged: Record<string, InvoiceLineItem> = {}
-  let seq = 1
-  for (const item of allItems) {
-    if (merged[item.menuItemId]) {
-      merged[item.menuItemId].quantity += item.quantity
-      merged[item.menuItemId].amount = Math.round(
-        (merged[item.menuItemId].quantity * item.priceNum) / VAT_INCLUSIVE,
-      )
-    } else {
-      merged[item.menuItemId] = {
-        no: seq++,
-        name: item.name,
-        unit: 'phần',
-        quantity: item.quantity,
-        unitPrice: Math.round(item.priceNum / VAT_INCLUSIVE),
-        amount: Math.round((item.priceNum * item.quantity) / VAT_INCLUSIVE),
-      }
-    }
-  }
+  const items: InvoiceLineItem[] = merged.map((item, i) => ({
+    no: i + 1,
+    name: item.name,
+    unit: 'phần',
+    quantity: item.quantity,
+    unitPrice: Math.round(item.priceNum / VAT_INCLUSIVE),
+    amount: Math.round((item.priceNum * item.quantity) / VAT_INCLUSIVE),
+  }))
 
-  const total = allItems.reduce((s, i) => s + i.priceNum * i.quantity, 0)
+  const total = merged.reduce((s, i) => s + i.priceNum * i.quantity, 0)
   const subtotal = Math.round(total / VAT_INCLUSIVE)
   const vatAmount = total - subtotal
 
@@ -93,7 +83,7 @@ export function buildInvoice(session: TableSession, request: InvoiceRequest): In
     issuedAt: new Date().toISOString(),
     seller,
     buyer: request,
-    items: Object.values(merged),
+    items,
     subtotal,
     vatRate: 0.1,
     vatAmount,

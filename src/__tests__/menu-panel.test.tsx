@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, it, expect, vi } from 'vitest'
 import MenuPanel from '@/components/staff/menu-panel'
 import { menuItems, categories } from '@/data/menu'
-import type { OrderItem } from '@/hooks/useTableSessions'
+import type { OrderItem } from '@/types/session'
 
 const defaultProps = {
   pendingItems: [] as OrderItem[],

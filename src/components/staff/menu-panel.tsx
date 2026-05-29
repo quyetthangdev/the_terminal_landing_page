@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { menuItems, categories, type CategoryId } from '@/data/menu'
-import type { OrderItem } from '@/hooks/useTableSessions'
+import type { OrderItem } from '@/types/session'
 
 interface Props {
   pendingItems: OrderItem[]

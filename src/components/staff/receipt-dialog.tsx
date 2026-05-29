@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { SubmittedOrder } from '@/hooks/useTableSessions'
+import type { SubmittedOrder } from '@/types/session'
 import ReceiptPreview from './receipt-preview'
 
 interface Props {

@@ -33,6 +33,8 @@ describe('useMenuData', () => {
     const id = result.current.items[0].id
     act(() => result.current.updateItem(id, { name: 'Renamed' }))
     expect(result.current.items.find(i => i.id === id)?.name).toBe('Renamed')
+    const stored: Array<{ id: string; name: string }> = JSON.parse(localStorage.getItem('terminal_menu_items') ?? '[]')
+    expect(stored.find(i => i.id === id)?.name).toBe('Renamed')
   })
 
   it('deletes an item by id', () => {

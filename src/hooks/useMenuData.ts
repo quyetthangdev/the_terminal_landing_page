@@ -15,11 +15,11 @@ function readLocal<T>(key: string, fallback: T): T {
 }
 
 export function useMenuData() {
-  const [items, setItems] = useState<MenuItem[]>(() => readLocal(ITEMS_KEY, defaultItems))
+  const [items, setItems] = useState<MenuItem[]>(() => readLocal(ITEMS_KEY, [...defaultItems]))
   const [categories, setCategories] = useState<Category[]>(() => readLocal(CATS_KEY, [...defaultCategories]))
 
   function addItem(item: Omit<MenuItem, 'id'>): void {
-    const next = [...items, { ...item, id: `item_${Date.now()}` }]
+    const next = [...items, { ...item, id: `item_${crypto.randomUUID()}` }]
     setItems(next)
     localStorage.setItem(ITEMS_KEY, JSON.stringify(next))
   }
@@ -37,7 +37,7 @@ export function useMenuData() {
   }
 
   function addCategory(label: string): void {
-    const next = [...categories, { id: `cat_${Date.now()}`, label }]
+    const next = [...categories, { id: `cat_${crypto.randomUUID()}`, label }]
     setCategories(next)
     localStorage.setItem(CATS_KEY, JSON.stringify(next))
   }

@@ -1,20 +1,20 @@
-import { tables } from '@/data/tables'
+import type { Table } from '@/data/tables'
 import type { TableSession } from '@/hooks/useTableSessions'
 import TableCard from '@/components/staff/table-card'
 
 interface Props {
+  tables: Table[]
   sessions: Record<string, TableSession>
   onTableClick: (tableId: string) => void
 }
 
-export default function FloorPlan({ sessions, onTableClick }: Props) {
+export default function FloorPlan({ tables, sessions, onTableClick }: Props) {
   const serving = tables.filter(t => sessions[t.id]?.status === 'serving').length
   const waiting = tables.filter(t => sessions[t.id]?.status === 'waiting_payment').length
   const empty = tables.length - serving - waiting
 
   return (
     <div className="p-3 sm:p-5">
-      {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-4 sm:mb-6">
         {[
           { val: tables.length, label: 'Tổng bàn', cls: 'text-[#f5f0e8]' },
@@ -28,17 +28,10 @@ export default function FloorPlan({ sessions, onTableClick }: Props) {
           </div>
         ))}
       </div>
-
-      {/* Table grid */}
       <p className="text-[10px] tracking-[0.2em] text-[#555] uppercase mb-2 sm:mb-3">SƠ ĐỒ BÀN</p>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
         {tables.map(t => (
-          <TableCard
-            key={t.id}
-            table={t}
-            session={sessions[t.id]}
-            onClick={() => onTableClick(t.id)}
-          />
+          <TableCard key={t.id} table={t} session={sessions[t.id]} onClick={() => onTableClick(t.id)} />
         ))}
       </div>
     </div>

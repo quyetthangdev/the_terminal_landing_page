@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useTableSessions } from '@/hooks/useTableSessions'
-import { tables } from '@/data/tables'
+import { useTableData } from '@/hooks/useTableData'
 import PaymentPanel from '@/components/staff/payment-panel'
 import InvoiceForm from '@/components/staff/invoice-form'
 import ReceiptDialog from '@/components/staff/receipt-dialog'
@@ -13,6 +13,7 @@ export default function StaffPaymentPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { sessions, closeSession, setInvoiceRequest } = useTableSessions()
+  const { tables } = useTableData()
   const [showInvoiceForm, setShowInvoiceForm] = useState(false)
   const [receiptType, setReceiptType] = useState<'draft' | 'final' | null>(null)
 

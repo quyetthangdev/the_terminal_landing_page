@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTableSessions } from '@/hooks/useTableSessions'
-import { tables } from '@/data/tables'
+import { useTableData } from '@/hooks/useTableData'
 import MenuPanel from '@/components/staff/menu-panel'
 import OrderSummary from '@/components/staff/order-summary'
 import ReceiptDialog from '@/components/staff/receipt-dialog'
@@ -10,6 +10,7 @@ export default function StaffTableOrderPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { sessions, addItem, updateItem, removeItem, submitOrder, requestPayment } = useTableSessions()
+  const { tables } = useTableData()
   const [mobilePane, setMobilePane] = useState<'menu' | 'order'>('menu')
   const [showDraftReceipt, setShowDraftReceipt] = useState(false)
 

@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { numberToWords, generateInvoiceNumber, buildInvoice } from '@/lib/invoice'
-import type { InvoiceRequest } from '@/types/invoice'
+import type { InvoiceRequest, SellerInfo } from '@/types/invoice'
 import type { TableSession } from '@/hooks/useTableSessions'
 
 beforeEach(() => localStorage.clear())
@@ -11,6 +11,14 @@ const mockRequest: InvoiceRequest = {
   buyerAddress: '456 Nguyễn Huệ, Q1, TP.HCM',
   buyerEmail: 'ke-toan@abc.com',
   paymentMethod: 'cash',
+}
+
+const mockSeller: SellerInfo = {
+  name: 'The Terminal',
+  address: '123 Test St',
+  taxCode: '0123456789',
+  phone: '0900000000',
+  invoiceSymbol: 'AA/25E',
 }
 
 const mockSession: TableSession = {
@@ -66,28 +74,28 @@ describe('generateInvoiceNumber', () => {
 
 describe('buildInvoice', () => {
   it('merges items from all submitted orders', () => {
-    const inv = buildInvoice(mockSession, mockRequest)
+    const inv = buildInvoice(mockSession, mockRequest, mockSeller)
     expect(inv.items).toHaveLength(2)
   })
 
   it('calculates total as sum of all submitted order items', () => {
     // 2 × 245000 + 1 × 55000 = 545000
-    const inv = buildInvoice(mockSession, mockRequest)
+    const inv = buildInvoice(mockSession, mockRequest, mockSeller)
     expect(inv.total).toBe(545000)
   })
 
   it('derives subtotal as total / 1.1 (rounded)', () => {
-    const inv = buildInvoice(mockSession, mockRequest)
+    const inv = buildInvoice(mockSession, mockRequest, mockSeller)
     expect(inv.subtotal).toBe(Math.round(545000 / 1.1))
   })
 
   it('vatAmount = total - subtotal', () => {
-    const inv = buildInvoice(mockSession, mockRequest)
+    const inv = buildInvoice(mockSession, mockRequest, mockSeller)
     expect(inv.vatAmount).toBe(inv.total - inv.subtotal)
   })
 
   it('assigns correct invoice number and symbol', () => {
-    const inv = buildInvoice(mockSession, mockRequest)
+    const inv = buildInvoice(mockSession, mockRequest, mockSeller)
     expect(inv.number).toBe('0000001')
     expect(inv.symbol).toBe('AA/25E')
   })
@@ -104,7 +112,7 @@ describe('buildInvoice', () => {
         ]},
       ],
     }
-    const inv = buildInvoice(sessionWithDupe, mockRequest)
+    const inv = buildInvoice(sessionWithDupe, mockRequest, mockSeller)
     expect(inv.items).toHaveLength(1)
     expect(inv.items[0].quantity).toBe(3)
   })

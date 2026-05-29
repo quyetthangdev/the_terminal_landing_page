@@ -1,26 +1,33 @@
 import { useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTableSessions } from '@/hooks/useTableSessions'
-import { tables } from '@/data/tables'
+import { useTableData } from '@/hooks/useTableData'
+import { useSettings } from '@/hooks/useSettings'
 import { buildInvoice } from '@/lib/invoice'
+import type { SellerInfo } from '@/types/invoice'
 import InvoicePreview from '@/components/staff/invoice-preview'
 
 export default function StaffInvoicePage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { sessions, closeSession } = useTableSessions()
+  const { tables } = useTableData()
+  const { settings } = useSettings()
 
   const table = tables.find(t => t.id === id)
   const session = id ? sessions[id] : undefined
 
-  // Call hook unconditionally before any early return
   const invoice = useMemo(() => {
-    // Guard inside the callback to ensure we have valid data
-    if (!session || !session.invoiceRequest) {
-      return null
+    if (!session?.invoiceRequest) return null
+    const sellerInfo: SellerInfo = {
+      name: settings.restaurantName,
+      address: settings.address,
+      taxCode: settings.taxCode,
+      phone: settings.phone,
+      invoiceSymbol: settings.invoiceSymbol,
     }
-    return buildInvoice(session, session.invoiceRequest)
-  }, [session])
+    return buildInvoice(session, session.invoiceRequest, sellerInfo, settings.vatRate)
+  }, [session, settings])
 
   if (!table || !session || !session.invoiceRequest || !invoice) {
     return (
@@ -41,7 +48,6 @@ export default function StaffInvoicePage() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Action bar — hidden when printing */}
       <div className="print:hidden sticky top-0 z-10 flex items-center justify-between bg-[#1a1a1a] border-b border-[#2a2a2a] px-4 sm:px-6 py-3 gap-3">
         <div className="flex items-center gap-3">
           <button
@@ -70,8 +76,6 @@ export default function StaffInvoicePage() {
           </button>
         </div>
       </div>
-
-      {/* Invoice */}
       <div className="py-6 px-4 print:p-0 print:py-0">
         <InvoicePreview invoice={invoice} />
       </div>

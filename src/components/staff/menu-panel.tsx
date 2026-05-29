@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { menuItems, categories, type CategoryId } from '@/data/menu'
+import { useMenuData } from '@/hooks/useMenuData'
 import type { OrderItem } from '@/types/session'
 import { ToastAddIcon } from '@/components/ui/toast-icons'
 
@@ -14,8 +14,9 @@ function parsePrice(price: string): number {
 }
 
 export default function MenuPanel({ pendingItems, onAdd }: Props) {
-  const [active, setActive] = useState<CategoryId>('appetizers')
-  const filtered = menuItems.filter(m => m.category === active)
+  const { items, categories } = useMenuData()
+  const [active, setActive] = useState(categories[0]?.id ?? 'appetizers')
+  const filtered = items.filter(m => m.category === active)
 
   function qtyOf(menuItemId: string) {
     return pendingItems.find(i => i.menuItemId === menuItemId)?.quantity ?? 0
@@ -28,7 +29,7 @@ export default function MenuPanel({ pendingItems, onAdd }: Props) {
         {categories.map(cat => (
           <button
             key={cat.id}
-            onClick={() => setActive(cat.id as CategoryId)}
+            onClick={() => setActive(cat.id)}
             className={`px-2 py-3 text-[10px] tracking-[0.1em] text-left leading-tight border-l-2 transition-colors ${
               active === cat.id
                 ? 'text-gold border-gold bg-[#1c1a10]'
@@ -40,7 +41,7 @@ export default function MenuPanel({ pendingItems, onAdd }: Props) {
         ))}
       </div>
 
-      {/* Right: item grid — 2 cols on mobile (square cards), 2 cols on sm+ (wide cards) */}
+      {/* Right: item grid */}
       <div className="flex-1 overflow-y-auto p-2 sm:p-3 grid grid-cols-2 gap-2 sm:gap-2.5 content-start">
         {filtered.map(item => {
           const qty = qtyOf(item.id)
@@ -58,15 +59,9 @@ export default function MenuPanel({ pendingItems, onAdd }: Props) {
                   {qty}
                 </span>
               )}
-
-              {/* Mobile layout: square card — image top, info bottom */}
+              {/* Mobile layout: square card */}
               <div className="sm:hidden">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full aspect-square object-cover"
-                  loading="lazy"
-                />
+                <img src={item.image} alt={item.name} className="w-full aspect-square object-cover" loading="lazy" />
                 <div className="p-1.5">
                   <p className="text-[10px] font-semibold text-[#e8e0d0] leading-snug mb-1.5 pr-4 line-clamp-2">{item.name}</p>
                   <div className="flex items-center justify-between gap-1">
@@ -75,22 +70,14 @@ export default function MenuPanel({ pendingItems, onAdd }: Props) {
                       aria-label={`Thêm ${item.name}`}
                       onClick={handleAdd}
                       className="w-6 h-6 flex-shrink-0 rounded bg-gold text-brand-dark text-sm font-bold flex items-center justify-center"
-                    >
-                      +
-                    </button>
+                    >+</button>
                   </div>
                 </div>
               </div>
-
-              {/* sm+ layout: horizontal card — image left, info right */}
+              {/* sm+ layout: horizontal card */}
               <div className="hidden sm:block p-2.5">
                 <div className="flex gap-2 mb-2">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-14 h-14 object-cover rounded flex-shrink-0"
-                    loading="lazy"
-                  />
+                  <img src={item.image} alt={item.name} className="w-14 h-14 object-cover rounded flex-shrink-0" loading="lazy" />
                   <div className="flex-1 min-w-0">
                     <p className="text-[11px] font-semibold text-[#e8e0d0] leading-snug mb-0.5 pr-4">{item.name}</p>
                     <p className="text-[9px] text-[#555] leading-relaxed line-clamp-3">{item.description}</p>
@@ -102,9 +89,7 @@ export default function MenuPanel({ pendingItems, onAdd }: Props) {
                     aria-label={`Thêm ${item.name}`}
                     onClick={handleAdd}
                     className="w-6 h-6 rounded bg-gold text-brand-dark text-sm font-bold flex items-center justify-center"
-                  >
-                    +
-                  </button>
+                  >+</button>
                 </div>
               </div>
             </div>

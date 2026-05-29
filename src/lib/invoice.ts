@@ -1,9 +1,6 @@
-import type { InvoiceData, InvoiceLineItem, InvoiceRequest } from '@/types/invoice'
+import type { InvoiceData, InvoiceLineItem, InvoiceRequest, SellerInfo } from '@/types/invoice'
 import type { TableSession } from '@/types/session'
 import { mergeOrderItems } from '@/lib/orders'
-import { seller } from '@/data/seller'
-
-const VAT_INCLUSIVE = 1.1
 const ONES = ['', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín']
 const ONES_AFTER_TEN = ['', 'mốt', 'hai', 'ba', 'bốn', 'lăm', 'sáu', 'bảy', 'tám', 'chín']
 
@@ -61,7 +58,13 @@ export function generateInvoiceNumber(): string {
   return String(n).padStart(7, '0')
 }
 
-export function buildInvoice(session: TableSession, request: InvoiceRequest): InvoiceData {
+export function buildInvoice(
+  session: TableSession,
+  request: InvoiceRequest,
+  sellerInfo: SellerInfo,
+  vatRate = 0.1,
+): InvoiceData {
+  const vatInclusive = 1 + vatRate
   const merged = mergeOrderItems(session.submittedOrders)
 
   const items: InvoiceLineItem[] = merged.map((item, i) => ({
@@ -69,23 +72,23 @@ export function buildInvoice(session: TableSession, request: InvoiceRequest): In
     name: item.name,
     unit: 'phần',
     quantity: item.quantity,
-    unitPrice: Math.round(item.priceNum / VAT_INCLUSIVE),
-    amount: Math.round((item.priceNum * item.quantity) / VAT_INCLUSIVE),
+    unitPrice: Math.round(item.priceNum / vatInclusive),
+    amount: Math.round((item.priceNum * item.quantity) / vatInclusive),
   }))
 
   const total = merged.reduce((s, i) => s + i.priceNum * i.quantity, 0)
-  const subtotal = Math.round(total / VAT_INCLUSIVE)
+  const subtotal = Math.round(total / vatInclusive)
   const vatAmount = total - subtotal
 
   return {
     number: generateInvoiceNumber(),
-    symbol: seller.invoiceSymbol,
+    symbol: sellerInfo.invoiceSymbol,
     issuedAt: new Date().toISOString(),
-    seller,
+    seller: sellerInfo,
     buyer: request,
     items,
     subtotal,
-    vatRate: 0.1,
+    vatRate,
     vatAmount,
     total,
     totalInWords: numberToWords(total),

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import type { FormEvent } from 'react'
 
 interface Props {
   correctPin: string
@@ -9,7 +10,7 @@ export default function PinGate({ correctPin, onSuccess }: Props) {
   const [input, setInput] = useState('')
   const [error, setError] = useState(false)
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (input === correctPin) {
       onSuccess()
@@ -32,6 +33,7 @@ export default function PinGate({ correctPin, onSuccess }: Props) {
             value={input}
             onChange={e => { setInput(e.target.value); setError(false) }}
             placeholder="Nhập PIN"
+            autoFocus
             className="w-full bg-[#111] border border-[#333] rounded px-4 py-3 text-center text-[#f5f0e8] text-lg tracking-[0.3em] outline-none focus:border-[#C9A84C44]"
           />
           {error && <p className="text-red-400 text-[11px] text-center">PIN không đúng</p>}

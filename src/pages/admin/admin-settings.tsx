@@ -28,6 +28,10 @@ export default function AdminSettingsPage() {
       toast.error('PIN phải có ít nhất 4 ký tự')
       return
     }
+    if (!/^\d+$/.test(newPin)) {
+      toast.error('PIN chỉ được chứa chữ số')
+      return
+    }
     if (newPin !== confirmPin) {
       toast.error('PIN xác nhận không khớp')
       return
@@ -75,7 +79,10 @@ export default function AdminSettingsPage() {
           <label htmlFor="s-vat" className={labelCls}>Thuế VAT (%)</label>
           <input id="s-vat" type="number" min={0} max={100} step={1}
             value={Math.round(form.vatRate * 100)}
-            onChange={e => setForm(f => ({ ...f, vatRate: Number(e.target.value) / 100 }))}
+            onChange={e => {
+              const pct = Math.max(0, Math.min(100, Number(e.target.value) || 0))
+              setForm(f => ({ ...f, vatRate: pct / 100 }))
+            }}
             className={inputCls} />
         </div>
         <button type="submit" className="bg-gold text-brand-dark font-bold text-[11px] tracking-[0.2em] px-6 py-2.5 rounded">
@@ -89,11 +96,13 @@ export default function AdminSettingsPage() {
           <div>
             <label htmlFor="pin-new" className={labelCls}>PIN mới</label>
             <input id="pin-new" type="password" inputMode="numeric" value={newPin}
+              autoComplete="new-password" maxLength={8} pattern="\d*"
               onChange={e => setNewPin(e.target.value)} className={inputCls} />
           </div>
           <div>
             <label htmlFor="pin-confirm" className={labelCls}>Xác nhận PIN</label>
             <input id="pin-confirm" type="password" inputMode="numeric" value={confirmPin}
+              autoComplete="new-password" maxLength={8} pattern="\d*"
               onChange={e => setConfirmPin(e.target.value)} className={inputCls} />
           </div>
           <button type="submit" className="bg-gold text-brand-dark font-bold text-[11px] tracking-[0.2em] px-6 py-2.5 rounded">

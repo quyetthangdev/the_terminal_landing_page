@@ -19,39 +19,51 @@ export function useMenuData() {
   const [categories, setCategories] = useState<Category[]>(() => readLocal(CATS_KEY, [...defaultCategories]))
 
   function addItem(item: Omit<MenuItem, 'id'>): void {
-    const next = [...items, { ...item, id: `item_${crypto.randomUUID()}` }]
-    setItems(next)
-    localStorage.setItem(ITEMS_KEY, JSON.stringify(next))
+    setItems(prev => {
+      const next = [...prev, { ...item, id: `item_${crypto.randomUUID()}` }]
+      localStorage.setItem(ITEMS_KEY, JSON.stringify(next))
+      return next
+    })
   }
 
   function updateItem(id: string, patch: Partial<Omit<MenuItem, 'id'>>): void {
-    const next = items.map(i => (i.id === id ? { ...i, ...patch } : i))
-    setItems(next)
-    localStorage.setItem(ITEMS_KEY, JSON.stringify(next))
+    setItems(prev => {
+      const next = prev.map(i => (i.id === id ? { ...i, ...patch } : i))
+      localStorage.setItem(ITEMS_KEY, JSON.stringify(next))
+      return next
+    })
   }
 
   function deleteItem(id: string): void {
-    const next = items.filter(i => i.id !== id)
-    setItems(next)
-    localStorage.setItem(ITEMS_KEY, JSON.stringify(next))
+    setItems(prev => {
+      const next = prev.filter(i => i.id !== id)
+      localStorage.setItem(ITEMS_KEY, JSON.stringify(next))
+      return next
+    })
   }
 
   function addCategory(label: string): void {
-    const next = [...categories, { id: `cat_${crypto.randomUUID()}`, label }]
-    setCategories(next)
-    localStorage.setItem(CATS_KEY, JSON.stringify(next))
+    setCategories(prev => {
+      const next = [...prev, { id: `cat_${crypto.randomUUID()}`, label }]
+      localStorage.setItem(CATS_KEY, JSON.stringify(next))
+      return next
+    })
   }
 
   function updateCategory(id: string, label: string): void {
-    const next = categories.map(c => (c.id === id ? { ...c, label } : c))
-    setCategories(next)
-    localStorage.setItem(CATS_KEY, JSON.stringify(next))
+    setCategories(prev => {
+      const next = prev.map(c => (c.id === id ? { ...c, label } : c))
+      localStorage.setItem(CATS_KEY, JSON.stringify(next))
+      return next
+    })
   }
 
   function deleteCategory(id: string): void {
-    const next = categories.filter(c => c.id !== id)
-    setCategories(next)
-    localStorage.setItem(CATS_KEY, JSON.stringify(next))
+    setCategories(prev => {
+      const next = prev.filter(c => c.id !== id)
+      localStorage.setItem(CATS_KEY, JSON.stringify(next))
+      return next
+    })
   }
 
   return { items, categories, addItem, updateItem, deleteItem, addCategory, updateCategory, deleteCategory }

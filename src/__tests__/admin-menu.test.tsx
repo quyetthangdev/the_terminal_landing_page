@@ -36,3 +36,48 @@ describe('MenuItemForm', () => {
     expect((screen.getByLabelText(/giá/i) as HTMLInputElement).value).toBe('200.000đ')
   })
 })
+
+import { MemoryRouter } from 'react-router-dom'
+import AdminMenuPage from '@/pages/admin/admin-menu'
+
+const mockDeleteItem = vi.fn()
+const mockAddItem = vi.fn()
+const mockUpdateItem = vi.fn()
+
+// Mock hooks
+vi.mock('@/hooks/useMenuData', () => ({
+  useMenuData: () => ({
+    items: [
+      { id: 'item1', name: 'Gỏi cuốn', description: '', price: '85.000đ', image: '', category: 'appetizers' },
+    ],
+    categories: [{ id: 'appetizers', label: 'Khai Vị' }],
+    addItem: mockAddItem,
+    updateItem: mockUpdateItem,
+    deleteItem: mockDeleteItem,
+  }),
+}))
+
+// Mock sonner
+vi.mock('sonner', () => ({ toast: { success: vi.fn() } }))
+
+describe('AdminMenuPage', () => {
+  it('renders item list and category tabs', () => {
+    render(<MemoryRouter><AdminMenuPage /></MemoryRouter>)
+    expect(screen.getByText('Khai Vị')).toBeInTheDocument()
+    expect(screen.getByText('Gỏi cuốn')).toBeInTheDocument()
+  })
+
+  it('opens add modal when THÊM MÓN is clicked', () => {
+    render(<MemoryRouter><AdminMenuPage /></MemoryRouter>)
+    fireEvent.click(screen.getByText(/thêm món/i))
+    expect(screen.getByText('Thêm món mới')).toBeInTheDocument()
+  })
+
+  it('calls deleteItem with confirm', async () => {
+    vi.spyOn(window, 'confirm').mockReturnValue(true)
+    render(<MemoryRouter><AdminMenuPage /></MemoryRouter>)
+    fireEvent.click(screen.getByRole('button', { name: /xóa/i }))
+    expect(mockDeleteItem).toHaveBeenCalledWith('item1')
+    vi.restoreAllMocks()
+  })
+})

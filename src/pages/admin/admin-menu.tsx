@@ -18,7 +18,8 @@ export default function AdminMenuPage() {
         <h1 className="text-[10px] tracking-[0.2em] text-[#555] uppercase">Quản lý thực đơn</h1>
         <button
           onClick={() => setAdding(true)}
-          className="bg-gold text-brand-dark text-[11px] tracking-[0.15em] font-bold px-4 py-2 rounded"
+          disabled={categories.length === 0}
+          className="bg-gold text-brand-dark text-[11px] tracking-[0.15em] font-bold px-4 py-2 rounded disabled:opacity-40 disabled:cursor-not-allowed"
         >
           + THÊM MÓN
         </button>
@@ -56,6 +57,12 @@ export default function AdminMenuPage() {
         </div>
       )}
 
+      {categories.length === 0 && (
+        <p className="text-[#555] text-[12px] text-center py-8">
+          Chưa có danh mục. Hãy thêm danh mục trước khi thêm món.
+        </p>
+      )}
+
       <div className="flex gap-2 overflow-x-auto pb-2 mb-4">
         {categories.map(cat => (
           <button
@@ -90,7 +97,11 @@ export default function AdminMenuPage() {
                 SỬA
               </button>
               <button
-                onClick={() => { deleteItem(item.id); toast.success('Đã xóa món') }}
+                onClick={() => {
+                  if (!window.confirm(`Xóa "${item.name}"?`)) return
+                  deleteItem(item.id)
+                  toast.success('Đã xóa món')
+                }}
                 className="text-[10px] tracking-[0.1em] text-red-400 border border-red-900/30 px-3 py-1.5 rounded hover:bg-red-900/10"
               >
                 XÓA

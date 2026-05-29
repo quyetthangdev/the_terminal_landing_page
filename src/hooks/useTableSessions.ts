@@ -1,29 +1,8 @@
 import { useState, useCallback } from 'react'
-import type { InvoiceRequest } from '@/types/invoice'
+import type { OrderItem, SubmittedOrder, TableSession } from '@/types/session'
 
-export interface OrderItem {
-  menuItemId: string
-  name: string
-  priceNum: number
-  price: string
-  quantity: number
-  note: string
-}
-
-export interface SubmittedOrder {
-  id: string
-  items: OrderItem[]
-  submittedAt: string
-}
-
-export interface TableSession {
-  tableId: string
-  status: 'empty' | 'serving' | 'waiting_payment' | 'done'
-  pendingItems: OrderItem[]
-  submittedOrders: SubmittedOrder[]
-  openedAt: string
-  invoiceRequest?: InvoiceRequest
-}
+// Re-export so all existing imports from this hook continue to work
+export type { OrderItem, SubmittedOrder, TableSession } from '@/types/session'
 
 const STORAGE_KEY = 'terminal_staff_sessions'
 

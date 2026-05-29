@@ -68,7 +68,7 @@ export default function MenuPanel({ pendingItems, onAdd }: Props) {
                     <button
                       aria-label={`Thêm ${item.name}`}
                       onClick={() => onAdd({ menuItemId: item.id, name: item.name, priceNum: parsePrice(item.price), price: item.price })}
-                      className="w-[20px] h-[20px] flex-shrink-0 rounded bg-gold text-brand-dark text-sm font-bold flex items-center justify-center"
+                      className="w-6 h-6 flex-shrink-0 rounded bg-gold text-brand-dark text-sm font-bold flex items-center justify-center"
                     >
                       +
                     </button>
@@ -95,7 +95,7 @@ export default function MenuPanel({ pendingItems, onAdd }: Props) {
                   <button
                     aria-label={`Thêm ${item.name}`}
                     onClick={() => onAdd({ menuItemId: item.id, name: item.name, priceNum: parsePrice(item.price), price: item.price })}
-                    className="w-[20px] h-[20px] rounded bg-gold text-brand-dark text-sm font-bold flex items-center justify-center"
+                    className="w-6 h-6 rounded bg-gold text-brand-dark text-sm font-bold flex items-center justify-center"
                   >
                     +
                   </button>

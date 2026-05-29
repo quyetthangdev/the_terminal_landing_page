@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import MuseumPage from '@/pages/MuseumPage'
-import GlassPage from '@/pages/GlassPage'
+import MuseumPage from '@/pages/museum-page'
+import GlassPage from '@/pages/glass-page'
 import StaffFloorPlanPage from '@/pages/staff-floor-plan'
 import StaffTableOrderPage from '@/pages/staff-table-order'
 import StaffPaymentPage from '@/pages/staff-payment'

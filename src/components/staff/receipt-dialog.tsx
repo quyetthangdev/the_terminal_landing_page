@@ -16,8 +16,8 @@ export default function ReceiptDialog({ tableId, tableLabel, orders, isDraft, on
   const receiptUrl = `/staff/table/${tableId}/receipt${isDraft ? '?draft=true' : ''}`
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/75 flex items-end sm:items-center justify-center sm:p-4">
-      <div className="bg-white w-full sm:max-w-sm sm:rounded-lg max-h-[90vh] flex flex-col shadow-xl">
+    <div className="fixed inset-0 z-50 bg-black/75 flex items-end sm:items-center justify-center sm:p-4" onClick={onClose}>
+      <div className="bg-white w-full sm:max-w-sm sm:rounded-lg max-h-[90vh] flex flex-col shadow-xl" onClick={e => e.stopPropagation()}>
         {/* Top bar */}
         <div className="flex items-center justify-between bg-[#1a1a1a] sm:rounded-t-lg px-4 py-3 flex-shrink-0">
           <div className="flex items-center gap-3">

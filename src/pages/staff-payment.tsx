@@ -108,14 +108,28 @@ export default function StaffPaymentPage() {
           <PaymentPanel total={total} onConfirm={handleConfirm} />
 
           <div className="mt-6 pt-4 border-t border-[#2a2a2a]">
-            <p className="text-[10px] tracking-[0.2em] text-[#555] uppercase mb-3">Hoá đơn đỏ</p>
-            <button
-              onClick={() => setShowInvoiceForm(true)}
-              className="w-full border border-[#C9A84C44] text-gold text-[11px] tracking-[0.2em] py-2.5 rounded hover:bg-[#1e1a0e] transition-colors"
-            >
-              XUẤT HOÁ ĐƠN GTGT →
-            </button>
-            <p className="text-[9px] text-[#444] mt-2 text-center">Dành cho khách hàng doanh nghiệp</p>
+            <p className="text-[10px] tracking-[0.2em] text-[#555] uppercase mb-3">Hoá đơn</p>
+            <div className="space-y-2">
+              <button
+                onClick={() => navigate(`/staff/table/${id}/receipt?draft=true`)}
+                className="w-full border border-[#333] text-[#888] text-[11px] tracking-[0.2em] py-2.5 rounded hover:bg-[#181818] transition-colors"
+              >
+                XUẤT HOÁ ĐƠN TẠM
+              </button>
+              <button
+                onClick={() => navigate(`/staff/table/${id}/receipt`)}
+                className="w-full border border-[#C9A84C44] text-gold text-[11px] tracking-[0.2em] py-2.5 rounded hover:bg-[#1e1a0e] transition-colors"
+              >
+                XUẤT HOÁ ĐƠN THƯỜNG
+              </button>
+              <button
+                onClick={() => setShowInvoiceForm(true)}
+                className="w-full border border-[#C9A84C44] text-gold text-[11px] tracking-[0.2em] py-2.5 rounded hover:bg-[#1e1a0e] transition-colors"
+              >
+                XUẤT HOÁ ĐƠN GTGT →
+              </button>
+            </div>
+            <p className="text-[9px] text-[#444] mt-2 text-center">GTGT dành cho khách hàng doanh nghiệp</p>
           </div>
         </div>
       </div>

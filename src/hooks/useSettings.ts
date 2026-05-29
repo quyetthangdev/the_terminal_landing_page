@@ -34,9 +34,11 @@ export function useSettings() {
   })
 
   function updateSettings(patch: Partial<AdminSettings>): void {
-    const next = { ...settings, ...patch }
-    setSettings(next)
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(next))
+    setSettings(prev => {
+      const next = { ...prev, ...patch }
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(next))
+      return next
+    })
   }
 
   return { settings, updateSettings }

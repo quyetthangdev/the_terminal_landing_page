@@ -80,7 +80,7 @@ export default function AdminTablesPage() {
           </div>
         ))}
         {tables.length === 0 && (
-          <p className="text-[#555] text-[12px] text-center py-8 col-span-3">Chưa có bàn nào</p>
+          <p className="text-[#555] text-[12px] text-center py-8 col-span-1 sm:col-span-2 lg:col-span-3">Chưa có bàn nào</p>
         )}
       </div>
     </div>

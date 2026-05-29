@@ -29,20 +29,20 @@ export default function TableForm({ initial, onSave, onCancel }: Props) {
       <div>
         <label htmlFor="tf-seats" className="text-[10px] tracking-[0.15em] text-[#555] uppercase block mb-1">Số chỗ ngồi</label>
         <input id="tf-seats" type="number" min={1} max={20} required value={seats}
-          onChange={e => setSeats(Number(e.target.value))}
+          onChange={e => setSeats(Math.max(1, Number(e.target.value) || 1))}
           className="w-full bg-[#111] border border-[#333] rounded px-3 py-2 text-[13px] text-[#f5f0e8] focus:border-[#C9A84C44] outline-none" />
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label htmlFor="tf-col" className="text-[10px] tracking-[0.15em] text-[#555] uppercase block mb-1">Cột (1–4)</label>
           <input id="tf-col" type="number" min={1} max={4} required value={gridCol}
-            onChange={e => setGridCol(Number(e.target.value))}
+            onChange={e => setGridCol(Math.min(4, Math.max(1, Number(e.target.value) || 1)))}
             className="w-full bg-[#111] border border-[#333] rounded px-3 py-2 text-[13px] text-[#f5f0e8] focus:border-[#C9A84C44] outline-none" />
         </div>
         <div>
           <label htmlFor="tf-row" className="text-[10px] tracking-[0.15em] text-[#555] uppercase block mb-1">Hàng (1–3)</label>
           <input id="tf-row" type="number" min={1} max={3} required value={gridRow}
-            onChange={e => setGridRow(Number(e.target.value))}
+            onChange={e => setGridRow(Math.min(3, Math.max(1, Number(e.target.value) || 1)))}
             className="w-full bg-[#111] border border-[#333] rounded px-3 py-2 text-[13px] text-[#f5f0e8] focus:border-[#C9A84C44] outline-none" />
         </div>
       </div>

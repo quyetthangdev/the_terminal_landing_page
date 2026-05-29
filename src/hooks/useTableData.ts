@@ -15,21 +15,27 @@ export function useTableData() {
   })
 
   function addTable(table: Omit<Table, 'id'>): void {
-    const next = [...tables, { ...table, id: `t${crypto.randomUUID()}` }]
-    setTables(next)
-    localStorage.setItem(TABLES_KEY, JSON.stringify(next))
+    setTables(prev => {
+      const next = [...prev, { ...table, id: `t${crypto.randomUUID()}` }]
+      localStorage.setItem(TABLES_KEY, JSON.stringify(next))
+      return next
+    })
   }
 
   function updateTable(id: string, patch: Partial<Omit<Table, 'id'>>): void {
-    const next = tables.map(t => (t.id === id ? { ...t, ...patch } : t))
-    setTables(next)
-    localStorage.setItem(TABLES_KEY, JSON.stringify(next))
+    setTables(prev => {
+      const next = prev.map(t => (t.id === id ? { ...t, ...patch } : t))
+      localStorage.setItem(TABLES_KEY, JSON.stringify(next))
+      return next
+    })
   }
 
   function deleteTable(id: string): void {
-    const next = tables.filter(t => t.id !== id)
-    setTables(next)
-    localStorage.setItem(TABLES_KEY, JSON.stringify(next))
+    setTables(prev => {
+      const next = prev.filter(t => t.id !== id)
+      localStorage.setItem(TABLES_KEY, JSON.stringify(next))
+      return next
+    })
   }
 
   return { tables, addTable, updateTable, deleteTable }

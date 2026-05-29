@@ -1,6 +1,23 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { MemoryRouter } from 'react-router-dom'
 import TableForm from '@/components/admin/table-form'
+import AdminTablesPage from '@/pages/admin/admin-tables'
+
+const mockDeleteTable = vi.fn()
+const mockAddTable = vi.fn()
+const mockUpdateTable = vi.fn()
+
+vi.mock('@/hooks/useTableData', () => ({
+  useTableData: () => ({
+    tables: [{ id: 't1', label: 'Bàn 01', seats: 4, gridCol: 1, gridRow: 1 }],
+    addTable: mockAddTable,
+    updateTable: mockUpdateTable,
+    deleteTable: mockDeleteTable,
+  }),
+}))
+
+vi.mock('sonner', () => ({ toast: { success: vi.fn() } }))
 
 describe('TableForm', () => {
   it('calls onSave with correct data', () => {
@@ -27,25 +44,13 @@ describe('TableForm', () => {
   })
 })
 
-import { MemoryRouter } from 'react-router-dom'
-import AdminTablesPage from '@/pages/admin/admin-tables'
-
-const mockDeleteTable = vi.fn()
-const mockAddTable = vi.fn()
-const mockUpdateTable = vi.fn()
-
-vi.mock('@/hooks/useTableData', () => ({
-  useTableData: () => ({
-    tables: [{ id: 't1', label: 'Bàn 01', seats: 4, gridCol: 1, gridRow: 1 }],
-    addTable: mockAddTable,
-    updateTable: mockUpdateTable,
-    deleteTable: mockDeleteTable,
-  }),
-}))
-
-vi.mock('sonner', () => ({ toast: { success: vi.fn() } }))
-
 describe('AdminTablesPage', () => {
+  beforeEach(() => {
+    mockAddTable.mockClear()
+    mockUpdateTable.mockClear()
+    mockDeleteTable.mockClear()
+  })
+
   it('renders table list', () => {
     render(<MemoryRouter><AdminTablesPage /></MemoryRouter>)
     expect(screen.getByText('Bàn 01')).toBeInTheDocument()
@@ -63,6 +68,23 @@ describe('AdminTablesPage', () => {
     render(<MemoryRouter><AdminTablesPage /></MemoryRouter>)
     fireEvent.click(screen.getByRole('button', { name: /xóa/i }))
     expect(mockDeleteTable).toHaveBeenCalledWith('t1')
+    vi.restoreAllMocks()
+  })
+
+  it('calls updateTable when editing a table', () => {
+    render(<MemoryRouter><AdminTablesPage /></MemoryRouter>)
+    fireEvent.click(screen.getByRole('button', { name: /sửa/i }))
+    expect(screen.getByText('Sửa bàn')).toBeInTheDocument()
+    // pre-filled with Bàn 01
+    fireEvent.click(screen.getByRole('button', { name: /lưu/i }))
+    expect(mockUpdateTable).toHaveBeenCalledWith('t1', expect.objectContaining({ label: 'Bàn 01' }))
+  })
+
+  it('does not call deleteTable when confirm is cancelled', () => {
+    vi.spyOn(window, 'confirm').mockReturnValue(false)
+    render(<MemoryRouter><AdminTablesPage /></MemoryRouter>)
+    fireEvent.click(screen.getByRole('button', { name: /xóa/i }))
+    expect(mockDeleteTable).not.toHaveBeenCalled()
     vi.restoreAllMocks()
   })
 })

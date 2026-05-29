@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 import type { OrderItem, SubmittedOrder, TableSession } from '@/types/session'
+import type { InvoiceRequest } from '@/types/invoice'
 
 // Re-export so all existing imports from this hook continue to work
 export type { OrderItem, SubmittedOrder, TableSession } from '@/types/session'

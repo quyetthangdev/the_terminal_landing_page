@@ -55,9 +55,18 @@ export default function StaffTableOrderPage() {
             {statusLabel[session.status] ?? session.status.toUpperCase()}
           </span>
         </div>
-        <span className="text-[11px] text-[#666] flex-shrink-0 hidden sm:block">
-          {new Date(session.openedAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
-        </span>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <button
+            onClick={() => navigate(`/staff/table/${id}/receipt?draft=true`)}
+            disabled={session.submittedOrders.length === 0}
+            className="text-[10px] sm:text-[11px] text-[#888] border border-[#333] px-2 sm:px-3 py-1 rounded tracking-[0.1em] disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            HĐ tạm
+          </button>
+          <span className="text-[11px] text-[#666] hidden sm:block">
+            {new Date(session.openedAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
+          </span>
+        </div>
       </div>
 
       {/* Mobile tab bar — hidden on lg+ */}

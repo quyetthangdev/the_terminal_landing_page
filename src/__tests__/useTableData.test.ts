@@ -25,6 +25,8 @@ describe('useTableData', () => {
     const id = result.current.tables[0].id
     act(() => result.current.updateTable(id, { label: 'VIP' }))
     expect(result.current.tables[0].label).toBe('VIP')
+    const stored: Array<{ id: string; label: string }> = JSON.parse(localStorage.getItem('terminal_tables') ?? '[]')
+    expect(stored.find(t => t.id === id)?.label).toBe('VIP')
   })
 
   it('deletes a table by id', () => {
@@ -33,5 +35,7 @@ describe('useTableData', () => {
     act(() => result.current.deleteTable(id))
     expect(result.current.tables).toHaveLength(11)
     expect(result.current.tables.find(t => t.id === id)).toBeUndefined()
+    const stored: unknown[] = JSON.parse(localStorage.getItem('terminal_tables') ?? '[]')
+    expect(stored).toHaveLength(11)
   })
 })

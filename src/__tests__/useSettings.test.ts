@@ -18,7 +18,7 @@ describe('useSettings', () => {
     expect(result.current.settings.restaurantName).toBe('New Name')
     expect(result.current.settings.pin).toBe('9999')
     const stored = JSON.parse(localStorage.getItem('terminal_settings') ?? '{}') as Record<string, unknown>
-    expect(stored.restaurantName).toBe('New Name')
+    expect(stored).toMatchObject({ restaurantName: 'New Name', pin: '9999', vatRate: 0.1 })
   })
 
   it('merges partial localStorage data with defaults on init', () => {

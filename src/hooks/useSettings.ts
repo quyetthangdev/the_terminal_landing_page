@@ -27,9 +27,9 @@ export function useSettings() {
   const [settings, setSettings] = useState<AdminSettings>(() => {
     try {
       const raw = localStorage.getItem(SETTINGS_KEY)
-      return raw ? { ...defaults, ...(JSON.parse(raw) as Partial<AdminSettings>) } : defaults
+      return raw ? { ...defaults, ...(JSON.parse(raw) as Partial<AdminSettings>) } : { ...defaults }
     } catch {
-      return defaults
+      return { ...defaults }
     }
   })
 

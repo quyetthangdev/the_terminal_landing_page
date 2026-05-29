@@ -4,10 +4,17 @@ export interface MenuItem {
   description: string
   price: string
   image: string
-  category: CategoryId
+  category: string
 }
 
-export const categories = [
+export interface Category {
+  id: string
+  label: string
+}
+
+export type CategoryId = string
+
+export const categories: Category[] = [
   { id: 'appetizers', label: 'Khai Vị' },
   { id: 'soups', label: 'Súp' },
   { id: 'salads', label: 'Salad' },
@@ -18,9 +25,7 @@ export const categories = [
   { id: 'desserts', label: 'Tráng Miệng' },
   { id: 'coffee', label: 'Cà Phê' },
   { id: 'cocktails', label: 'Cocktail' },
-] as const
-
-export type CategoryId = (typeof categories)[number]['id']
+]
 
 export const menuItems: MenuItem[] = [
   // Khai vị

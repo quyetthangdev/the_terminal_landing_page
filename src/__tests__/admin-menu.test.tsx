@@ -1,6 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { MemoryRouter } from 'react-router-dom'
 import MenuItemForm from '@/components/admin/menu-item-form'
+import AdminMenuPage from '@/pages/admin/admin-menu'
 import type { Category } from '@/data/menu'
 
 const cats: Category[] = [
@@ -37,18 +39,14 @@ describe('MenuItemForm', () => {
   })
 })
 
-import { MemoryRouter } from 'react-router-dom'
-import AdminMenuPage from '@/pages/admin/admin-menu'
-
 const mockDeleteItem = vi.fn()
 const mockAddItem = vi.fn()
 const mockUpdateItem = vi.fn()
 
-// Mock hooks
 vi.mock('@/hooks/useMenuData', () => ({
   useMenuData: () => ({
     items: [
-      { id: 'item1', name: 'Gỏi cuốn', description: '', price: '85.000đ', image: '', category: 'appetizers' },
+      { id: 'item1', name: 'Gỏi cuốn', description: 'Fresh rolls', price: '85.000đ', image: '', category: 'appetizers' },
     ],
     categories: [{ id: 'appetizers', label: 'Khai Vị' }],
     addItem: mockAddItem,
@@ -57,13 +55,17 @@ vi.mock('@/hooks/useMenuData', () => ({
   }),
 }))
 
-// Mock sonner
 vi.mock('sonner', () => ({ toast: { success: vi.fn() } }))
 
 describe('AdminMenuPage', () => {
-  it('renders item list and category tabs', () => {
+  beforeEach(() => {
+    mockDeleteItem.mockClear()
+    mockAddItem.mockClear()
+    mockUpdateItem.mockClear()
+  })
+
+  it('renders item in DataTable', () => {
     render(<MemoryRouter><AdminMenuPage /></MemoryRouter>)
-    expect(screen.getByText('Khai Vị')).toBeInTheDocument()
     expect(screen.getByText('Gỏi cuốn')).toBeInTheDocument()
   })
 
@@ -73,10 +75,24 @@ describe('AdminMenuPage', () => {
     expect(screen.getByText('Thêm món mới')).toBeInTheDocument()
   })
 
-  it('calls deleteItem with confirm', async () => {
+  it('row click opens MenuDetailDialog with correct item', () => {
+    render(<MemoryRouter><AdminMenuPage /></MemoryRouter>)
+    fireEvent.click(screen.getByText('Gỏi cuốn'))
+    expect(screen.getByText('Fresh rolls')).toBeInTheDocument()
+  })
+
+  it('action Sửa món opens edit form', () => {
+    render(<MemoryRouter><AdminMenuPage /></MemoryRouter>)
+    fireEvent.click(screen.getByRole('button', { name: /hành động/i }))
+    fireEvent.click(screen.getByText('Sửa món'))
+    expect(screen.getByText('Sửa món')).toBeInTheDocument()
+  })
+
+  it('action Xóa món calls deleteItem after confirm', () => {
     vi.spyOn(window, 'confirm').mockReturnValue(true)
     render(<MemoryRouter><AdminMenuPage /></MemoryRouter>)
-    fireEvent.click(screen.getByRole('button', { name: /xóa/i }))
+    fireEvent.click(screen.getByRole('button', { name: /hành động/i }))
+    fireEvent.click(screen.getByText('Xóa món'))
     expect(mockDeleteItem).toHaveBeenCalledWith('item1')
     vi.restoreAllMocks()
   })

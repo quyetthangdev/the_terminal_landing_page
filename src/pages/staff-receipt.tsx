@@ -20,7 +20,7 @@ export default function StaffReceiptPage() {
     return (
       <div className="min-h-screen bg-brand-darker flex items-center justify-center text-[#555]">
         Không có đơn hàng để xuất hoá đơn.{' '}
-        <button className="text-gold ml-2 underline" onClick={() => navigate(-1)}>
+        <button className="text-gold ml-2 underline" onClick={() => navigate('/staff')}>
           Quay lại
         </button>
       </div>

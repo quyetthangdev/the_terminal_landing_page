@@ -1,4 +1,3 @@
-import { Toaster } from '@/components/ui/sonner'
 import GlassNavbar from '@/components/glass/GlassNavbar'
 import GlassHeroSection from '@/components/glass/GlassHeroSection'
 import GlassAboutSection from '@/components/glass/GlassAboutSection'
@@ -23,7 +22,6 @@ export default function GlassPage() {
       </main>
       <GlassFooter />
       <PageSwitcher current="glass" />
-      <Toaster />
     </div>
   )
 }

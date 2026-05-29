@@ -6,7 +6,6 @@ import MenuSection from '@/components/sections/MenuSection'
 import ReservationSection from '@/components/sections/ReservationSection'
 import GallerySection from '@/components/sections/GallerySection'
 import LocationSection from '@/components/sections/LocationSection'
-import { Toaster } from '@/components/ui/sonner'
 import PageSwitcher from '@/components/PageSwitcher'
 
 export default function MuseumPage() {
@@ -22,7 +21,6 @@ export default function MuseumPage() {
         <LocationSection />
       </main>
       <Footer />
-      <Toaster />
       <PageSwitcher current="museum" />
     </div>
   )

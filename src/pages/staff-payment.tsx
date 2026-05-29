@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 import { useTableSessions } from '@/hooks/useTableSessions'
 import { tables } from '@/data/tables'
 import PaymentPanel from '@/components/staff/payment-panel'
@@ -36,6 +37,7 @@ export default function StaffPaymentPage() {
 
   function handleConfirm() {
     if (!id) return
+    toast.success('Thanh toán thành công', { description: table?.label, duration: 3000 })
     closeSession(id)
     navigate('/staff')
   }
@@ -48,6 +50,7 @@ export default function StaffPaymentPage() {
 
   function handleReceiptDone() {
     if (!id) return
+    toast.success('Thanh toán thành công', { description: table?.label, duration: 3000 })
     closeSession(id)
     navigate('/staff')
   }

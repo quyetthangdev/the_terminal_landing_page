@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { toast } from 'sonner'
 import { menuItems, categories, type CategoryId } from '@/data/menu'
 import type { OrderItem } from '@/types/session'
+import { ToastAddIcon } from '@/components/ui/toast-icons'
 
 interface Props {
   pendingItems: OrderItem[]
@@ -42,6 +44,10 @@ export default function MenuPanel({ pendingItems, onAdd }: Props) {
       <div className="flex-1 overflow-y-auto p-2 sm:p-3 grid grid-cols-2 gap-2 sm:gap-2.5 content-start">
         {filtered.map(item => {
           const qty = qtyOf(item.id)
+          const handleAdd = () => {
+            onAdd({ menuItemId: item.id, name: item.name, priceNum: parsePrice(item.price), price: item.price })
+            toast(`Đã thêm ${item.name} vào đơn`, { icon: <ToastAddIcon />, duration: 1500 })
+          }
           return (
             <div
               key={item.id}
@@ -67,7 +73,7 @@ export default function MenuPanel({ pendingItems, onAdd }: Props) {
                     <span className="text-[10px] text-gold font-semibold leading-none">{item.price}</span>
                     <button
                       aria-label={`Thêm ${item.name}`}
-                      onClick={() => onAdd({ menuItemId: item.id, name: item.name, priceNum: parsePrice(item.price), price: item.price })}
+                      onClick={handleAdd}
                       className="w-6 h-6 flex-shrink-0 rounded bg-gold text-brand-dark text-sm font-bold flex items-center justify-center"
                     >
                       +
@@ -94,7 +100,7 @@ export default function MenuPanel({ pendingItems, onAdd }: Props) {
                   <span className="text-[11px] text-gold font-semibold">{item.price}</span>
                   <button
                     aria-label={`Thêm ${item.name}`}
-                    onClick={() => onAdd({ menuItemId: item.id, name: item.name, priceNum: parsePrice(item.price), price: item.price })}
+                    onClick={handleAdd}
                     className="w-6 h-6 rounded bg-gold text-brand-dark text-sm font-bold flex items-center justify-center"
                   >
                     +

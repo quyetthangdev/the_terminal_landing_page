@@ -40,7 +40,7 @@ describe('useAdminTheme', () => {
   })
 
   it('persists dark to localStorage', () => {
-    const { result } = renderHook(() => useAdminTheme())
+    renderHook(() => useAdminTheme())
     expect(localStorage.getItem('terminal_admin_theme')).toBe('dark')
   })
 
@@ -51,7 +51,7 @@ describe('useAdminTheme', () => {
   })
 
   it('adds dark class to documentElement when isDark true', () => {
-    const { result } = renderHook(() => useAdminTheme())
+    renderHook(() => useAdminTheme())
     expect(document.documentElement.classList.contains('dark')).toBe(true)
   })
 

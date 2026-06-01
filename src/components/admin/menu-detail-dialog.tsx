@@ -28,7 +28,7 @@ export default function MenuDetailDialog({ item, categories, open, onClose, onEd
 
   return (
     <Dialog open={open} onOpenChange={open => { if (!open) onClose() }}>
-      <DialogContent className="bg-[#1a1a1a] border-[#2a2a2a] text-[#f5f0e8] p-0 max-w-sm overflow-hidden">
+      <DialogContent className="bg-gray-50 dark:bg-[#1a1a1a] border-gray-200 dark:border-[#2a2a2a] text-gray-900 dark:text-[#f5f0e8] p-0 max-w-sm overflow-hidden">
         {menuItem.image ? (
           <img
             src={menuItem.image}
@@ -36,7 +36,7 @@ export default function MenuDetailDialog({ item, categories, open, onClose, onEd
             className="w-full aspect-video object-cover"
           />
         ) : (
-          <div className="w-full aspect-video bg-[#111] flex items-center justify-center text-[#333] text-[11px] tracking-widest uppercase">
+          <div className="w-full aspect-video bg-gray-100 dark:bg-[#111] flex items-center justify-center text-gray-300 dark:text-[#333] text-[11px] tracking-widest uppercase">
             Không có ảnh
           </div>
         )}
@@ -44,13 +44,13 @@ export default function MenuDetailDialog({ item, categories, open, onClose, onEd
           <DialogTitle className="font-display text-gold text-[18px] font-semibold mb-1">{menuItem.name}</DialogTitle>
           <DialogDescription className="sr-only">Chi tiết món ăn</DialogDescription>
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-[10px] text-[#555] border border-[#2a2a2a] px-2 py-0.5 rounded-full">
+            <span className="text-[10px] text-gray-400 dark:text-[#555] border border-gray-200 dark:border-[#2a2a2a] px-2 py-0.5 rounded-full">
               {catLabel}
             </span>
             <span className="text-gold text-[16px] font-medium">{menuItem.price}</span>
           </div>
           {menuItem.description && (
-            <p className="text-[12px] text-[#888] leading-relaxed mb-4">{menuItem.description}</p>
+            <p className="text-[12px] text-gray-500 dark:text-[#888] leading-relaxed mb-4">{menuItem.description}</p>
           )}
           <div className="flex gap-2">
             <button

@@ -70,7 +70,7 @@ export function DataTable<T>({
 
       <div className="flex gap-2 mb-2 items-center">
         <input
-          className="flex-1 bg-[#111] border border-[#2a2a2a] rounded px-3 py-2 text-[13px] text-[#f5f0e8] outline-none placeholder-[#555]"
+          className="flex-1 bg-white dark:bg-[#111] border border-gray-200 dark:border-[#2a2a2a] rounded px-3 py-2 text-[13px] text-gray-900 dark:text-[#f5f0e8] outline-none placeholder-gray-400 dark:placeholder-[#555]"
           placeholder={searchPlaceholder}
           value={search}
           onChange={e => { setSearch(e.target.value); resetPage() }}
@@ -78,7 +78,7 @@ export function DataTable<T>({
         {filter && (
           <select
             aria-label="Lọc danh mục"
-            className="bg-[#111] border border-[#2a2a2a] rounded px-3 py-2 text-[13px] text-[#f5f0e8] outline-none min-w-[130px]"
+            className="bg-white dark:bg-[#111] border border-gray-200 dark:border-[#2a2a2a] rounded px-3 py-2 text-[13px] text-gray-900 dark:text-[#f5f0e8] outline-none min-w-[130px]"
             value={filterValue}
             onChange={e => { setFilterValue(e.target.value); resetPage() }}
           >
@@ -91,7 +91,7 @@ export function DataTable<T>({
         {sorts.length > 0 && (
           <select
             aria-label="Sắp xếp"
-            className="bg-[#111] border border-[#2a2a2a] rounded px-3 py-2 text-[13px] text-[#f5f0e8] outline-none min-w-[120px]"
+            className="bg-white dark:bg-[#111] border border-gray-200 dark:border-[#2a2a2a] rounded px-3 py-2 text-[13px] text-gray-900 dark:text-[#f5f0e8] outline-none min-w-[120px]"
             value={sortIndex}
             onChange={e => { setSortIndex(Number(e.target.value)); resetPage() }}
           >
@@ -103,19 +103,19 @@ export function DataTable<T>({
         )}
       </div>
 
-      <div className="text-[9px] text-[#444] tracking-[0.1em] mb-2">
+      <div className="text-[9px] text-gray-400 dark:text-[#444] tracking-[0.1em] mb-2">
         {totalCount} MÓN · HIỂN THỊ {totalCount === 0 ? '0' : start + 1}–{Math.min(end, totalCount)}
       </div>
 
-      <div className="bg-[#111] border border-[#1e1e1e] rounded-lg overflow-hidden">
+      <div className="bg-white dark:bg-[#111] border border-gray-100 dark:border-[#1e1e1e] rounded-lg overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-[#1e1e1e] bg-[#151515]">
+            <tr className="border-b border-gray-100 dark:border-[#1e1e1e] bg-gray-100 dark:bg-[#151515]">
               {columns.map(col => (
                 <th
                   key={col.key}
                   style={col.width ? { width: col.width } : undefined}
-                  className="text-left text-[9px] text-[#444] tracking-[0.1em] uppercase px-3 py-2 font-normal"
+                  className="text-left text-[9px] text-gray-400 dark:text-[#444] tracking-[0.1em] uppercase px-3 py-2 font-normal"
                 >
                   {col.header}
                 </th>
@@ -128,7 +128,7 @@ export function DataTable<T>({
               <tr>
                 <td
                   colSpan={columns.length + (actions ? 1 : 0)}
-                  className="text-center text-[#555] text-[12px] py-8"
+                  className="text-center text-gray-400 dark:text-[#555] text-[12px] py-8"
                 >
                   Không tìm thấy kết quả
                 </td>
@@ -139,11 +139,11 @@ export function DataTable<T>({
               return (
                 <tr
                   key={key}
-                  className={`border-b border-[#161616] last:border-0 ${onRowClick ? 'cursor-pointer hover:bg-[#161616]' : ''}`}
+                  className={`border-b border-gray-100 dark:border-[#161616] last:border-0 ${onRowClick ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-[#161616]' : ''}`}
                   onClick={() => onRowClick?.(row)}
                 >
                   {columns.map(col => (
-                    <td key={col.key} className="px-3 py-2 text-[13px] text-[#f5f0e8]">
+                    <td key={col.key} className="px-3 py-2 text-[13px] text-gray-900 dark:text-[#f5f0e8]">
                       {col.render(row)}
                     </td>
                   ))}
@@ -154,17 +154,17 @@ export function DataTable<T>({
                     >
                       <button
                         aria-label="Hành động"
-                        className="text-[#555] hover:text-[#888] text-[14px] w-8 h-8 flex items-center justify-center"
+                        className="text-gray-400 dark:text-[#555] hover:text-gray-500 dark:hover:text-[#888] text-[14px] w-8 h-8 flex items-center justify-center"
                         onClick={() => setOpenActionKey(openActionKey === key ? null : key)}
                       >
                         ⋯
                       </button>
                       {openActionKey === key && (
-                        <div className="absolute right-0 top-full z-20 bg-[#1e1e1e] border border-[#2a2a2a] rounded shadow-lg min-w-[120px] overflow-hidden">
+                        <div className="absolute right-0 top-full z-20 bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-[#2a2a2a] rounded shadow-lg min-w-[120px] overflow-hidden">
                           {rowActions.map((action, i) => (
                             <button
                               key={i}
-                              className={`w-full text-left px-3 py-2 text-[11px] hover:bg-[#2a2a2a] ${action.destructive ? 'text-red-400' : 'text-[#888]'}`}
+                              className={`w-full text-left px-3 py-2 text-[11px] hover:bg-gray-100 dark:hover:bg-[#2a2a2a] ${action.destructive ? 'text-red-400' : 'text-gray-500 dark:text-[#888]'}`}
                               onClick={() => { action.onClick(); setOpenActionKey(null) }}
                             >
                               {action.label}
@@ -183,10 +183,10 @@ export function DataTable<T>({
 
       {totalPages > 1 && (
         <div className="flex items-center justify-between mt-3">
-          <span className="text-[9px] text-[#444]">Trang {page + 1} / {totalPages}</span>
+          <span className="text-[9px] text-gray-400 dark:text-[#444]">Trang {page + 1} / {totalPages}</span>
           <div className="flex gap-1">
             <button
-              className="text-[10px] text-[#555] border border-[#222] px-2 py-1 rounded disabled:opacity-40"
+              className="text-[10px] text-gray-400 dark:text-[#555] border border-gray-200 dark:border-[#222] px-2 py-1 rounded disabled:opacity-40"
               onClick={() => setPage(p => p - 1)}
               disabled={page === 0}
             >←</button>
@@ -194,7 +194,9 @@ export function DataTable<T>({
               <button
                 key={i}
                 className={`text-[10px] border px-2 py-1 rounded ${
-                  i === page ? 'text-gold border-[#C9A84C44] bg-[#1c1a10]' : 'text-[#555] border-[#222]'
+                  i === page
+                    ? 'text-gold border-gold/30 dark:border-[#C9A84C44] bg-amber-50 dark:bg-[#1c1a10]'
+                    : 'text-gray-400 dark:text-[#555] border-gray-200 dark:border-[#222]'
                 }`}
                 onClick={() => setPage(i)}
               >
@@ -202,7 +204,7 @@ export function DataTable<T>({
               </button>
             ))}
             <button
-              className="text-[10px] text-[#555] border border-[#222] px-2 py-1 rounded disabled:opacity-40"
+              className="text-[10px] text-gray-400 dark:text-[#555] border border-gray-200 dark:border-[#222] px-2 py-1 rounded disabled:opacity-40"
               onClick={() => setPage(p => p + 1)}
               disabled={page >= totalPages - 1}
             >→</button>

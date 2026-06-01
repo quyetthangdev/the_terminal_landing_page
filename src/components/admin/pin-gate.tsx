@@ -21,10 +21,10 @@ export default function PinGate({ correctPin, onSuccess }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-brand-darker flex items-center justify-center">
-      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-8 w-full max-w-sm">
+    <div className="min-h-screen bg-gray-50 dark:bg-brand-darker flex items-center justify-center">
+      <div className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-lg p-8 w-full max-w-sm">
         <p className="font-display text-gold text-center text-xl mb-2">THE TERMINAL</p>
-        <p className="text-[10px] tracking-[0.2em] text-[#555] text-center uppercase mb-8">Quản lý</p>
+        <p className="text-[10px] tracking-[0.2em] text-gray-400 dark:text-[#555] text-center uppercase mb-8">Quản lý</p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="password"
@@ -34,7 +34,7 @@ export default function PinGate({ correctPin, onSuccess }: Props) {
             onChange={e => { setInput(e.target.value); setError(false) }}
             placeholder="Nhập PIN"
             autoFocus
-            className="w-full bg-[#111] border border-[#333] rounded px-4 py-3 text-center text-[#f5f0e8] text-lg tracking-[0.3em] outline-none focus:border-[#C9A84C44]"
+            className="w-full bg-white dark:bg-[#111] border border-gray-300 dark:border-[#333] rounded px-4 py-3 text-center text-gray-900 dark:text-[#f5f0e8] text-lg tracking-[0.3em] outline-none focus:border-gold/30"
           />
           {error && <p className="text-red-400 text-[11px] text-center">PIN không đúng</p>}
           <button

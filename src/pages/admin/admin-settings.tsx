@@ -42,12 +42,12 @@ export default function AdminSettingsPage() {
     toast.success('Đã đổi PIN')
   }
 
-  const inputCls = 'w-full bg-[#111] border border-[#333] rounded px-3 py-2 text-[13px] text-[#f5f0e8] focus:border-[#C9A84C44] outline-none'
-  const labelCls = 'text-[10px] tracking-[0.15em] text-[#555] uppercase block mb-1'
+  const inputCls = 'w-full bg-white dark:bg-[#111] border border-gray-300 dark:border-[#333] rounded px-3 py-2 text-[13px] text-gray-900 dark:text-[#f5f0e8] focus:border-gold/30 outline-none'
+  const labelCls = 'text-[10px] tracking-[0.15em] text-gray-400 dark:text-[#555] uppercase block mb-1'
 
   return (
     <div className="p-6 max-w-2xl">
-      <h1 className="text-[10px] tracking-[0.2em] text-[#555] uppercase mb-6">Cài đặt nhà hàng</h1>
+      <h1 className="text-[10px] tracking-[0.2em] text-gray-400 dark:text-[#555] uppercase mb-6">Cài đặt nhà hàng</h1>
 
       <form onSubmit={handleInfoSubmit} className="space-y-4 mb-10">
         <div>
@@ -90,8 +90,8 @@ export default function AdminSettingsPage() {
         </button>
       </form>
 
-      <div className="border-t border-[#2a2a2a] pt-8">
-        <p className="text-[10px] tracking-[0.2em] text-[#555] uppercase mb-4">Đổi PIN quản lý</p>
+      <div className="border-t border-gray-200 dark:border-[#2a2a2a] pt-8">
+        <p className="text-[10px] tracking-[0.2em] text-gray-400 dark:text-[#555] uppercase mb-4">Đổi PIN quản lý</p>
         <form onSubmit={handlePinSubmit} className="space-y-4 max-w-xs">
           <div>
             <label htmlFor="pin-new" className={labelCls}>PIN mới</label>

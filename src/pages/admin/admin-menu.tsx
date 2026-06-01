@@ -37,20 +37,20 @@ export default function AdminMenuPage() {
         item.image ? (
           <img src={item.image} alt={item.name} className="w-9 h-9 object-cover rounded" />
         ) : (
-          <div className="w-9 h-9 bg-[#1a1a1a] rounded" />
+          <div className="w-9 h-9 bg-gray-100 dark:bg-[#1a1a1a] rounded" />
         ),
     },
     {
       key: 'name',
       header: 'Tên món',
-      render: item => <span className="text-[#f5f0e8]">{item.name}</span>,
+      render: item => <span className="text-gray-900 dark:text-[#f5f0e8]">{item.name}</span>,
     },
     {
       key: 'category',
       header: 'Danh mục',
       render: item => {
         const cat = categories.find(c => c.id === item.category)
-        return <span className="text-[#555]">{cat?.label ?? item.category}</span>
+        return <span className="text-gray-400 dark:text-[#555]">{cat?.label ?? item.category}</span>
       },
     },
     {
@@ -63,7 +63,7 @@ export default function AdminMenuPage() {
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-[10px] tracking-[0.2em] text-[#555] uppercase">Quản lý thực đơn</h1>
+        <h1 className="text-[10px] tracking-[0.2em] text-gray-400 dark:text-[#555] uppercase">Quản lý thực đơn</h1>
         <button
           onClick={() => setAdding(true)}
           disabled={categories.length === 0}
@@ -79,10 +79,10 @@ export default function AdminMenuPage() {
           onClick={() => { setAdding(false); setEditingItem(null) }}
         >
           <div
-            className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto"
+            className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto"
             onClick={e => e.stopPropagation()}
           >
-            <p className="text-[10px] tracking-[0.2em] text-[#555] uppercase mb-4">
+            <p className="text-[10px] tracking-[0.2em] text-gray-400 dark:text-[#555] uppercase mb-4">
               {editingItem ? 'Sửa món' : 'Thêm món mới'}
             </p>
             <MenuItemForm
@@ -106,7 +106,7 @@ export default function AdminMenuPage() {
       )}
 
       {categories.length === 0 && (
-        <p className="text-[#555] text-[12px] text-center py-8">
+        <p className="text-gray-400 dark:text-[#555] text-[12px] text-center py-8">
           Chưa có danh mục. Hãy thêm danh mục trước khi thêm món.
         </p>
       )}

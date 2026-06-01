@@ -12,7 +12,7 @@ export default function AdminTablesPage() {
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-[10px] tracking-[0.2em] text-[#555] uppercase">Quản lý bàn</h1>
+        <h1 className="text-[10px] tracking-[0.2em] text-gray-400 dark:text-[#555] uppercase">Quản lý bàn</h1>
         <button
           onClick={() => setAdding(true)}
           className="bg-gold text-brand-dark text-[11px] tracking-[0.15em] font-bold px-4 py-2 rounded"
@@ -27,10 +27,10 @@ export default function AdminTablesPage() {
           onClick={() => { setAdding(false); setEditing(null) }}
         >
           <div
-            className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-6 w-full max-w-sm"
+            className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-lg p-6 w-full max-w-sm"
             onClick={e => e.stopPropagation()}
           >
-            <p className="text-[10px] tracking-[0.2em] text-[#555] uppercase mb-4">
+            <p className="text-[10px] tracking-[0.2em] text-gray-400 dark:text-[#555] uppercase mb-4">
               {editing ? 'Sửa bàn' : 'Thêm bàn mới'}
             </p>
             <TableForm
@@ -54,15 +54,15 @@ export default function AdminTablesPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {tables.map(table => (
-          <div key={table.id} className="bg-[#1a1a1a] border border-[#2a2a2a] rounded p-4">
-            <p className="text-[14px] text-[#f5f0e8] font-medium mb-1">{table.label}</p>
-            <p className="text-[10px] text-[#555] mb-3">
+          <div key={table.id} className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded p-4">
+            <p className="text-[14px] text-gray-900 dark:text-[#f5f0e8] font-medium mb-1">{table.label}</p>
+            <p className="text-[10px] text-gray-400 dark:text-[#555] mb-3">
               {table.seats} chỗ · Cột {table.gridCol}, Hàng {table.gridRow}
             </p>
             <div className="flex gap-2">
               <button
                 onClick={() => setEditing(table)}
-                className="flex-1 text-[10px] tracking-[0.1em] text-[#888] border border-[#333] py-1.5 rounded hover:text-[#f5f0e8]"
+                className="flex-1 text-[10px] tracking-[0.1em] text-gray-500 dark:text-[#888] border border-gray-300 dark:border-[#333] py-1.5 rounded hover:text-gray-900 dark:hover:text-[#f5f0e8]"
               >
                 SỬA
               </button>
@@ -80,7 +80,7 @@ export default function AdminTablesPage() {
           </div>
         ))}
         {tables.length === 0 && (
-          <p className="text-[#555] text-[12px] text-center py-8 col-span-1 sm:col-span-2 lg:col-span-3">Chưa có bàn nào</p>
+          <p className="text-gray-400 dark:text-[#555] text-[12px] text-center py-8 col-span-1 sm:col-span-2 lg:col-span-3">Chưa có bàn nào</p>
         )}
       </div>
     </div>
